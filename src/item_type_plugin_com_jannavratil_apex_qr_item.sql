@@ -1,246 +1,226 @@
-set define off
-set verify off
-set feedback off
-WHENEVER SQLERROR EXIT SQL.SQLCODE ROLLBACK
-begin wwv_flow.g_import_in_progress := true; end;
-/
- 
---       AAAA       PPPPP   EEEEEE  XX      XX
---      AA  AA      PP  PP  EE       XX    XX
---     AA    AA     PP  PP  EE        XX  XX
---    AAAAAAAAAA    PPPPP   EEEE       XXXX
---   AA        AA   PP      EE        XX  XX
---  AA          AA  PP      EE       XX    XX
---  AA          AA  PP      EEEEEE  XX      XX
-prompt  Set Credentials...
- 
-begin
- 
-  -- Assumes you are running the script connected to SQL*Plus as the Oracle user APEX_040200 or as the owner (parsing schema) of the application.
-  wwv_flow_api.set_security_group_id(p_security_group_id=>nvl(wwv_flow_application_install.get_workspace_id,941512753047020));
- 
-end;
-/
-
-begin wwv_flow.g_import_in_progress := true; end;
-/
-begin 
-
-select value into wwv_flow_api.g_nls_numeric_chars from nls_session_parameters where parameter='NLS_NUMERIC_CHARACTERS';
-
-end;
-
-/
-begin execute immediate 'alter session set nls_numeric_characters=''.,''';
-
-end;
-
-/
-begin wwv_flow.g_browser_language := 'en'; end;
-/
-prompt  Check Compatibility...
- 
-begin
- 
--- This date identifies the minimum version required to import this file.
-wwv_flow_api.set_version(p_version_yyyy_mm_dd=>'2012.01.01');
- 
-end;
-/
-
-prompt  Set Application ID...
- 
-begin
- 
-   -- SET APPLICATION ID
-   wwv_flow.g_flow_id := nvl(wwv_flow_application_install.get_application_id,104);
-   wwv_flow_api.g_id_offset := nvl(wwv_flow_application_install.get_offset,0);
-null;
- 
-end;
-/
-
-prompt  ...ui types
+set define off verify off feedback off
+whenever sqlerror exit sql.sqlcode rollback
+--------------------------------------------------------------------------------
 --
- 
-begin
- 
-null;
- 
-end;
-/
-
-prompt  ...plugins
+-- ORACLE Application Express (APEX) export file
 --
---application/shared_components/plugins/item_type/com_jannavratil_apex_qr_item
- 
+-- You should run the script connected to SQL*Plus as the Oracle user
+-- APEX_050000 or as the owner (parsing schema) of the application.
+--
+-- NOTE: Calls to apex_application_install override the defaults below.
+--
+--------------------------------------------------------------------------------
 begin
- 
-wwv_flow_api.create_plugin (
-  p_id => 20563635873959606 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_plugin_type => 'ITEM TYPE'
- ,p_name => 'COM.JANNAVRATIL.APEX.QR.ITEM'
- ,p_display_name => 'QR Code Item'
- ,p_supported_ui_types => 'DESKTOP:JQM_SMARTPHONE'
- ,p_image_prefix => '#PLUGIN_PREFIX#'
- ,p_plsql_code => 
-'function render_qr_item ('||unistr('\000a')||
-'    p_item                in apex_plugin.t_page_item,'||unistr('\000a')||
-'    p_plugin              in apex_plugin.t_plugin,'||unistr('\000a')||
-'    p_value               in varchar2,'||unistr('\000a')||
-'    p_is_readonly         in boolean,'||unistr('\000a')||
-'    p_is_printer_friendly in boolean )'||unistr('\000a')||
-'    return apex_plugin.t_page_item_render_result'||unistr('\000a')||
-'is'||unistr('\000a')||
-'    l_size          apex_application_page_items.attribute_01%type := p_item.attribute_01;'||unistr('\000a')||
-'    l_color'||
-'         apex_application_page_items.attribute_01%type := p_item.attribute_02;'||unistr('\000a')||
-'    l_background    apex_application_page_items.attribute_01%type := p_item.attribute_03;'||unistr('\000a')||
-'begin'||unistr('\000a')||
-''||unistr('\000a')||
-'  if apex_application.g_debug then'||unistr('\000a')||
-'    apex_plugin_util.debug_page_item('||unistr('\000a')||
-'      p_plugin        => p_plugin,'||unistr('\000a')||
-'      p_page_item     => p_item'||unistr('\000a')||
-'    );'||unistr('\000a')||
-'  end if;'||unistr('\000a')||
-'   '||unistr('\000a')||
-'  apex_javascript.add_library('||unistr('\000a')||
-'     p_name      => ''qrcode.min'''||
-','||unistr('\000a')||
-'     p_directory => p_plugin.file_prefix,'||unistr('\000a')||
-'     p_version   => NULL'||unistr('\000a')||
-'  );'||unistr('\000a')||
-''||unistr('\000a')||
-'  sys.htp.p(''<div id="QR-''||p_item.id||''" style="width:''||l_size||''px; height:''||l_size||''px;"></div>'');'||unistr('\000a')||
-''||unistr('\000a')||
-'  apex_javascript.add_inline_code ('||unistr('\000a')||
-'    p_code => ''function renderQR_''||p_item.name||''(value) '||unistr('\000a')||
-'{ $("#QR-''||p_item.id||''").html(" ");'||unistr('\000a')||
-'  new QRCode(document.getElementById("QR-''||p_item.id||''"), {'||unistr('\000a')||
-'  text:   value, '||unistr('\000a')||
-'  widt'||
-'h:  "''||l_size||''" , '||unistr('\000a')||
-'  height: "''||l_size||''" ,'||unistr('\000a')||
-'  colorDark:  "''||l_color||''" , '||unistr('\000a')||
-'  colorLight: "''||l_background||''"'||unistr('\000a')||
-'  } );'||unistr('\000a')||
-'}'','||unistr('\000a')||
-'    p_key  => ''renderQR_''||p_item.name'||unistr('\000a')||
-'  );'||unistr('\000a')||
-''||unistr('\000a')||
-'  apex_javascript.add_onload_code ('||unistr('\000a')||
-'    p_code => ''renderQR_''||p_item.name||''("''||p_value||''");'', '||unistr('\000a')||
-'    p_key  => ''renderQR_''||p_item.name'||unistr('\000a')||
-'  );'||unistr('\000a')||
-'  '||unistr('\000a')||
-'  return null;'||unistr('\000a')||
-'end;'
- ,p_render_function => 'render_qr_item'
- ,p_standard_attributes => 'VISIBLE:SOURCE:ELEMENT:ENCRYPT'
- ,p_substitute_attributes => true
- ,p_subscribe_plugin_settings => true
- ,p_help_text => '<div>'||unistr('\000a')||
-'	<span style="font-size:11px;"><span style="font-family:courier new,courier,monospace;">&nbsp;__ &nbsp; &nbsp;__ &nbsp; &nbsp; ____ &nbsp; &nbsp;__ &nbsp; &nbsp;__ &nbsp; _________ &nbsp; &nbsp; ____ &nbsp; ________ &nbsp; __ &nbsp; __</span></span></div>'||unistr('\000a')||
-'<div>'||unistr('\000a')||
-'	<span style="font-size:11px;"><span style="font-family: ''courier new'', courier, monospace;">| &nbsp;\ &nbsp;| &nbsp;| &nbsp; / &nbsp; &nbsp;\ &nbsp;| &nbsp;| &nbsp;| &nbsp;| | &nbsp; ___ &nbsp; \ &nbsp; / &nbsp; &nbsp;\ |__ &nbsp; &nbsp;__| | &nbsp;| | &nbsp;|</span></span></div>'||unistr('\000a')||
-'<div>'||unistr('\000a')||
-'	<span style="font-size:11px;"><span style="font-family:courier new,courier,monospace;">| &nbsp; \_| &nbsp;| &nbsp;/ &nbsp;/\ &nbsp;\ | &nbsp;| &nbsp;| &nbsp;| | &nbsp;|___| &nbsp;/ &nbsp;/ &nbsp;/\ &nbsp;\ &nbsp; | &nbsp;| &nbsp; &nbsp;| &nbsp;| | &nbsp;|</span></span></div>'||unistr('\000a')||
-'<div>'||unistr('\000a')||
-'	<span style="font-size:11px;"><span style="font-family:courier new,courier,monospace;">| &nbsp; _ &nbsp; &nbsp;| | &nbsp;|__| &nbsp;| \ &nbsp;\/ &nbsp;/ &nbsp;| &nbsp; __ &nbsp; / &nbsp;| &nbsp;|__| &nbsp;| &nbsp;| &nbsp;| &nbsp; &nbsp;| &nbsp;| | &nbsp;|</span></span></div>'||unistr('\000a')||
-'<div>'||unistr('\000a')||
-'	<span style="font-size:11px;"><span style="font-family:courier new,courier,monospace;">| &nbsp;| \ &nbsp; | | &nbsp; __ &nbsp; | &nbsp;\ &nbsp; &nbsp;/ &nbsp; | &nbsp;| &nbsp;\ &nbsp;\ &nbsp;| &nbsp; __ &nbsp; | &nbsp;| &nbsp;| &nbsp; &nbsp;| &nbsp;| | &nbsp;|____</span></span></div>'||unistr('\000a')||
-'<div>'||unistr('\000a')||
-'	<span style="font-size:11px;"><span style="font-family:courier new,courier,monospace;">|__| &nbsp;\__| |__| &nbsp;|__| &nbsp; \__/ &nbsp; &nbsp;|__| &nbsp; \__\ |__| &nbsp;|__| &nbsp;|__| &nbsp; &nbsp;|__| |_______|</span></span></div>'||unistr('\000a')||
-'<div>'||unistr('\000a')||
-'	&nbsp;</div>'||unistr('\000a')||
-'<div>'||unistr('\000a')||
-'	<span style="font-size:16px;">github.com/navratil/apex-qr-plugin</span></div>'||unistr('\000a')||
-''
- ,p_version_identifier => '1.0.0'
- ,p_about_url => 'https://github.com/navratil/apex-qr-code'
- ,p_plugin_comment => 'The MIT License (MIT)'||unistr('\000a')||
-''||unistr('\000a')||
-'QR code plugin for Oracle Application Express'||unistr('\000a')||
-''||unistr('\000a')||
-'Copyright (c) 2014 Jan Navratil    (github.com/navratil/apex-qr-plugin)'||unistr('\000a')||
-'Copyright (c) 2012 davidshimjs     (github.com/davidshimjs/qrcodejs)'||unistr('\000a')||
-''||unistr('\000a')||
-'Permission is hereby granted, free of charge, to any person obtaining a copy of'||unistr('\000a')||
-'this software and associated documentation files (the "Software"), to deal in'||unistr('\000a')||
-'the Software without restriction, including without limitation the rights to'||unistr('\000a')||
-'use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of'||unistr('\000a')||
-'the Software, and to permit persons to whom the Software is furnished to do so,'||unistr('\000a')||
-'subject to the following conditions:'||unistr('\000a')||
-''||unistr('\000a')||
-'The above copyright notice and this permission notice shall be included in all'||unistr('\000a')||
-'copies or substantial portions of the Software.'||unistr('\000a')||
-''||unistr('\000a')||
-'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR'||unistr('\000a')||
-'IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS'||unistr('\000a')||
-'FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR'||unistr('\000a')||
-'COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER'||unistr('\000a')||
-'IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN'||unistr('\000a')||
-'CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.'||unistr('\000a')||
-''
-  );
-wwv_flow_api.create_plugin_attribute (
-  p_id => 20567412844144844 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_plugin_id => 20563635873959606 + wwv_flow_api.g_id_offset
- ,p_attribute_scope => 'COMPONENT'
- ,p_attribute_sequence => 1
- ,p_display_sequence => 10
- ,p_prompt => 'Size'
- ,p_attribute_type => 'INTEGER'
- ,p_is_required => true
- ,p_default_value => '200'
- ,p_display_length => 10
- ,p_max_length => 30
- ,p_is_translatable => false
- ,p_help_text => 'Height and Width of the QR code in pixels'
-  );
-wwv_flow_api.create_plugin_attribute (
-  p_id => 20568034589180421 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_plugin_id => 20563635873959606 + wwv_flow_api.g_id_offset
- ,p_attribute_scope => 'COMPONENT'
- ,p_attribute_sequence => 2
- ,p_display_sequence => 20
- ,p_prompt => 'Color'
- ,p_attribute_type => 'TEXT'
- ,p_is_required => true
- ,p_default_value => '#000000'
- ,p_display_length => 10
- ,p_max_length => 30
- ,p_is_translatable => false
- ,p_help_text => 'QR code color (dark)'
-  );
-wwv_flow_api.create_plugin_attribute (
-  p_id => 20568427040183863 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_plugin_id => 20563635873959606 + wwv_flow_api.g_id_offset
- ,p_attribute_scope => 'COMPONENT'
- ,p_attribute_sequence => 3
- ,p_display_sequence => 30
- ,p_prompt => 'Background'
- ,p_attribute_type => 'TEXT'
- ,p_is_required => true
- ,p_default_value => '#FFFFFF'
- ,p_display_length => 10
- ,p_max_length => 30
- ,p_is_translatable => false
- ,p_help_text => 'QR code background color'
-  );
-null;
- 
+wwv_flow_api.import_begin (
+ p_version_yyyy_mm_dd=>'2013.01.01'
+,p_release=>'5.0.2.00.07'
+,p_default_workspace_id=>2861805289199311
+,p_default_application_id=>320
+,p_default_owner=>'SYG'
+);
 end;
 /
-
- 
+prompt --application/ui_types
 begin
- 
+null;
+end;
+/
+prompt --application/shared_components/plugins/item_type/com_jannavratil_apex_qr_item
+begin
+wwv_flow_api.create_plugin(
+ p_id=>wwv_flow_api.id(95764706315371725)
+,p_plugin_type=>'ITEM TYPE'
+,p_name=>'COM.JANNAVRATIL.APEX.QR.ITEM'
+,p_display_name=>'QR Code Item'
+,p_supported_ui_types=>'DESKTOP:JQM_SMARTPHONE'
+,p_plsql_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'function render_qr_item (',
+'    p_item                in apex_plugin.t_page_item,',
+'    p_plugin              in apex_plugin.t_plugin,',
+'    p_value               in varchar2,',
+'    p_is_readonly         in boolean,',
+'    p_is_printer_friendly in boolean )',
+'    return apex_plugin.t_page_item_render_result',
+'is',
+'    l_size          apex_application_page_items.attribute_01%type := p_item.attribute_01;',
+'    l_color         apex_application_page_items.attribute_01%type := p_item.attribute_02;',
+'    l_background    apex_application_page_items.attribute_01%type := p_item.attribute_03;',
+'    l_err_correction_level apex_application_page_items.attribute_01%type := p_item.attribute_04;',
+'begin',
+'',
+'  if apex_application.g_debug then',
+'    apex_plugin_util.debug_page_item(',
+'      p_plugin        => p_plugin,',
+'      p_page_item     => p_item',
+'    );',
+'  end if;',
+'   ',
+'  apex_javascript.add_library(',
+'     p_name      => ''qrcode.min'',',
+'     p_directory => p_plugin.file_prefix,',
+'     p_version   => NULL',
+'  );',
+'',
+'  sys.htp.p(''<div id="QR-''||p_item.id||''" style="width:''||l_size||''px; height:''||l_size||''px;"></div>'');',
+'',
+'  apex_javascript.add_inline_code (',
+'    p_code => ''function renderQR_''||p_item.name||''(value) ',
+'{ $("#QR-''||p_item.id||''").html(" ");',
+'  new QRCode(document.getElementById("QR-''||p_item.id||''"), {',
+'  text:   value, ',
+'  width:  "''||l_size||''" , ',
+'  height: "''||l_size||''" ,',
+'  colorDark:  "''||l_color||''" , ',
+'  colorLight: "''||l_background||''" ,',
+'  correctLevel : QRCode.CorrectLevel.''||l_err_correction_level||''',
+'  } );',
+'}'',',
+'    p_key  => ''renderQR_''||p_item.name',
+'  );',
+'',
+'  apex_javascript.add_onload_code (',
+'    p_code => ''renderQR_''||p_item.name||''("''||p_value||''");'', ',
+'    p_key  => ''renderQR_''||p_item.name',
+'  );',
+'  ',
+'  return null;',
+'end;'))
+,p_render_function=>'render_qr_item'
+,p_standard_attributes=>'VISIBLE:SOURCE:ELEMENT:ENCRYPT'
+,p_substitute_attributes=>true
+,p_subscribe_plugin_settings=>true
+,p_version_identifier=>'1.1.0'
+,p_about_url=>'https://github.com/jeffreykemp/apex-qr-plugin'
+,p_plugin_comment=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'1.1.0 (16 Mar 2016) jeffreykemp - Updated to Apex 5.0 and added Error Correction Level parameter - https://github.com/jeffreykemp/apex-qr-plugin',
+'',
+'1.0.0 (24 Feb 2014) navratil - original release https://github.com/navratil/apex-qr-plugin',
+'',
+'The MIT License (MIT)',
+'',
+'QR code plugin for Oracle Application Express',
+'',
+'Copyright (c) 2014 Jan Navratil    (github.com/navratil/apex-qr-plugin)',
+'Copyright (c) 2012 davidshimjs     (github.com/davidshimjs/qrcodejs)',
+'',
+'Permission is hereby granted, free of charge, to any person obtaining a copy of',
+'this software and associated documentation files (the "Software"), to deal in',
+'the Software without restriction, including without limitation the rights to',
+'use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of',
+'the Software, and to permit persons to whom the Software is furnished to do so,',
+'subject to the following conditions:',
+'',
+'The above copyright notice and this permission notice shall be included in all',
+'copies or substantial portions of the Software.',
+'',
+'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR',
+'IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS',
+'FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR',
+'COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER',
+'IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN',
+'CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.',
+''))
+);
+wwv_flow_api.create_plugin_attribute(
+ p_id=>wwv_flow_api.id(95768483285556963)
+,p_plugin_id=>wwv_flow_api.id(95764706315371725)
+,p_attribute_scope=>'COMPONENT'
+,p_attribute_sequence=>1
+,p_display_sequence=>10
+,p_prompt=>'Size'
+,p_attribute_type=>'INTEGER'
+,p_is_required=>true
+,p_default_value=>'200'
+,p_display_length=>10
+,p_max_length=>30
+,p_is_translatable=>false
+,p_help_text=>'Height and Width of the QR code in pixels'
+);
+wwv_flow_api.create_plugin_attribute(
+ p_id=>wwv_flow_api.id(95769105030592540)
+,p_plugin_id=>wwv_flow_api.id(95764706315371725)
+,p_attribute_scope=>'COMPONENT'
+,p_attribute_sequence=>2
+,p_display_sequence=>20
+,p_prompt=>'Color'
+,p_attribute_type=>'TEXT'
+,p_is_required=>true
+,p_default_value=>'#000000'
+,p_display_length=>10
+,p_max_length=>30
+,p_is_translatable=>false
+,p_help_text=>'QR code color (dark)'
+);
+wwv_flow_api.create_plugin_attribute(
+ p_id=>wwv_flow_api.id(95769497481595982)
+,p_plugin_id=>wwv_flow_api.id(95764706315371725)
+,p_attribute_scope=>'COMPONENT'
+,p_attribute_sequence=>3
+,p_display_sequence=>30
+,p_prompt=>'Background'
+,p_attribute_type=>'TEXT'
+,p_is_required=>true
+,p_default_value=>'#FFFFFF'
+,p_display_length=>10
+,p_max_length=>30
+,p_is_translatable=>false
+,p_help_text=>'QR code background color'
+);
+wwv_flow_api.create_plugin_attribute(
+ p_id=>wwv_flow_api.id(75202820638462905)
+,p_plugin_id=>wwv_flow_api.id(95764706315371725)
+,p_attribute_scope=>'COMPONENT'
+,p_attribute_sequence=>4
+,p_display_sequence=>40
+,p_prompt=>'Error Correction Level'
+,p_attribute_type=>'SELECT LIST'
+,p_is_required=>true
+,p_default_value=>'M'
+,p_is_translatable=>false
+,p_lov_type=>'STATIC'
+,p_help_text=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'There are 4 error correction levels used for QR codes, with each one adding different amounts of "backup" data depending on how much damage the QR code is expected to suffer in its intended environment, and hence how much error correction may be requ'
+||'ired:',
+'<ul>',
+'<li>Level L – up to 7% damage</ul>',
+'<li>Level M – up to 15% damage</ul>',
+'<li>Level Q – up to 25% damage</ul>',
+'<li>Level H – up to 30% damage</ul>',
+'</ul>',
+'<p>',
+'More info: http://blog.qrstuff.com/2011/12/14/qr-code-error-correction'))
+);
+wwv_flow_api.create_plugin_attr_value(
+ p_id=>wwv_flow_api.id(75203451077463614)
+,p_plugin_attribute_id=>wwv_flow_api.id(75202820638462905)
+,p_display_sequence=>10
+,p_display_value=>'L'
+,p_return_value=>'L'
+);
+wwv_flow_api.create_plugin_attr_value(
+ p_id=>wwv_flow_api.id(75204030666464706)
+,p_plugin_attribute_id=>wwv_flow_api.id(75202820638462905)
+,p_display_sequence=>20
+,p_display_value=>'M'
+,p_return_value=>'M'
+);
+wwv_flow_api.create_plugin_attr_value(
+ p_id=>wwv_flow_api.id(75204446936465139)
+,p_plugin_attribute_id=>wwv_flow_api.id(75202820638462905)
+,p_display_sequence=>30
+,p_display_value=>'Q'
+,p_return_value=>'Q'
+);
+wwv_flow_api.create_plugin_attr_value(
+ p_id=>wwv_flow_api.id(75204882949465533)
+,p_plugin_attribute_id=>wwv_flow_api.id(75202820638462905)
+,p_display_sequence=>40
+,p_display_value=>'H'
+,p_return_value=>'H'
+);
+end;
+/
+begin
 wwv_flow_api.g_varchar2_table := wwv_flow_api.empty_varchar2_table;
 wwv_flow_api.g_varchar2_table(1) := '766172205152436F64653B2166756E6374696F6E28297B66756E6374696F6E20612861297B746869732E6D6F64653D632E4D4F44455F384249545F425954452C746869732E646174613D612C746869732E706172736564446174613D5B5D3B666F722876';
 wwv_flow_api.g_varchar2_table(2) := '617220623D5B5D2C643D302C653D746869732E646174612E6C656E6774683B653E643B642B2B297B76617220663D746869732E646174612E63686172436F646541742864293B663E36353533363F28625B305D3D3234307C28313833353030382666293E';
@@ -443,32 +423,22 @@ wwv_flow_api.g_varchar2_table(198) := '6F64652E70726F746F747970652E6D616B65496D6
 wwv_flow_api.g_varchar2_table(199) := '732E5F616E64726F69643E3D33292626746869732E5F6F44726177696E672E6D616B65496D61676528297D2C5152436F64652E70726F746F747970652E636C6561723D66756E6374696F6E28297B746869732E5F6F44726177696E672E636C6561722829';
 wwv_flow_api.g_varchar2_table(200) := '7D2C5152436F64652E436F72726563744C6576656C3D647D28293B';
 null;
- 
 end;
 /
-
- 
 begin
- 
-wwv_flow_api.create_plugin_file (
-  p_id => 20564911238048246 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_plugin_id => 20563635873959606 + wwv_flow_api.g_id_offset
- ,p_file_name => 'qrcode.min.js'
- ,p_mime_type => 'application/javascript'
- ,p_file_content => wwv_flow_api.g_varchar2_table
-  );
-null;
- 
+wwv_flow_api.create_plugin_file(
+ p_id=>wwv_flow_api.id(95765981679460365)
+,p_plugin_id=>wwv_flow_api.id(95764706315371725)
+,p_file_name=>'qrcode.min.js'
+,p_mime_type=>'application/javascript'
+,p_file_content=>wwv_flow_api.varchar2_to_blob(wwv_flow_api.g_varchar2_table)
+);
 end;
 /
-
+begin
+wwv_flow_api.import_end(p_auto_install_sup_obj => nvl(wwv_flow_application_install.get_auto_install_sup_obj, false), p_is_component_import => true);
 commit;
-begin
-execute immediate 'begin sys.dbms_session.set_nls( param => ''NLS_NUMERIC_CHARACTERS'', value => '''''''' || replace(wwv_flow_api.g_nls_numeric_chars,'''''''','''''''''''') || ''''''''); end;';
 end;
 /
-set verify on
-set feedback on
-set define on
+set verify on feedback on define on
 prompt  ...done
