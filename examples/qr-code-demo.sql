@@ -1,33 +1,44 @@
-set define off
-set verify off
-set feedback off
-WHENEVER SQLERROR EXIT SQL.SQLCODE ROLLBACK
-begin wwv_flow.g_import_in_progress := true; end;
+set define off verify off feedback off
+whenever sqlerror exit sql.sqlcode rollback
+--------------------------------------------------------------------------------
+--
+-- ORACLE Application Express (APEX) export file
+--
+-- You should run the script connected to SQL*Plus as the Oracle user
+-- APEX_050000 or as the owner (parsing schema) of the application.
+--
+-- NOTE: Calls to apex_application_install override the defaults below.
+--
+--------------------------------------------------------------------------------
+begin
+wwv_flow_api.import_begin (
+ p_version_yyyy_mm_dd=>'2013.01.01'
+,p_release=>'5.0.3.00.03'
+,p_default_workspace_id=>69160808430820669492
+,p_default_application_id=>23053
+,p_default_owner=>'JK64'
+);
+end;
 /
+prompt --application/set_environment
  
- 
---application/set_environment
-prompt  APPLICATION 104 - QR Code demo
+prompt APPLICATION 23053 - QR Code demo
 --
 -- Application Export:
---   Application:     104
+--   Application:     23053
 --   Name:            QR Code demo
---   Date and Time:   20:46 Tuesday January 14, 2014
---   Exported By:     ADMIN
+--   Date and Time:   02:26 Wednesday March 16, 2016
+--   Exported By:     JEFFREY.KEMP@JK64.COM
 --   Flashback:       0
 --   Export Type:     Application Export
---   Version:         4.2.4.00.08
---   Instance ID:     61805560454720
+--   Version:         5.0.3.00.03
+--   Instance ID:     63113759365424
 --
--- Import:
---   Using Application Builder
---   or
---   Using SQL*Plus as the Oracle user APEX_040200 or as the owner (parsing schema) of the application
- 
+
 -- Application Statistics:
 --   Pages:                      1
---     Items:                    5
---     Regions:                  3
+--     Items:                    8
+--     Regions:                  4
 --     Buttons:                  1
 --     Dynamic Actions:          1
 --   Shared Components:
@@ -52,7599 +63,5669 @@ prompt  APPLICATION 104 - QR Code demo
 --       Plug-ins:               1
 --     Globalization:
 --     Reports:
- 
- 
---       AAAA       PPPPP   EEEEEE  XX      XX
---      AA  AA      PP  PP  EE       XX    XX
---     AA    AA     PP  PP  EE        XX  XX
---    AAAAAAAAAA    PPPPP   EEEE       XXXX
---   AA        AA   PP      EE        XX  XX
---  AA          AA  PP      EE       XX    XX
---  AA          AA  PP      EEEEEE  XX      XX
-prompt  Set Credentials...
- 
+--   Supporting Objects:  Included
+
+prompt --application/delete_application
 begin
- 
-  -- Assumes you are running the script connected to SQL*Plus as the Oracle user APEX_040200 or as the owner (parsing schema) of the application.
-  wwv_flow_api.set_security_group_id(p_security_group_id=>nvl(wwv_flow_application_install.get_workspace_id,941512753047020));
- 
+wwv_flow_api.remove_flow(wwv_flow.g_flow_id);
 end;
 /
-
-begin wwv_flow.g_import_in_progress := true; end;
-/
-begin 
-
-select value into wwv_flow_api.g_nls_numeric_chars from nls_session_parameters where parameter='NLS_NUMERIC_CHARACTERS';
-
-end;
-
-/
-begin execute immediate 'alter session set nls_numeric_characters=''.,''';
-
-end;
-
-/
-begin wwv_flow.g_browser_language := 'en'; end;
-/
-prompt  Check Compatibility...
- 
+prompt --application/ui_types
 begin
- 
--- This date identifies the minimum version required to import this file.
-wwv_flow_api.set_version(p_version_yyyy_mm_dd=>'2012.01.01');
- 
-end;
-/
-
-prompt  Set Application ID...
- 
-begin
- 
-   -- SET APPLICATION ID
-   wwv_flow.g_flow_id := nvl(wwv_flow_application_install.get_application_id,104);
-   wwv_flow_api.g_id_offset := nvl(wwv_flow_application_install.get_offset,0);
 null;
- 
 end;
 /
-
---application/delete_application
- 
+prompt --application/create_application
 begin
- 
-   -- Remove Application
-wwv_flow_api.remove_flow(nvl(wwv_flow_application_install.get_application_id,104));
- 
-end;
-/
-
- 
-begin
- 
-wwv_flow_audit.remove_audit_trail(nvl(wwv_flow_application_install.get_application_id,104));
-null;
- 
-end;
-/
-
-prompt  ...ui types
---
- 
-begin
- 
-null;
- 
-end;
-/
-
---application/create_application
- 
-begin
- 
 wwv_flow_api.create_flow(
-  p_id    => nvl(wwv_flow_application_install.get_application_id,104),
-  p_display_id=> nvl(wwv_flow_application_install.get_application_id,104),
-  p_owner => nvl(wwv_flow_application_install.get_schema,'NX'),
-  p_name  => nvl(wwv_flow_application_install.get_application_name,'QR Code demo'),
-  p_alias => nvl(wwv_flow_application_install.get_application_alias,'QRDEMO'),
-  p_page_view_logging => 'YES',
-  p_page_protection_enabled_y_n=> 'Y',
-  p_checksum_salt=> 'A68855E628F990951A850732EE5EE266A412303C6DF0188BD90D7C6DAB6E0D93',
-  p_max_session_length_sec=> null,
-  p_compatibility_mode=> '4.2',
-  p_html_escaping_mode=> 'E',
-  p_flow_language=> 'en',
-  p_flow_language_derived_from=> 'FLOW_PRIMARY_LANGUAGE',
-  p_allow_feedback_yn=> 'Y',
-  p_flow_image_prefix => nvl(wwv_flow_application_install.get_image_prefix,''),
-  p_publish_yn=> 'N',
-  p_documentation_banner=> '',
-  p_authentication=> 'PLUGIN',
-  p_authentication_id=> 27233640401693138 + wwv_flow_api.g_id_offset,
-  p_logout_url=> '',
-  p_application_tab_set=> 1,
-  p_logo_image => 'TEXT:QR Code plugin demo',
-  p_public_url_prefix => '',
-  p_public_user=> 'APEX_PUBLIC_USER',
-  p_dbauth_url_prefix => '',
-  p_proxy_server=> nvl(wwv_flow_application_install.get_proxy,''),
-  p_cust_authentication_process=> '',
-  p_cust_authentication_page=> '',
-  p_flow_version=> 'Copyright (C) 2014  Jan Navratil',
-  p_flow_status=> 'AVAILABLE_W_EDIT_LINK',
-  p_flow_unavailable_text=> 'This application is currently unavailable at this time.',
-  p_build_status=> 'RUN_AND_BUILD',
-  p_exact_substitutions_only=> 'Y',
-  p_browser_cache=>'N',
-  p_browser_frame=>'D',
-  p_deep_linking=>'N',
-  p_vpd=> '',
-  p_vpd_teardown_code=> '',
-  p_authorize_public_pages_yn=>'N',
-  p_csv_encoding=> 'Y',
-  p_auto_time_zone=> 'N',
-  p_include_legacy_javascript=> 'N',
-  p_default_error_display_loc=> 'INLINE_WITH_FIELD_AND_NOTIFICATION',
-  p_last_updated_by => 'ADMIN',
-  p_last_upd_yyyymmddhh24miss=> '20140114234621',
-  p_ui_type_name => null,
-  p_required_roles=> wwv_flow_utilities.string_to_table2(''));
- 
- 
+ p_id=>wwv_flow.g_flow_id
+,p_display_id=>nvl(wwv_flow_application_install.get_application_id,23053)
+,p_owner=>nvl(wwv_flow_application_install.get_schema,'JK64')
+,p_name=>nvl(wwv_flow_application_install.get_application_name,'QR Code demo')
+,p_alias=>nvl(wwv_flow_application_install.get_application_alias,'QRDEMO')
+,p_page_view_logging=>'YES'
+,p_page_protection_enabled_y_n=>'Y'
+,p_checksum_salt=>'A68855E628F990951A850732EE5EE266A412303C6DF0188BD90D7C6DAB6E0D93'
+,p_bookmark_checksum_function=>'MD5'
+,p_compatibility_mode=>'5.0'
+,p_flow_language=>'en'
+,p_flow_language_derived_from=>'FLOW_PRIMARY_LANGUAGE'
+,p_allow_feedback_yn=>'Y'
+,p_flow_image_prefix => nvl(wwv_flow_application_install.get_image_prefix,'')
+,p_authentication=>'PLUGIN'
+,p_authentication_id=>wwv_flow_api.id(28171985867037048292)
+,p_application_tab_set=>1
+,p_logo_image=>'TEXT:QR Code plugin demo'
+,p_public_user=>'APEX_PUBLIC_USER'
+,p_proxy_server=> nvl(wwv_flow_application_install.get_proxy,'')
+,p_flow_version=>'Copyright (C) 2014  Jan Navratil; Updated 2016 Jeff Kemp'
+,p_flow_status=>'AVAILABLE_W_EDIT_LINK'
+,p_flow_unavailable_text=>'This application is currently unavailable at this time.'
+,p_exact_substitutions_only=>'Y'
+,p_browser_cache=>'N'
+,p_browser_frame=>'D'
+,p_runtime_api_usage=>'T:O:W'
+,p_rejoin_existing_sessions=>'P'
+,p_csv_encoding=>'Y'
+,p_auto_time_zone=>'N'
+,p_substitution_string_01=>'REPOSITORY'
+,p_substitution_value_01=>'https://github.com/jeffreykemp/apex-qr-plugin'
+,p_last_updated_by=>'JEFFREY.KEMP@JK64.COM'
+,p_last_upd_yyyymmddhh24miss=>'20160316022513'
+,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
+,p_ui_type_name => null
+);
 end;
 /
-
-----------------
---package app map
---
-prompt  ...user interfaces
---
- 
+prompt --application/shared_components/navigation/lists
 begin
- 
---application/user interface/desktop
-wwv_flow_api.create_user_interface (
-  p_id => 27233453412693087 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_ui_type_name => 'DESKTOP'
- ,p_display_name => 'Desktop'
- ,p_display_seq => 10
- ,p_use_auto_detect => false
- ,p_is_default => true
- ,p_theme_id => 25
- ,p_home_url => 'f?p=&APP_ID.:HOME:&SESSION.'
- ,p_login_url => 'f?p=&APP_ID.:LOGIN_DESKTOP:&SESSION.'
-  );
 null;
- 
 end;
 /
-
-prompt  ...plug-in settings
---
- 
+prompt --application/shared_components/files
 begin
- 
---application/plug-in setting/item_type_native_yes_no
-wwv_flow_api.create_plugin_setting (
-  p_id => 27215560494692930 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_plugin_type => 'ITEM TYPE'
- ,p_plugin => 'NATIVE_YES_NO'
- ,p_attribute_01 => 'Y'
- ,p_attribute_03 => 'N'
-  );
 null;
- 
 end;
 /
-
-prompt  ...authorization schemes
---
- 
+prompt --application/plugin_settings
 begin
- 
+wwv_flow_api.create_plugin_setting(
+ p_id=>wwv_flow_api.id(28144752663631355192)
+,p_plugin_type=>'REGION TYPE'
+,p_plugin=>'NATIVE_CSS_CALENDAR'
+);
+wwv_flow_api.create_plugin_setting(
+ p_id=>wwv_flow_api.id(28144752794942355192)
+,p_plugin_type=>'REGION TYPE'
+,p_plugin=>'NATIVE_DISPLAY_SELECTOR'
+,p_attribute_01=>'N'
+);
+wwv_flow_api.create_plugin_setting(
+ p_id=>wwv_flow_api.id(28171967787130048084)
+,p_plugin_type=>'ITEM TYPE'
+,p_plugin=>'NATIVE_YES_NO'
+,p_attribute_01=>'Y'
+,p_attribute_03=>'N'
+);
+end;
+/
+prompt --application/shared_components/security/authorizations
+begin
 null;
- 
 end;
 /
-
---application/shared_components/navigation/navigation_bar
-prompt  ...navigation bar entries
---
- 
+prompt --application/shared_components/navigation/navigation_bar
 begin
- 
 wwv_flow_api.create_icon_bar_item(
-  p_id => 27233556333693131 + wwv_flow_api.g_id_offset,
-  p_flow_id => wwv_flow.g_flow_id,
-  p_icon_sequence=> 200,
-  p_icon_image => '',
-  p_icon_subtext=> 'Logout',
-  p_icon_target=> '&LOGOUT_URL.',
-  p_icon_image_alt=> 'Logout',
-  p_icon_height=> 32,
-  p_icon_width=> 32,
-  p_icon_height2=> 24,
-  p_icon_width2=> 24,
-  p_nav_entry_is_feedback_yn => 'N',
-  p_icon_bar_disp_cond=> '',
-  p_icon_bar_disp_cond_type=> '',
-  p_begins_on_new_line=> '',
-  p_cell_colspan      => 1,
-  p_onclick=> '',
-  p_icon_bar_comment=> '');
- 
- 
+ p_id=>wwv_flow_api.id(28171985782969048285)
+,p_icon_sequence=>200
+,p_icon_subtext=>'Logout'
+,p_icon_target=>'&LOGOUT_URL.'
+,p_icon_image_alt=>'Logout'
+,p_icon_height=>32
+,p_icon_width=>32
+,p_icon_height2=>24
+,p_icon_width2=>24
+,p_nav_entry_is_feedback_yn=>'N'
+,p_cell_colspan=>1
+);
 end;
 /
-
-prompt  ...application processes
---
-prompt  ...application items
---
-prompt  ...application level computations
---
- 
+prompt --application/shared_components/logic/application_processes
 begin
- 
 null;
- 
 end;
 /
-
-prompt  ...Application Tabs
---
- 
+prompt --application/shared_components/logic/application_items
 begin
- 
 null;
- 
 end;
 /
-
-prompt  ...Application Parent Tabs
---
- 
+prompt --application/shared_components/logic/application_computations
 begin
- 
 null;
- 
 end;
 /
-
-prompt  ...Shared Lists of values
---
-prompt  ...Application Trees
---
---application/pages/page_groups
-prompt  ...page groups
---
- 
+prompt --application/shared_components/navigation/tabs/standard
 begin
- 
 null;
- 
 end;
 /
-
---application/comments
-prompt  ...comments: requires application express 2.2 or higher
---
- 
---application/pages/page_00101
-prompt  ...PAGE 101: QR Code demo
---
- 
+prompt --application/shared_components/navigation/tabs/parent
 begin
- 
-wwv_flow_api.create_page (
-  p_flow_id => wwv_flow.g_flow_id
- ,p_id => 101
- ,p_user_interface_id => 27233453412693087 + wwv_flow_api.g_id_offset
- ,p_name => 'QR Code demo'
- ,p_alias => 'HOME'
- ,p_step_title => 'QR Code demo'
- ,p_allow_duplicate_submissions => 'Y'
- ,p_step_sub_title => 'QR Code demo'
- ,p_step_sub_title_type => 'TEXT_WITH_SUBSTITUTIONS'
- ,p_first_item => 'NO_FIRST_ITEM'
- ,p_include_apex_css_js_yn => 'Y'
- ,p_autocomplete_on_off => 'ON'
- ,p_javascript_code_onload => 
-'renderQR_P101_QR_CLOCK((new Date).toTimeString());'||unistr('\000a')||
-''||unistr('\000a')||
-'setInterval(function() {'||unistr('\000a')||
-'   renderQR_P101_QR_CLOCK((new Date).toTimeString());'||unistr('\000a')||
-'}, 1000);'
- ,p_page_is_public_y_n => 'Y'
- ,p_protection_level => 'N'
- ,p_cache_page_yn => 'N'
- ,p_cache_timeout_seconds => 21600
- ,p_cache_by_user_yn => 'N'
- ,p_help_text => 
-'No help is available for this page.'
- ,p_last_updated_by => 'ADMIN'
- ,p_last_upd_yyyymmddhh24miss => '20140114234621'
-  );
 null;
- 
 end;
 /
-
-declare
-  s varchar2(32767) := null;
-  l_clob clob;
-  l_length number := 1;
+prompt --application/shared_components/user_interface/lovs
 begin
-s := null;
-wwv_flow_api.create_page_plug (
-  p_id=> 13735524814580021 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_page_id=> 101,
-  p_plug_name=> 'QR Code Item Plugin',
-  p_region_name=>'',
-  p_escape_on_http_output=>'Y',
-  p_plug_template=> 27228745519693013+ wwv_flow_api.g_id_offset,
-  p_plug_display_sequence=> 20,
-  p_plug_new_grid         => false,
-  p_plug_new_grid_row     => true,
-  p_plug_new_grid_column  => true,
-  p_plug_display_column=> null,
-  p_plug_display_point=> 'BODY_3',
-  p_plug_item_display_point=> 'ABOVE',
-  p_plug_source=> s,
-  p_plug_source_type=> 'STATIC_TEXT',
-  p_translate_title=> 'Y',
-  p_plug_query_row_template=> 1,
-  p_plug_query_headings_type=> 'QUERY_COLUMNS',
-  p_plug_query_num_rows_type => 'NEXT_PREVIOUS_LINKS',
-  p_plug_query_row_count_max => 500,
-  p_plug_query_show_nulls_as => ' - ',
-  p_plug_display_condition_type => '',
-  p_pagination_display_position=>'BOTTOM_RIGHT',
-  p_plug_customized=>'0',
-  p_plug_caching=> 'NOT_CACHED',
-  p_plug_comment=> '');
-end;
-/
-declare
-  s varchar2(32767) := null;
-  l_clob clob;
-  l_length number := 1;
-begin
-s := null;
-wwv_flow_api.create_page_plug (
-  p_id=> 13736307426580029 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_page_id=> 101,
-  p_plug_name=> 'QR Clock',
-  p_region_name=>'',
-  p_escape_on_http_output=>'Y',
-  p_plug_template=> 27228745519693013+ wwv_flow_api.g_id_offset,
-  p_plug_display_sequence=> 60,
-  p_plug_new_grid         => false,
-  p_plug_new_grid_row     => false,
-  p_plug_new_grid_column  => true,
-  p_plug_display_column=> null,
-  p_plug_display_point=> 'BODY_3',
-  p_plug_item_display_point=> 'ABOVE',
-  p_plug_source=> s,
-  p_plug_source_type=> 'STATIC_TEXT',
-  p_translate_title=> 'Y',
-  p_plug_query_row_template=> 1,
-  p_plug_query_headings_type=> 'QUERY_COLUMNS',
-  p_plug_query_num_rows_type => 'NEXT_PREVIOUS_LINKS',
-  p_plug_query_row_count_max => 500,
-  p_plug_query_show_nulls_as => ' - ',
-  p_plug_display_condition_type => '',
-  p_pagination_display_position=>'BOTTOM_RIGHT',
-  p_plug_customized=>'0',
-  p_plug_caching=> 'NOT_CACHED',
-  p_plug_comment=> '');
-end;
-/
-declare
-  s varchar2(32767) := null;
-  l_clob clob;
-  l_length number := 1;
-begin
-s := null;
-wwv_flow_api.create_page_plug (
-  p_id=> 13736713703580030 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_page_id=> 101,
-  p_plug_name=> 'QR Code - Dynamic',
-  p_region_name=>'',
-  p_escape_on_http_output=>'Y',
-  p_plug_template=> 27228745519693013+ wwv_flow_api.g_id_offset,
-  p_plug_display_sequence=> 30,
-  p_plug_new_grid         => false,
-  p_plug_new_grid_row     => false,
-  p_plug_new_grid_column  => true,
-  p_plug_display_column=> null,
-  p_plug_display_point=> 'BODY_3',
-  p_plug_item_display_point=> 'ABOVE',
-  p_plug_source=> s,
-  p_plug_source_type=> 'STATIC_TEXT',
-  p_translate_title=> 'Y',
-  p_plug_query_row_template=> 1,
-  p_plug_query_headings_type=> 'QUERY_COLUMNS',
-  p_plug_query_num_rows_type => 'NEXT_PREVIOUS_LINKS',
-  p_plug_query_row_count_max => 500,
-  p_plug_query_show_nulls_as => ' - ',
-  p_plug_display_condition_type => '',
-  p_pagination_display_position=>'BOTTOM_RIGHT',
-  p_plug_customized=>'0',
-  p_plug_caching=> 'NOT_CACHED',
-  p_plug_comment=> '');
-end;
-/
- 
-begin
- 
-wwv_flow_api.create_page_button(
-  p_id             => 13735719419580023 + wwv_flow_api.g_id_offset,
-  p_flow_id        => wwv_flow.g_flow_id,
-  p_flow_step_id   => 101,
-  p_button_sequence=> 20,
-  p_button_plug_id => 13735524814580021+wwv_flow_api.g_id_offset,
-  p_button_name    => 'APPLY_CHANGES',
-  p_button_action  => 'SUBMIT',
-  p_button_image   => 'template:'||to_char(27232739282693047+wwv_flow_api.g_id_offset),
-  p_button_is_hot=>'Y',
-  p_button_image_alt=> 'Apply',
-  p_button_position=> 'REGION_TEMPLATE_CHANGE',
-  p_button_alignment=> 'RIGHT',
-  p_button_redirect_url=> '',
-  p_button_execute_validations=>'Y',
-  p_required_patch => null + wwv_flow_api.g_id_offset);
- 
- 
-end;
-/
-
- 
-begin
- 
-null;
- 
-end;
-/
-
-declare
-    h varchar2(32767) := null;
-begin
-wwv_flow_api.create_page_item(
-  p_id=>13735919544580026 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_flow_step_id=> 101,
-  p_name=>'P101_TEXT',
-  p_data_type=> 'VARCHAR',
-  p_is_required=> true,
-  p_accept_processing=> 'REPLACE_EXISTING',
-  p_item_sequence=> 20,
-  p_item_plug_id => 13735524814580021+wwv_flow_api.g_id_offset,
-  p_use_cache_before_default=> 'YES',
-  p_item_default_type=> 'STATIC_TEXT_WITH_SUBSTITUTIONS',
-  p_prompt=>'Text',
-  p_source=>'Hello world !',
-  p_source_type=> 'STATIC',
-  p_display_as=> 'NATIVE_TEXT_FIELD',
-  p_lov_display_null=> 'NO',
-  p_lov_translated=> 'N',
-  p_cSize=> 40,
-  p_cMaxlength=> 120,
-  p_cHeight=> 1,
-  p_new_grid=> false,
-  p_begin_on_new_line=> 'YES',
-  p_begin_on_new_field=> 'YES',
-  p_colspan=> null,
-  p_rowspan=> null,
-  p_grid_column=> null,
-  p_label_alignment=> 'RIGHT',
-  p_field_alignment=> 'LEFT-CENTER',
-  p_field_template=> 27232036483693040+wwv_flow_api.g_id_offset,
-  p_is_persistent=> 'Y',
-  p_lov_display_extra=>'YES',
-  p_protection_level => 'N',
-  p_escape_on_http_output => 'Y',
-  p_attribute_01 => 'Y',
-  p_attribute_02 => 'N',
-  p_attribute_04 => 'TEXT',
-  p_show_quick_picks=>'N',
-  p_item_comment => '');
- 
- 
-end;
-/
-
-declare
-    h varchar2(32767) := null;
-begin
-wwv_flow_api.create_page_item(
-  p_id=>13736104060580028 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_flow_step_id=> 101,
-  p_name=>'P101_QR_CODE',
-  p_data_type=> 'VARCHAR',
-  p_is_required=> false,
-  p_accept_processing=> 'REPLACE_EXISTING',
-  p_item_sequence=> 60,
-  p_item_plug_id => 13735524814580021+wwv_flow_api.g_id_offset,
-  p_use_cache_before_default=> 'NO',
-  p_item_default_type=> 'STATIC_TEXT_WITH_SUBSTITUTIONS',
-  p_prompt=>'QR code',
-  p_source=>'P101_TEXT',
-  p_source_type=> 'ITEM',
-  p_display_as=> 'PLUGIN_COM.JANNAVRATIL.APEX.QR.ITEM',
-  p_lov_display_null=> 'NO',
-  p_lov_translated=> 'N',
-  p_cSize=> 30,
-  p_cMaxlength=> 4000,
-  p_cHeight=> 1,
-  p_new_grid=> false,
-  p_begin_on_new_line=> 'YES',
-  p_begin_on_new_field=> 'YES',
-  p_colspan=> null,
-  p_rowspan=> null,
-  p_grid_column=> null,
-  p_label_alignment=> 'RIGHT',
-  p_field_alignment=> 'LEFT-CENTER',
-  p_read_only_when_type=>'ALWAYS',
-  p_field_template=> 27232036483693040+wwv_flow_api.g_id_offset,
-  p_is_persistent=> 'Y',
-  p_lov_display_extra=>'YES',
-  p_protection_level => 'N',
-  p_escape_on_http_output => 'Y',
-  p_attribute_01 => '200',
-  p_attribute_02 => '#000000',
-  p_attribute_03 => '#FFFFFF',
-  p_show_quick_picks=>'N',
-  p_item_comment => '');
- 
- 
-end;
-/
-
-declare
-    h varchar2(32767) := null;
-begin
-wwv_flow_api.create_page_item(
-  p_id=>13736512017580030 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_flow_step_id=> 101,
-  p_name=>'P101_QR_CLOCK',
-  p_data_type=> 'VARCHAR',
-  p_is_required=> false,
-  p_accept_processing=> 'REPLACE_EXISTING',
-  p_item_sequence=> 70,
-  p_item_plug_id => 13736307426580029+wwv_flow_api.g_id_offset,
-  p_use_cache_before_default=> 'YES',
-  p_item_default_type=> 'STATIC_TEXT_WITH_SUBSTITUTIONS',
-  p_prompt=>'QR Clock',
-  p_source_type=> 'STATIC',
-  p_display_as=> 'PLUGIN_COM.JANNAVRATIL.APEX.QR.ITEM',
-  p_lov_display_null=> 'NO',
-  p_lov_translated=> 'N',
-  p_cSize=> 30,
-  p_cMaxlength=> 4000,
-  p_cHeight=> 1,
-  p_new_grid=> false,
-  p_begin_on_new_line=> 'YES',
-  p_begin_on_new_field=> 'YES',
-  p_colspan=> null,
-  p_rowspan=> null,
-  p_grid_column=> null,
-  p_label_alignment=> 'RIGHT',
-  p_field_alignment=> 'LEFT-CENTER',
-  p_field_template=> 27232036483693040+wwv_flow_api.g_id_offset,
-  p_is_persistent=> 'Y',
-  p_lov_display_extra=>'YES',
-  p_protection_level => 'N',
-  p_escape_on_http_output => 'Y',
-  p_attribute_01 => '200',
-  p_attribute_02 => '#770000',
-  p_attribute_03 => '#FFFFFF',
-  p_show_quick_picks=>'N',
-  p_item_comment => '');
- 
- 
-end;
-/
-
-declare
-    h varchar2(32767) := null;
-begin
-wwv_flow_api.create_page_item(
-  p_id=>13736913165580030 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_flow_step_id=> 101,
-  p_name=>'P101_QR_DYNAMIC',
-  p_data_type=> 'VARCHAR',
-  p_is_required=> false,
-  p_accept_processing=> 'REPLACE_EXISTING',
-  p_item_sequence=> 90,
-  p_item_plug_id => 13736713703580030+wwv_flow_api.g_id_offset,
-  p_use_cache_before_default=> 'YES',
-  p_item_default_type=> 'STATIC_TEXT_WITH_SUBSTITUTIONS',
-  p_prompt=>'QR Code',
-  p_source_type=> 'STATIC',
-  p_display_as=> 'PLUGIN_COM.JANNAVRATIL.APEX.QR.ITEM',
-  p_lov_display_null=> 'NO',
-  p_lov_translated=> 'N',
-  p_cSize=> 30,
-  p_cMaxlength=> 4000,
-  p_cHeight=> 1,
-  p_new_grid=> false,
-  p_begin_on_new_line=> 'YES',
-  p_begin_on_new_field=> 'YES',
-  p_colspan=> null,
-  p_rowspan=> null,
-  p_grid_column=> null,
-  p_label_alignment=> 'RIGHT',
-  p_field_alignment=> 'LEFT-CENTER',
-  p_field_template=> 27232036483693040+wwv_flow_api.g_id_offset,
-  p_is_persistent=> 'Y',
-  p_lov_display_extra=>'YES',
-  p_protection_level => 'N',
-  p_escape_on_http_output => 'Y',
-  p_attribute_01 => '200',
-  p_attribute_02 => '#000077',
-  p_attribute_03 => '#FFFFFF',
-  p_show_quick_picks=>'N',
-  p_item_comment => '');
- 
- 
-end;
-/
-
-declare
-    h varchar2(32767) := null;
-begin
-wwv_flow_api.create_page_item(
-  p_id=>13737129079580031 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_flow_step_id=> 101,
-  p_name=>'P101_DYNAMIC_TEXT',
-  p_data_type=> 'VARCHAR',
-  p_is_required=> false,
-  p_accept_processing=> 'REPLACE_EXISTING',
-  p_item_sequence=> 80,
-  p_item_plug_id => 13736713703580030+wwv_flow_api.g_id_offset,
-  p_use_cache_before_default=> 'YES',
-  p_item_default_type=> 'STATIC_TEXT_WITH_SUBSTITUTIONS',
-  p_prompt=>'Text',
-  p_source=>'QR changes as you type!',
-  p_source_type=> 'STATIC',
-  p_display_as=> 'NATIVE_TEXT_FIELD',
-  p_lov_display_null=> 'NO',
-  p_lov_translated=> 'N',
-  p_cSize=> 40,
-  p_cMaxlength=> 120,
-  p_cHeight=> 1,
-  p_new_grid=> false,
-  p_begin_on_new_line=> 'YES',
-  p_begin_on_new_field=> 'YES',
-  p_colspan=> null,
-  p_rowspan=> null,
-  p_grid_column=> null,
-  p_label_alignment=> 'RIGHT',
-  p_field_alignment=> 'LEFT-CENTER',
-  p_field_template=> 27232341229693041+wwv_flow_api.g_id_offset,
-  p_is_persistent=> 'Y',
-  p_lov_display_extra=>'YES',
-  p_protection_level => 'N',
-  p_escape_on_http_output => 'Y',
-  p_attribute_01 => 'N',
-  p_attribute_02 => 'N',
-  p_attribute_04 => 'TEXT',
-  p_show_quick_picks=>'N',
-  p_item_comment => '');
- 
- 
-end;
-/
-
- 
-begin
- 
-wwv_flow_api.create_page_da_event (
-  p_id => 13737303044580032 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_id => 101
- ,p_name => 'Change QR as you type'
- ,p_event_sequence => 10
- ,p_triggering_element_type => 'ITEM'
- ,p_triggering_element => 'P101_DYNAMIC_TEXT'
- ,p_bind_type => 'bind'
- ,p_bind_event_type => 'keyup'
-  );
-wwv_flow_api.create_page_da_action (
-  p_id => 13737628176580034 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_id => 101
- ,p_event_id => 13737303044580032 + wwv_flow_api.g_id_offset
- ,p_event_result => 'TRUE'
- ,p_action_sequence => 10
- ,p_execute_on_page_init => 'Y'
- ,p_action => 'NATIVE_JAVASCRIPT_CODE'
- ,p_attribute_01 => 'renderQR_P101_QR_DYNAMIC($x("P101_DYNAMIC_TEXT").value);'
- ,p_stop_execution_on_error => 'Y'
- );
-null;
- 
-end;
-/
-
- 
-begin
- 
----------------------------------------
--- ...updatable report columns for page 101
---
- 
-begin
- 
-null;
-end;
-null;
- 
-end;
-/
-
-prompt  ...lists
---
---application/shared_components/navigation/breadcrumbs
-prompt  ...breadcrumbs
---
- 
-begin
- 
-wwv_flow_api.create_menu (
-  p_id=> 27234731453693192 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_name=> ' Breadcrumb');
- 
-null;
- 
-end;
-/
-
-prompt  ...page templates for application: 104
---
---application/shared_components/user_interface/templates/page/login
-prompt  ......Page template 27215656582692942
- 
-begin
- 
-wwv_flow_api.create_template (
-  p_id => 27215656582692942 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_theme_id => 25
- ,p_name => 'Login'
- ,p_is_popup => false
- ,p_javascript_file_urls => '#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js'||unistr('\000a')||
-'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'
- ,p_css_file_urls => '#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'
- ,p_header_template => '<!--[if HTML5]><![endif]-->'||unistr('\000a')||
-'<!doctype html>'||unistr('\000a')||
-'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->'||unistr('\000a')||
-'<head>'||unistr('\000a')||
-'<!--[if !HTML5]>'||unistr('\000a')||
-'  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">'||unistr('\000a')||
-'<![endif]-->'||unistr('\000a')||
-'  <meta charset="UTF-8">'||unistr('\000a')||
-'  <title>#TITLE#</title>'||unistr('\000a')||
-'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'#APEX_CSS#'||unistr('\000a')||
-'#TEMPLATE_CSS#'||unistr('\000a')||
-'#THEME_CSS#'||unistr('\000a')||
-'#PAGE_CSS#'||unistr('\000a')||
-'#APEX_JAVASCRIPT#'||unistr('\000a')||
-'#TEMPLATE_JAVASCRIPT#'||unistr('\000a')||
-'#APPLICATION_JAVASCRIPT#'||unistr('\000a')||
-'#PAGE_JAVASCRIPT#'||unistr('\000a')||
-'#HEAD#'||unistr('\000a')||
-'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />'||unistr('\000a')||
-'</head>'||unistr('\000a')||
-'<body #ONLOAD# id="uLogin">'||unistr('\000a')||
-'  <!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->'||unistr('\000a')||
-'  #FORM_OPEN#'
- ,p_box => 
-'<div id="uOneCol">'||unistr('\000a')||
-'  <div class="apex_grid_container">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      <div id="uLoginContainer">'||unistr('\000a')||
-'      #SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#'||unistr('\000a')||
-'      #BOX_BODY#'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_footer_template => 
-'#FORM_CLOSE#'||unistr('\000a')||
-'#DEVELOPER_TOOLBAR#'||unistr('\000a')||
-'#GENERATED_CSS#'||unistr('\000a')||
-'#GENERATED_JAVASCRIPT#'||unistr('\000a')||
-'</body>'||unistr('\000a')||
-'</html>'
- ,p_success_message => '<section class="uRegion uWhiteRegion uMessageRegion clearfix" id="uSuccessMessage">'||unistr('\000a')||
-'  <div class="uRegionContent clearfix">'||unistr('\000a')||
-'    <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"></a>'||unistr('\000a')||
-'    <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />'||unistr('\000a')||
-'    <div class="uMessageText">'||unistr('\000a')||
-'      #SUCCESS_MESSAGE#'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</section>'
- ,p_notification_message => '<section class="uSingleAlertMessage red" id="uNotificationMessage">'||unistr('\000a')||
-'	<p>#MESSAGE#</p>'||unistr('\000a')||
-'	<a href="javascript:void(0)" class="closeMessage" onclick="apex.jQuery(''#uNotificationMessage'').remove();"></a>'||unistr('\000a')||
-'</section>'
- ,p_navigation_bar => '#BAR_BODY#'
- ,p_region_table_cattributes => ' summary="" cellpadding="0" border="0" cellspacing="0"'
- ,p_theme_class_id => 6
- ,p_grid_type => 'FIXED'
- ,p_grid_max_columns => 12
- ,p_grid_always_use_max_columns => false
- ,p_grid_has_column_span => true
- ,p_grid_emit_empty_leading_cols => true
- ,p_grid_emit_empty_trail_cols => false
- ,p_grid_template => '#ROWS#'
- ,p_grid_row_template => '<div class="apex_row">'||unistr('\000a')||
-'#COLUMNS#'||unistr('\000a')||
-'</div>'
- ,p_grid_column_template => '<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">'||unistr('\000a')||
-'#CONTENT#'||unistr('\000a')||
-'</div>'
- ,p_grid_first_column_attributes => 'alpha'
- ,p_grid_last_column_attributes => 'omega'
- ,p_grid_javascript_debug_code => 'apex.jQuery(document)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-on", showGrid)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-off", hideGrid);'
- ,p_has_edit_links => true
- ,p_translate_this_template => 'N'
- ,p_template_comment => '18'
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27215750754692956 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27215656582692942 + wwv_flow_api.g_id_offset
- ,p_name => 'Content Body'
- ,p_placeholder => 'BOX_BODY'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 4
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/page/no_tabs_left_sidebar
-prompt  ......Page template 27215855371692958
- 
-begin
- 
-wwv_flow_api.create_template (
-  p_id => 27215855371692958 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_theme_id => 25
- ,p_name => 'No Tabs - Left Sidebar'
- ,p_is_popup => false
- ,p_javascript_file_urls => '#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'
- ,p_css_file_urls => '#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'
- ,p_header_template => '<!--[if HTML5]><![endif]-->'||unistr('\000a')||
-'<!doctype html>'||unistr('\000a')||
-'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->'||unistr('\000a')||
-'<head>'||unistr('\000a')||
-'<!--[if !HTML5]>'||unistr('\000a')||
-'  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">'||unistr('\000a')||
-'<![endif]-->'||unistr('\000a')||
-'  <meta charset="UTF-8">'||unistr('\000a')||
-'  <title>#TITLE#</title>'||unistr('\000a')||
-'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'#APEX_CSS#'||unistr('\000a')||
-'#TEMPLATE_CSS#'||unistr('\000a')||
-'#THEME_CSS#'||unistr('\000a')||
-'#PAGE_CSS#'||unistr('\000a')||
-'#APEX_JAVASCRIPT#'||unistr('\000a')||
-'#TEMPLATE_JAVASCRIPT#'||unistr('\000a')||
-'#APPLICATION_JAVASCRIPT#'||unistr('\000a')||
-'#PAGE_JAVASCRIPT#'||unistr('\000a')||
-'#HEAD#'||unistr('\000a')||
-'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />'||unistr('\000a')||
-'</head>'||unistr('\000a')||
-'<body #ONLOAD#>'||unistr('\000a')||
-'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->'||unistr('\000a')||
-'#FORM_OPEN#'||unistr('\000a')||
-'<header id="uHeader">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      #REGION_POSITION_07#'||unistr('\000a')||
-'      <div class="logoBar">'||unistr('\000a')||
-'        <a href="#HOME_LINK#" id="uLogo">#LOGO#</a>'||unistr('\000a')||
-'        <div class="userBlock">'||unistr('\000a')||
-'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">'||unistr('\000a')||
-'          <span>&APP_USER.</span>'||unistr('\000a')||
-'          #NAVIGATION_BAR#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</header>'
- ,p_box => 
-'<div id="uBodyContainer">'||unistr('\000a')||
-'#REGION_POSITION_01#'||unistr('\000a')||
-'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#'||unistr('\000a')||
-'<div id="uTwoColumns" class="sideLeftCol">'||unistr('\000a')||
-'  <div class="apex_grid_container">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_2" id="uLeftCol">'||unistr('\000a')||
-'      <aside>'||unistr('\000a')||
-'        #REGION_POSITION_02#'||unistr('\000a')||
-'      </aside>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'    <div class="apex_cols apex_span_10" id="uMidCol">'||unistr('\000a')||
-'    #BOX_BODY#'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'<'||
-'/div>'||unistr('\000a')||
-'</div>'
- ,p_footer_template => 
-'<footer id="uFooter">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      <div class="uFooterContent">'||unistr('\000a')||
-'        <div id="customize">#CUSTOMIZE#</div>'||unistr('\000a')||
-'        #REGION_POSITION_05#'||unistr('\000a')||
-'        #SCREEN_READER_TOGGLE#'||unistr('\000a')||
-'        <span class="uFooterVersion">'||unistr('\000a')||
-'          #APP_VERSION#'||unistr('\000a')||
-'        </span>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'      <div class="uFooterBG">'||unistr('\000a')||
-'        <div class="uLeft"></d'||
-'iv>'||unistr('\000a')||
-'        <div class="uRight"></div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</footer>'||unistr('\000a')||
-'#FORM_CLOSE#'||unistr('\000a')||
-'#DEVELOPER_TOOLBAR#'||unistr('\000a')||
-'#GENERATED_CSS#'||unistr('\000a')||
-'#GENERATED_JAVASCRIPT#'||unistr('\000a')||
-'</body>'||unistr('\000a')||
-'</html>'
- ,p_success_message => '<section class="uRegion uWhiteRegion uMessageRegion clearfix" id="uSuccessMessage">'||unistr('\000a')||
-'  <div class="uRegionContent clearfix">'||unistr('\000a')||
-'    <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"></a>'||unistr('\000a')||
-'    <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />'||unistr('\000a')||
-'    <div class="uMessageText">'||unistr('\000a')||
-'      #SUCCESS_MESSAGE#'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</section>'
- ,p_notification_message => '<section class="uRegion uWhiteRegion uMessageRegion clearfix" id="uNotificationMessage">'||unistr('\000a')||
-'  <div class="uRegionContent clearfix">'||unistr('\000a')||
-'    <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"></a>'||unistr('\000a')||
-'    <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />'||unistr('\000a')||
-'    <div class="uMessageText">'||unistr('\000a')||
-'      #MESSAGE#'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</section>'
- ,p_navigation_bar => '#BAR_BODY#'
- ,p_navbar_entry => '<a href="#LINK#">#TEXT#</a>#EDIT#'
- ,p_region_table_cattributes => 'summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
- ,p_sidebar_def_reg_pos => 'REGION_POSITION_02'
- ,p_breadcrumb_def_reg_pos => 'REGION_POSITION_01'
- ,p_theme_class_id => 17
- ,p_grid_type => 'FIXED'
- ,p_grid_max_columns => 12
- ,p_grid_always_use_max_columns => false
- ,p_grid_has_column_span => true
- ,p_grid_emit_empty_leading_cols => true
- ,p_grid_emit_empty_trail_cols => false
- ,p_grid_template => '#ROWS#'
- ,p_grid_row_template => '<div class="apex_row">'||unistr('\000a')||
-'#COLUMNS#'||unistr('\000a')||
-'</div>'
- ,p_grid_column_template => '<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">'||unistr('\000a')||
-'#CONTENT#'||unistr('\000a')||
-'</div>'
- ,p_grid_first_column_attributes => 'alpha'
- ,p_grid_last_column_attributes => 'omega'
- ,p_grid_javascript_debug_code => 'apex.jQuery(document)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-on", showGrid)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-off", hideGrid);'
- ,p_has_edit_links => true
- ,p_translate_this_template => 'N'
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27215933411692959 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27215855371692958 + wwv_flow_api.g_id_offset
- ,p_name => 'Main Content'
- ,p_placeholder => 'BOX_BODY'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 10
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27216043812692960 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27215855371692958 + wwv_flow_api.g_id_offset
- ,p_name => 'Breadcrumb'
- ,p_placeholder => 'REGION_POSITION_01'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27216129091692960 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27215855371692958 + wwv_flow_api.g_id_offset
- ,p_name => 'Left Column'
- ,p_placeholder => 'REGION_POSITION_02'
- ,p_has_grid_support => false
- ,p_max_fixed_grid_columns => 2
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27216245410692960 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27215855371692958 + wwv_flow_api.g_id_offset
- ,p_name => 'Footer'
- ,p_placeholder => 'REGION_POSITION_05'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 12
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27216352779692960 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27215855371692958 + wwv_flow_api.g_id_offset
- ,p_name => 'Header'
- ,p_placeholder => 'REGION_POSITION_07'
- ,p_has_grid_support => false
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/page/no_tabs_left_and_right_sidebar
-prompt  ......Page template 27216454136692960
- 
-begin
- 
-wwv_flow_api.create_template (
-  p_id => 27216454136692960 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_theme_id => 25
- ,p_name => 'No Tabs - Left and Right Sidebar'
- ,p_is_popup => false
- ,p_javascript_file_urls => '#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js'||unistr('\000a')||
-'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'
- ,p_css_file_urls => '#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'
- ,p_header_template => '<!--[if HTML5]><![endif]-->'||unistr('\000a')||
-'<!doctype html>'||unistr('\000a')||
-'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->'||unistr('\000a')||
-'<head>'||unistr('\000a')||
-'<!--[if !HTML5]>'||unistr('\000a')||
-'  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">'||unistr('\000a')||
-'<![endif]-->'||unistr('\000a')||
-'  <meta charset="UTF-8">'||unistr('\000a')||
-'  <title>#TITLE#</title>'||unistr('\000a')||
-'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'#APEX_CSS#'||unistr('\000a')||
-'#TEMPLATE_CSS#'||unistr('\000a')||
-'#THEME_CSS#'||unistr('\000a')||
-'#PAGE_CSS#'||unistr('\000a')||
-'#APEX_JAVASCRIPT#'||unistr('\000a')||
-'#TEMPLATE_JAVASCRIPT#'||unistr('\000a')||
-'#APPLICATION_JAVASCRIPT#'||unistr('\000a')||
-'#PAGE_JAVASCRIPT#'||unistr('\000a')||
-'#HEAD#'||unistr('\000a')||
-'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />'||unistr('\000a')||
-'</head>'||unistr('\000a')||
-'<body #ONLOAD#>'||unistr('\000a')||
-'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->'||unistr('\000a')||
-'#FORM_OPEN#'||unistr('\000a')||
-'<header id="uHeader">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      #REGION_POSITION_07#'||unistr('\000a')||
-'      <div class="logoBar">'||unistr('\000a')||
-'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>'||unistr('\000a')||
-'        <div class="userBlock">'||unistr('\000a')||
-'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">'||unistr('\000a')||
-'          <span>&APP_USER.</span>'||unistr('\000a')||
-'          #NAVIGATION_BAR#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</header>'
- ,p_box => 
-'<div id="uBodyContainer">'||unistr('\000a')||
-'#REGION_POSITION_01#'||unistr('\000a')||
-'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#'||unistr('\000a')||
-'<div id="uThreeColumns">'||unistr('\000a')||
-'  <div class="apex_grid_container">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_2" id="uLeftCol">'||unistr('\000a')||
-'      <aside>'||unistr('\000a')||
-'        #REGION_POSITION_02#'||unistr('\000a')||
-'      </aside>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'    <div class="apex_cols apex_span_8" id="uMidCol">'||unistr('\000a')||
-'    #BOX_BODY#'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'    <div class="apex_cols ape'||
-'x_span_2" id="uRightCol">'||unistr('\000a')||
-'      <aside>'||unistr('\000a')||
-'        #REGION_POSITION_03#'||unistr('\000a')||
-'      </aside>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>'
- ,p_footer_template => 
-'<footer id="uFooter">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      <div class="uFooterContent">'||unistr('\000a')||
-'        #REGION_POSITION_05#'||unistr('\000a')||
-'        <div id="customize">#CUSTOMIZE#</div>'||unistr('\000a')||
-'        #SCREEN_READER_TOGGLE#'||unistr('\000a')||
-'        <span class="uFooterVersion">'||unistr('\000a')||
-'          #APP_VERSION#'||unistr('\000a')||
-'        </span>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</footer>'||unistr('\000a')||
-'#FORM_CLOSE#'||unistr('\000a')||
-'#DEVELOPER_TOOLBA'||
-'R#'||unistr('\000a')||
-'#GENERATED_CSS#'||unistr('\000a')||
-'#GENERATED_JAVASCRIPT#'||unistr('\000a')||
-'</body>'||unistr('\000a')||
-'</html>'
- ,p_success_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #SUCCESS_MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_notification_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_navigation_bar => '#BAR_BODY#'
- ,p_navbar_entry => '<a href="#LINK#">#TEXT#</a>#EDIT#'
- ,p_region_table_cattributes => 'summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
- ,p_sidebar_def_reg_pos => 'REGION_POSITION_03'
- ,p_breadcrumb_def_reg_pos => 'REGION_POSITION_01'
- ,p_theme_class_id => 17
- ,p_grid_type => 'FIXED'
- ,p_grid_max_columns => 12
- ,p_grid_always_use_max_columns => false
- ,p_grid_has_column_span => true
- ,p_grid_emit_empty_leading_cols => true
- ,p_grid_emit_empty_trail_cols => false
- ,p_grid_template => '#ROWS#'
- ,p_grid_row_template => '<div class="apex_row">'||unistr('\000a')||
-'#COLUMNS#'||unistr('\000a')||
-'</div>'
- ,p_grid_column_template => '<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">'||unistr('\000a')||
-'#CONTENT#'||unistr('\000a')||
-'</div>'
- ,p_grid_first_column_attributes => 'alpha'
- ,p_grid_last_column_attributes => 'omega'
- ,p_grid_javascript_debug_code => 'apex.jQuery(document)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-on", showGrid)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-off", hideGrid);'
- ,p_has_edit_links => true
- ,p_translate_this_template => 'N'
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27216530293692961 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27216454136692960 + wwv_flow_api.g_id_offset
- ,p_name => 'Content Body'
- ,p_placeholder => 'BOX_BODY'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 8
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27216650033692961 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27216454136692960 + wwv_flow_api.g_id_offset
- ,p_name => 'Breadcrumb'
- ,p_placeholder => 'REGION_POSITION_01'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27216740909692961 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27216454136692960 + wwv_flow_api.g_id_offset
- ,p_name => 'Left Column'
- ,p_placeholder => 'REGION_POSITION_02'
- ,p_has_grid_support => false
- ,p_max_fixed_grid_columns => 2
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27216858948692961 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27216454136692960 + wwv_flow_api.g_id_offset
- ,p_name => 'Footer'
- ,p_placeholder => 'REGION_POSITION_05'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 12
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27216955268692961 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27216454136692960 + wwv_flow_api.g_id_offset
- ,p_name => 'Header'
- ,p_placeholder => 'REGION_POSITION_07'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27217050615692961 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27216454136692960 + wwv_flow_api.g_id_offset
- ,p_name => 'Right Column'
- ,p_placeholder => 'REGION_POSITOIN_03'
- ,p_has_grid_support => false
- ,p_max_fixed_grid_columns => 2
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/page/no_tabs_no_sidebar
-prompt  ......Page template 27217130666692961
- 
-begin
- 
-wwv_flow_api.create_template (
-  p_id => 27217130666692961 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_theme_id => 25
- ,p_name => 'No Tabs - No Sidebar'
- ,p_is_popup => false
- ,p_javascript_file_urls => '#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'
- ,p_css_file_urls => '#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'
- ,p_header_template => '<!--[if HTML5]><![endif]-->'||unistr('\000a')||
-'<!doctype html>'||unistr('\000a')||
-'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->'||unistr('\000a')||
-'<head>'||unistr('\000a')||
-'<!--[if !HTML5]>'||unistr('\000a')||
-'  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">'||unistr('\000a')||
-'<![endif]-->'||unistr('\000a')||
-'  <meta charset="UTF-8">'||unistr('\000a')||
-'  <title>#TITLE#</title>'||unistr('\000a')||
-'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'#APEX_CSS#'||unistr('\000a')||
-'#TEMPLATE_CSS#'||unistr('\000a')||
-'#THEME_CSS#'||unistr('\000a')||
-'#PAGE_CSS#'||unistr('\000a')||
-'#APEX_JAVASCRIPT#'||unistr('\000a')||
-'#TEMPLATE_JAVASCRIPT#'||unistr('\000a')||
-'#APPLICATION_JAVASCRIPT#'||unistr('\000a')||
-'#PAGE_JAVASCRIPT#'||unistr('\000a')||
-'#HEAD#'||unistr('\000a')||
-'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />'||unistr('\000a')||
-'</head>'||unistr('\000a')||
-'<body #ONLOAD#>'||unistr('\000a')||
-'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->'||unistr('\000a')||
-'#FORM_OPEN#'||unistr('\000a')||
-'<header id="uHeader">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      #REGION_POSITION_07#'||unistr('\000a')||
-'      <div class="logoBar">'||unistr('\000a')||
-'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>'||unistr('\000a')||
-'        <div class="userBlock">'||unistr('\000a')||
-'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">'||unistr('\000a')||
-'          <span>&APP_USER.</span>'||unistr('\000a')||
-'          #NAVIGATION_BAR#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</header>'
- ,p_box => 
-'<div id="uBodyContainer">'||unistr('\000a')||
-'#REGION_POSITION_01#'||unistr('\000a')||
-'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#'||unistr('\000a')||
-'<div id="uOneCol">'||unistr('\000a')||
-'  <div class="apex_grid_container">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      #BOX_BODY#'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>'
- ,p_footer_template => 
-'<footer id="uFooter">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      <div class="uFooterContent">'||unistr('\000a')||
-'        #REGION_POSITION_05#'||unistr('\000a')||
-'        <div id="customize">#CUSTOMIZE#</div>'||unistr('\000a')||
-'        #SCREEN_READER_TOGGLE#'||unistr('\000a')||
-'        <span class="uFooterVersion">'||unistr('\000a')||
-'          #APP_VERSION#'||unistr('\000a')||
-'        </span>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</footer>'||unistr('\000a')||
-'#FORM_CLOSE#'||unistr('\000a')||
-'#DEVELOPER_TOOLBA'||
-'R#'||unistr('\000a')||
-'#GENERATED_CSS#'||unistr('\000a')||
-'#GENERATED_JAVASCRIPT#'||unistr('\000a')||
-'</body>'||unistr('\000a')||
-'</html>'
- ,p_success_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #SUCCESS_MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_notification_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_navigation_bar => '#BAR_BODY#'
- ,p_navbar_entry => '<a href="#LINK#">#TEXT#</a>#EDIT#'
- ,p_region_table_cattributes => ' summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
- ,p_breadcrumb_def_reg_pos => 'REGION_POSITION_01'
- ,p_theme_class_id => 3
- ,p_error_page_template => '<div class="apex_cols apex_span_12">'||unistr('\000a')||
-'  <section class="uRegion uNoHeading uErrorRegion">'||unistr('\000a')||
-'    <div class="uRegionContent">'||unistr('\000a')||
-'      <p class="errorIcon"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" class="iconLarge error"/></p>'||unistr('\000a')||
-'      <p><strong>#MESSAGE#</strong></p>'||unistr('\000a')||
-'      <p>#ADDITIONAL_INFO#</p>'||unistr('\000a')||
-'      <div class="uErrorTechInfo">#TECHNICAL_INFO#</div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'    <div class="uRegionHeading">'||unistr('\000a')||
-'      <span class="uButtonContainer">'||unistr('\000a')||
-'        <button onclick="#BACK_LINK#" class="uButtonLarge uHotButton" type="button"><span>#OK#</span></button>'||unistr('\000a')||
-'      </span>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </section>'||unistr('\000a')||
-'</div>'
- ,p_grid_type => 'FIXED'
- ,p_grid_max_columns => 12
- ,p_grid_always_use_max_columns => false
- ,p_grid_has_column_span => true
- ,p_grid_emit_empty_leading_cols => true
- ,p_grid_emit_empty_trail_cols => false
- ,p_grid_template => '#ROWS#'
- ,p_grid_row_template => '<div class="apex_row">'||unistr('\000a')||
-'#COLUMNS#'||unistr('\000a')||
-'</div>'
- ,p_grid_column_template => '<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">'||unistr('\000a')||
-'#CONTENT#'||unistr('\000a')||
-'</div>'
- ,p_grid_first_column_attributes => 'alpha'
- ,p_grid_last_column_attributes => 'omega'
- ,p_grid_javascript_debug_code => 'apex.jQuery(document)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-on", showGrid)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-off", hideGrid);'
- ,p_has_edit_links => true
- ,p_translate_this_template => 'N'
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27217236167692963 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27217130666692961 + wwv_flow_api.g_id_offset
- ,p_name => 'Content Body'
- ,p_placeholder => 'BOX_BODY'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 12
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27217340870692963 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27217130666692961 + wwv_flow_api.g_id_offset
- ,p_name => 'Breadcrumb'
- ,p_placeholder => 'REGION_POSITION_01'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27217451418692963 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27217130666692961 + wwv_flow_api.g_id_offset
- ,p_name => 'Footer'
- ,p_placeholder => 'REGION_POSITION_05'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27217540091692964 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27217130666692961 + wwv_flow_api.g_id_offset
- ,p_name => 'Header'
- ,p_placeholder => 'REGION_POSITION_07'
- ,p_has_grid_support => false
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/page/no_tabs_right_sidebar
-prompt  ......Page template 27217628194692964
- 
-begin
- 
-wwv_flow_api.create_template (
-  p_id => 27217628194692964 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_theme_id => 25
- ,p_name => 'No Tabs - Right Sidebar'
- ,p_is_popup => false
- ,p_javascript_file_urls => '#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'
- ,p_css_file_urls => '#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'
- ,p_header_template => '<!--[if HTML5]><![endif]-->'||unistr('\000a')||
-'<!doctype html>'||unistr('\000a')||
-'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->'||unistr('\000a')||
-'<head>'||unistr('\000a')||
-'<!--[if !HTML5]>'||unistr('\000a')||
-'  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">'||unistr('\000a')||
-'<![endif]-->'||unistr('\000a')||
-'  <meta charset="UTF-8">'||unistr('\000a')||
-'  <title>#TITLE#</title>'||unistr('\000a')||
-'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'#APEX_CSS#'||unistr('\000a')||
-'#TEMPLATE_CSS#'||unistr('\000a')||
-'#THEME_CSS#'||unistr('\000a')||
-'#PAGE_CSS#'||unistr('\000a')||
-'#APEX_JAVASCRIPT#'||unistr('\000a')||
-'#TEMPLATE_JAVASCRIPT#'||unistr('\000a')||
-'#APPLICATION_JAVASCRIPT#'||unistr('\000a')||
-'#PAGE_JAVASCRIPT#'||unistr('\000a')||
-'#HEAD#'||unistr('\000a')||
-'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />'||unistr('\000a')||
-'</head>'||unistr('\000a')||
-'<body #ONLOAD#>'||unistr('\000a')||
-'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->'||unistr('\000a')||
-'#FORM_OPEN#'||unistr('\000a')||
-'<header id="uHeader">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      #REGION_POSITION_07#'||unistr('\000a')||
-'      <div class="logoBar">'||unistr('\000a')||
-'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>'||unistr('\000a')||
-'        <div class="userBlock">'||unistr('\000a')||
-'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">'||unistr('\000a')||
-'          <span>&APP_USER.</span>'||unistr('\000a')||
-'          #NAVIGATION_BAR#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</header>'
- ,p_box => 
-'<div id="uBodyContainer">'||unistr('\000a')||
-'#REGION_POSITION_01#'||unistr('\000a')||
-'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#'||unistr('\000a')||
-'<div id="uTwoColumns" class="sideRightCol">'||unistr('\000a')||
-'  <div class="apex_grid_container">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_10" id="uMidCol">'||unistr('\000a')||
-'    #BOX_BODY#'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'    <div class="apex_cols apex_span_2" id="uRightCol">'||unistr('\000a')||
-'      <aside>'||unistr('\000a')||
-'        #REGION_POSITION_03#'||unistr('\000a')||
-'      </aside>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||
-''||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>'
- ,p_footer_template => 
-'<footer id="uFooter">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      <div class="uFooterContent">'||unistr('\000a')||
-'        #REGION_POSITION_05#'||unistr('\000a')||
-'        <div id="customize">#CUSTOMIZE#</div>'||unistr('\000a')||
-'        #SCREEN_READER_TOGGLE#'||unistr('\000a')||
-'        <span class="uFooterVersion">'||unistr('\000a')||
-'          #APP_VERSION#'||unistr('\000a')||
-'        </span>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</footer>'||unistr('\000a')||
-'#FORM_CLOSE#'||unistr('\000a')||
-'#DEVELOPER_TOOLBA'||
-'R#'||unistr('\000a')||
-'#GENERATED_CSS#'||unistr('\000a')||
-'#GENERATED_JAVASCRIPT#'||unistr('\000a')||
-'</body>'||unistr('\000a')||
-'</html>'
- ,p_success_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #SUCCESS_MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_notification_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_navigation_bar => '#BAR_BODY#'
- ,p_navbar_entry => '<a href="#LINK#">#TEXT#</a>#EDIT#'
- ,p_region_table_cattributes => ' summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
- ,p_sidebar_def_reg_pos => 'REGION_POSITION_03'
- ,p_breadcrumb_def_reg_pos => 'REGION_POSITION_01'
- ,p_theme_class_id => 3
- ,p_grid_type => 'FIXED'
- ,p_grid_max_columns => 12
- ,p_grid_always_use_max_columns => false
- ,p_grid_has_column_span => true
- ,p_grid_emit_empty_leading_cols => true
- ,p_grid_emit_empty_trail_cols => false
- ,p_grid_template => '#ROWS#'
- ,p_grid_row_template => '<div class="apex_row">'||unistr('\000a')||
-'#COLUMNS#'||unistr('\000a')||
-'</div>'
- ,p_grid_column_template => '<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">'||unistr('\000a')||
-'#CONTENT#'||unistr('\000a')||
-'</div>'
- ,p_grid_first_column_attributes => 'alpha'
- ,p_grid_last_column_attributes => 'omega'
- ,p_grid_javascript_debug_code => 'apex.jQuery(document)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-on", showGrid)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-off", hideGrid);'
- ,p_has_edit_links => true
- ,p_translate_this_template => 'N'
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27217742273692964 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27217628194692964 + wwv_flow_api.g_id_offset
- ,p_name => 'Main Content'
- ,p_placeholder => 'BOX_BODY'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 10
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27217847605692964 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27217628194692964 + wwv_flow_api.g_id_offset
- ,p_name => 'Breadcrumb'
- ,p_placeholder => 'REGION_POSITION_01'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27217958437692964 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27217628194692964 + wwv_flow_api.g_id_offset
- ,p_name => 'Right Column'
- ,p_placeholder => 'REGION_POSITION_03'
- ,p_has_grid_support => false
- ,p_max_fixed_grid_columns => 2
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27218043276692964 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27217628194692964 + wwv_flow_api.g_id_offset
- ,p_name => 'Footer'
- ,p_placeholder => 'REGION_POSITION_05'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 12
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27218144959692964 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27217628194692964 + wwv_flow_api.g_id_offset
- ,p_name => 'Header'
- ,p_placeholder => 'REGION_POSITION_07'
- ,p_has_grid_support => false
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/page/one_level_tabs_content_frame
-prompt  ......Page template 27218257317692965
- 
-begin
- 
-wwv_flow_api.create_template (
-  p_id => 27218257317692965 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_theme_id => 25
- ,p_name => 'One Level Tabs - Content Frame'
- ,p_is_popup => false
- ,p_javascript_file_urls => '#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'
- ,p_javascript_code_onload => 
-'initContentFrameTabs();'
- ,p_css_file_urls => '#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'
- ,p_header_template => '<!--[if HTML5]><![endif]-->'||unistr('\000a')||
-'<!doctype html>'||unistr('\000a')||
-'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->'||unistr('\000a')||
-'<head>'||unistr('\000a')||
-'<!--[if !HTML5]>'||unistr('\000a')||
-'  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">'||unistr('\000a')||
-'<![endif]-->'||unistr('\000a')||
-'  <meta charset="UTF-8">'||unistr('\000a')||
-'  <title>#TITLE#</title>'||unistr('\000a')||
-'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'#APEX_CSS#'||unistr('\000a')||
-'#TEMPLATE_CSS#'||unistr('\000a')||
-'#THEME_CSS#'||unistr('\000a')||
-'#PAGE_CSS#'||unistr('\000a')||
-'#APEX_JAVASCRIPT#'||unistr('\000a')||
-'#TEMPLATE_JAVASCRIPT#'||unistr('\000a')||
-'#APPLICATION_JAVASCRIPT#'||unistr('\000a')||
-'#PAGE_JAVASCRIPT#'||unistr('\000a')||
-'#HEAD#'||unistr('\000a')||
-'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />'||unistr('\000a')||
-'</head>'||unistr('\000a')||
-'<body #ONLOAD#>'||unistr('\000a')||
-'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->'||unistr('\000a')||
-'#FORM_OPEN#'||unistr('\000a')||
-'<header id="uHeader">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      #REGION_POSITION_07#'||unistr('\000a')||
-'      <div class="logoBar">'||unistr('\000a')||
-'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>'||unistr('\000a')||
-'        <div class="userBlock">'||unistr('\000a')||
-'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">'||unistr('\000a')||
-'          <span>&APP_USER.</span>'||unistr('\000a')||
-'          #NAVIGATION_BAR#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'  <nav>'||unistr('\000a')||
-'    <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'      <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'        <ul class="uMainNav">'||unistr('\000a')||
-'          #TAB_CELLS#'||unistr('\000a')||
-'          #REGION_POSITION_06#'||unistr('\000a')||
-'        </ul>'||unistr('\000a')||
-'        #REGION_POSITION_08#'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </nav>'||unistr('\000a')||
-'</header>'
- ,p_box => 
-'<div id="uBodyContainer">'||unistr('\000a')||
-'#REGION_POSITION_01#'||unistr('\000a')||
-'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#'||unistr('\000a')||
-'<div id="uOneCol">'||unistr('\000a')||
-'<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uRegion uRegionNoPadding clearfix uRegionFrame">'||unistr('\000a')||
-'      <div class="uRegionHeading">'||unistr('\000a')||
-'        <h1>#TITLE#</h1>'||unistr('\000a')||
-'        <span class="uButtonContainer">'||unistr('\000a')||
-'        #REGION_POSITION_02#'||unistr('\000a')||
-'  '||
-'      </span>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'      <div class="uFrameContent">'||unistr('\000a')||
-'        <div class="uFrameMain">'||unistr('\000a')||
-'            #BOX_BODY#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'        <div class="uFrameSide">'||unistr('\000a')||
-'          <div class="apex_cols apex_span_2 alpha omega">'||unistr('\000a')||
-'            #REGION_POSITION_03#'||unistr('\000a')||
-'          </div>'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>'
- ,p_footer_template => 
-'<footer id="uFooter">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      <div class="uFooterContent">'||unistr('\000a')||
-'        #REGION_POSITION_05#'||unistr('\000a')||
-'        <div id="customize">#CUSTOMIZE#</div>'||unistr('\000a')||
-'        #SCREEN_READER_TOGGLE#'||unistr('\000a')||
-'        <span class="uFooterVersion">'||unistr('\000a')||
-'          #APP_VERSION#'||unistr('\000a')||
-'        </span>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</footer>'||unistr('\000a')||
-'#FORM_CLOSE#'||unistr('\000a')||
-'#DEVELOPER_TOOLBA'||
-'R#'||unistr('\000a')||
-'#GENERATED_CSS#'||unistr('\000a')||
-'#GENERATED_JAVASCRIPT#'||unistr('\000a')||
-'</body>'||unistr('\000a')||
-'</html>'
- ,p_success_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #SUCCESS_MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_current_tab => '<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_non_current_tab => '<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_notification_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_navigation_bar => '#BAR_BODY#'
- ,p_navbar_entry => '<a href="#LINK#">#TEXT#</a>'
- ,p_sidebar_def_reg_pos => 'BODY_3'
- ,p_breadcrumb_def_reg_pos => 'REGION_POSITION_01'
- ,p_theme_class_id => 10
- ,p_grid_type => 'FIXED'
- ,p_grid_max_columns => 12
- ,p_grid_always_use_max_columns => false
- ,p_grid_has_column_span => true
- ,p_grid_emit_empty_leading_cols => true
- ,p_grid_emit_empty_trail_cols => false
- ,p_grid_template => '#ROWS#'
- ,p_grid_row_template => '<div class="apex_row">'||unistr('\000a')||
-'#COLUMNS#'||unistr('\000a')||
-'</div>'
- ,p_grid_column_template => '<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">'||unistr('\000a')||
-'#CONTENT#'||unistr('\000a')||
-'</div>'
- ,p_grid_first_column_attributes => 'alpha'
- ,p_grid_last_column_attributes => 'omega'
- ,p_grid_javascript_debug_code => 'apex.jQuery(document)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-on", showGrid)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-off", hideGrid);'
- ,p_has_edit_links => true
- ,p_translate_this_template => 'N'
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27218352512692967 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27218257317692965 + wwv_flow_api.g_id_offset
- ,p_name => 'Content Body'
- ,p_placeholder => 'BOX_BODY'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 10
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27218449082692967 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27218257317692965 + wwv_flow_api.g_id_offset
- ,p_name => 'Breadcrumb'
- ,p_placeholder => 'REGION_POSITION_01'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27218544304692967 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27218257317692965 + wwv_flow_api.g_id_offset
- ,p_name => 'Content Frame Buttons'
- ,p_placeholder => 'REGION_POSITION_02'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27218648848692967 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27218257317692965 + wwv_flow_api.g_id_offset
- ,p_name => 'Side Column'
- ,p_placeholder => 'REGION_POSITION_03'
- ,p_has_grid_support => false
- ,p_max_fixed_grid_columns => 2
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27218749610692967 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27218257317692965 + wwv_flow_api.g_id_offset
- ,p_name => 'Footer'
- ,p_placeholder => 'REGION_POSITION_05'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 12
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27218828809692967 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27218257317692965 + wwv_flow_api.g_id_offset
- ,p_name => 'Page Level Tabs'
- ,p_placeholder => 'REGION_POSITION_06'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27218931264692967 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27218257317692965 + wwv_flow_api.g_id_offset
- ,p_name => 'Header'
- ,p_placeholder => 'REGION_POSITION_07'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27219036344692967 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27218257317692965 + wwv_flow_api.g_id_offset
- ,p_name => 'Icon Nav Bar'
- ,p_placeholder => 'REGION_POSITION_08'
- ,p_has_grid_support => false
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/page/one_level_tabs_left_sidebar
-prompt  ......Page template 27219142087692967
- 
-begin
- 
-wwv_flow_api.create_template (
-  p_id => 27219142087692967 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_theme_id => 25
- ,p_name => 'One Level Tabs - Left Sidebar'
- ,p_is_popup => false
- ,p_javascript_file_urls => '#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'
- ,p_css_file_urls => '#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'
- ,p_header_template => '<!--[if HTML5]><![endif]-->'||unistr('\000a')||
-'<!doctype html>'||unistr('\000a')||
-'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->'||unistr('\000a')||
-'<head>'||unistr('\000a')||
-'<!--[if !HTML5]>'||unistr('\000a')||
-'  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">'||unistr('\000a')||
-'<![endif]-->'||unistr('\000a')||
-'  <meta charset="UTF-8">'||unistr('\000a')||
-'  <title>#TITLE#</title>'||unistr('\000a')||
-'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'#APEX_CSS#'||unistr('\000a')||
-'#TEMPLATE_CSS#'||unistr('\000a')||
-'#THEME_CSS#'||unistr('\000a')||
-'#PAGE_CSS#'||unistr('\000a')||
-'#APEX_JAVASCRIPT#'||unistr('\000a')||
-'#TEMPLATE_JAVASCRIPT#'||unistr('\000a')||
-'#APPLICATION_JAVASCRIPT#'||unistr('\000a')||
-'#PAGE_JAVASCRIPT#'||unistr('\000a')||
-'#HEAD#'||unistr('\000a')||
-'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />'||unistr('\000a')||
-'</head>'||unistr('\000a')||
-'<body #ONLOAD#>'||unistr('\000a')||
-'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->'||unistr('\000a')||
-'#FORM_OPEN#'||unistr('\000a')||
-'<header id="uHeader">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      #REGION_POSITION_07#'||unistr('\000a')||
-'      <div class="logoBar">'||unistr('\000a')||
-'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>'||unistr('\000a')||
-'        <div class="userBlock">'||unistr('\000a')||
-'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">'||unistr('\000a')||
-'          <span>&APP_USER.</span>'||unistr('\000a')||
-'          #NAVIGATION_BAR#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'  <nav>'||unistr('\000a')||
-'    <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'      <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'        <ul class="uMainNav">'||unistr('\000a')||
-'          #TAB_CELLS#'||unistr('\000a')||
-'          #REGION_POSITION_06#'||unistr('\000a')||
-'        </ul>'||unistr('\000a')||
-'        #REGION_POSITION_08#'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </nav>'||unistr('\000a')||
-'</header>'
- ,p_box => 
-'<div id="uBodyContainer">'||unistr('\000a')||
-'#REGION_POSITION_01#'||unistr('\000a')||
-'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#'||unistr('\000a')||
-'<div id="uTwoColumns" class="sideLeftCol">'||unistr('\000a')||
-'  <div class="apex_grid_container">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_2" id="uLeftCol">'||unistr('\000a')||
-'      <aside>'||unistr('\000a')||
-'        #REGION_POSITION_02#'||unistr('\000a')||
-'      </aside>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'    <div class="apex_cols apex_span_10" id="uMidCol">'||unistr('\000a')||
-'    #BOX_BODY#'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'<'||
-'/div>'||unistr('\000a')||
-'</div>'
- ,p_footer_template => 
-'<footer id="uFooter">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      <div class="uFooterContent">'||unistr('\000a')||
-'        #REGION_POSITION_05#'||unistr('\000a')||
-'        <div id="customize">#CUSTOMIZE#</div>'||unistr('\000a')||
-'        #SCREEN_READER_TOGGLE#'||unistr('\000a')||
-'        <span class="uFooterVersion">'||unistr('\000a')||
-'          #APP_VERSION#'||unistr('\000a')||
-'        </span>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</footer>'||unistr('\000a')||
-'#FORM_CLOSE#'||unistr('\000a')||
-'#DEVELOPER_TOOLBA'||
-'R#'||unistr('\000a')||
-'#GENERATED_CSS#'||unistr('\000a')||
-'#GENERATED_JAVASCRIPT#'||unistr('\000a')||
-'</body>'||unistr('\000a')||
-'</html>'
- ,p_success_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #SUCCESS_MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_current_tab => '<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_non_current_tab => '<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_notification_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_navigation_bar => '#BAR_BODY#'
- ,p_navbar_entry => '<a href="#LINK#">#TEXT#</a>#EDIT#'
- ,p_region_table_cattributes => ' summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
- ,p_sidebar_def_reg_pos => 'REGION_POSITION_02'
- ,p_breadcrumb_def_reg_pos => 'REGION_POSITION_01'
- ,p_theme_class_id => 16
- ,p_grid_type => 'FIXED'
- ,p_grid_max_columns => 12
- ,p_grid_always_use_max_columns => false
- ,p_grid_has_column_span => true
- ,p_grid_emit_empty_leading_cols => true
- ,p_grid_emit_empty_trail_cols => false
- ,p_grid_template => '#ROWS#'
- ,p_grid_row_template => '<div class="apex_row">'||unistr('\000a')||
-'#COLUMNS#'||unistr('\000a')||
-'</div>'
- ,p_grid_column_template => '<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">'||unistr('\000a')||
-'#CONTENT#'||unistr('\000a')||
-'</div>'
- ,p_grid_first_column_attributes => 'alpha'
- ,p_grid_last_column_attributes => 'omega'
- ,p_grid_javascript_debug_code => 'apex.jQuery(document)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-on", showGrid)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-off", hideGrid);'
- ,p_has_edit_links => true
- ,p_translate_this_template => 'N'
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27219253742692969 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27219142087692967 + wwv_flow_api.g_id_offset
- ,p_name => 'Content Body'
- ,p_placeholder => 'BOX_BODY'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 10
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27219330617692969 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27219142087692967 + wwv_flow_api.g_id_offset
- ,p_name => 'Breadcrumb'
- ,p_placeholder => 'REGION_POSITION_01'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27219443967692969 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27219142087692967 + wwv_flow_api.g_id_offset
- ,p_name => 'Left Column'
- ,p_placeholder => 'REGION_POSITION_02'
- ,p_has_grid_support => false
- ,p_max_fixed_grid_columns => 2
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27219532027692969 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27219142087692967 + wwv_flow_api.g_id_offset
- ,p_name => 'Footer'
- ,p_placeholder => 'REGION_POSITION_05'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 12
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27219647648692969 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27219142087692967 + wwv_flow_api.g_id_offset
- ,p_name => 'Page Level Tabs'
- ,p_placeholder => 'REGION_POSITION_06'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27219759643692969 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27219142087692967 + wwv_flow_api.g_id_offset
- ,p_name => 'Header'
- ,p_placeholder => 'REGION_POSITION_07'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27219848122692969 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27219142087692967 + wwv_flow_api.g_id_offset
- ,p_name => 'Icon Nav Bar'
- ,p_placeholder => 'REGION_POSITION_08'
- ,p_has_grid_support => false
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/page/one_level_tabs_left_and_right_sidebar
-prompt  ......Page template 27219959337692969
- 
-begin
- 
-wwv_flow_api.create_template (
-  p_id => 27219959337692969 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_theme_id => 25
- ,p_name => 'One Level Tabs - Left and Right Sidebar'
- ,p_is_popup => false
- ,p_javascript_file_urls => '#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'
- ,p_css_file_urls => '#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'
- ,p_header_template => '<!--[if HTML5]><![endif]-->'||unistr('\000a')||
-'<!doctype html>'||unistr('\000a')||
-'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->'||unistr('\000a')||
-'<head>'||unistr('\000a')||
-'<!--[if !HTML5]>'||unistr('\000a')||
-'  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">'||unistr('\000a')||
-'<![endif]-->'||unistr('\000a')||
-'  <meta charset="UTF-8">'||unistr('\000a')||
-'  <title>#TITLE#</title>'||unistr('\000a')||
-'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'#APEX_CSS#'||unistr('\000a')||
-'#TEMPLATE_CSS#'||unistr('\000a')||
-'#THEME_CSS#'||unistr('\000a')||
-'#PAGE_CSS#'||unistr('\000a')||
-'#APEX_JAVASCRIPT#'||unistr('\000a')||
-'#TEMPLATE_JAVASCRIPT#'||unistr('\000a')||
-'#APPLICATION_JAVASCRIPT#'||unistr('\000a')||
-'#PAGE_JAVASCRIPT#'||unistr('\000a')||
-'#HEAD#'||unistr('\000a')||
-'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />'||unistr('\000a')||
-'</head>'||unistr('\000a')||
-'<body #ONLOAD#>'||unistr('\000a')||
-'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->'||unistr('\000a')||
-'#FORM_OPEN#'||unistr('\000a')||
-'<header id="uHeader">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      #REGION_POSITION_07#'||unistr('\000a')||
-'      <div class="logoBar">'||unistr('\000a')||
-'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>'||unistr('\000a')||
-'        <div class="userBlock">'||unistr('\000a')||
-'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">'||unistr('\000a')||
-'          <span>&APP_USER.</span>'||unistr('\000a')||
-'          #NAVIGATION_BAR#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'  <nav>'||unistr('\000a')||
-'    <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'      <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'        <ul class="uMainNav">'||unistr('\000a')||
-'          #TAB_CELLS#'||unistr('\000a')||
-'          #REGION_POSITION_06#'||unistr('\000a')||
-'        </ul>'||unistr('\000a')||
-'        #REGION_POSITION_08#'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </nav>'||unistr('\000a')||
-'</header>'
- ,p_box => 
-'<div id="uBodyContainer">'||unistr('\000a')||
-'#REGION_POSITION_01#'||unistr('\000a')||
-'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#'||unistr('\000a')||
-'<div id="uThreeColumns">'||unistr('\000a')||
-'  <div class="apex_grid_container">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_2" id="uLeftCol">'||unistr('\000a')||
-'      <aside>'||unistr('\000a')||
-'        #REGION_POSITION_02#'||unistr('\000a')||
-'      </aside>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'    <div class="apex_cols apex_span_8" id="uMidCol">'||unistr('\000a')||
-'    #BOX_BODY#'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'    <div class="apex_cols ape'||
-'x_span_2" id="uRightCol">'||unistr('\000a')||
-'      <aside>'||unistr('\000a')||
-'        #REGION_POSITION_03#'||unistr('\000a')||
-'      </aside>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>'
- ,p_footer_template => 
-'<footer id="uFooter">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      <div class="uFooterContent">'||unistr('\000a')||
-'        #REGION_POSITION_05#'||unistr('\000a')||
-'        <div id="customize">#CUSTOMIZE#</div>'||unistr('\000a')||
-'        #SCREEN_READER_TOGGLE#'||unistr('\000a')||
-'        <span class="uFooterVersion">'||unistr('\000a')||
-'          #APP_VERSION#'||unistr('\000a')||
-'        </span>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</footer>'||unistr('\000a')||
-'#FORM_CLOSE#'||unistr('\000a')||
-'#DEVELOPER_TOOLBA'||
-'R#'||unistr('\000a')||
-'#GENERATED_CSS#'||unistr('\000a')||
-'#GENERATED_JAVASCRIPT#'||unistr('\000a')||
-'</body>'||unistr('\000a')||
-'</html>'
- ,p_success_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #SUCCESS_MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_current_tab => '<li><a class="active" href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_non_current_tab => '<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_notification_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_navigation_bar => '#BAR_BODY#'
- ,p_navbar_entry => '<a href="#LINK#">#TEXT#</a>#EDIT#'
- ,p_region_table_cattributes => ' summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
- ,p_sidebar_def_reg_pos => 'REGION_POSITION_03'
- ,p_breadcrumb_def_reg_pos => 'REGION_POSITION_01'
- ,p_theme_class_id => 16
- ,p_grid_type => 'FIXED'
- ,p_grid_max_columns => 12
- ,p_grid_always_use_max_columns => false
- ,p_grid_has_column_span => true
- ,p_grid_emit_empty_leading_cols => true
- ,p_grid_emit_empty_trail_cols => false
- ,p_grid_template => '#ROWS#'
- ,p_grid_row_template => '<div class="apex_row">'||unistr('\000a')||
-'#COLUMNS#'||unistr('\000a')||
-'</div>'
- ,p_grid_column_template => '<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">'||unistr('\000a')||
-'#CONTENT#'||unistr('\000a')||
-'</div>'
- ,p_grid_first_column_attributes => 'alpha'
- ,p_grid_last_column_attributes => 'omega'
- ,p_grid_javascript_debug_code => 'apex.jQuery(document)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-on", showGrid)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-off", hideGrid);'
- ,p_has_edit_links => true
- ,p_translate_this_template => 'N'
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27220048900692971 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27219959337692969 + wwv_flow_api.g_id_offset
- ,p_name => 'Content Body'
- ,p_placeholder => 'BOX_BODY'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 8
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27220155385692971 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27219959337692969 + wwv_flow_api.g_id_offset
- ,p_name => 'Left Column'
- ,p_placeholder => 'REGION_POSITION_02'
- ,p_has_grid_support => false
- ,p_max_fixed_grid_columns => 2
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27220256442692971 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27219959337692969 + wwv_flow_api.g_id_offset
- ,p_name => 'Breadcrumb'
- ,p_placeholder => 'REGION_POSITON_01'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27220340204692971 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27219959337692969 + wwv_flow_api.g_id_offset
- ,p_name => 'Right Column'
- ,p_placeholder => 'REGION_POSITON_03'
- ,p_has_grid_support => false
- ,p_max_fixed_grid_columns => 2
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27220455897692972 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27219959337692969 + wwv_flow_api.g_id_offset
- ,p_name => 'Footer'
- ,p_placeholder => 'REGION_POSITON_05'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 12
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27220531606692972 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27219959337692969 + wwv_flow_api.g_id_offset
- ,p_name => 'Page Level Tabs'
- ,p_placeholder => 'REGION_POSITON_06'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27220639896692972 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27219959337692969 + wwv_flow_api.g_id_offset
- ,p_name => 'Header'
- ,p_placeholder => 'REGION_POSITON_07'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27220745687692972 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27219959337692969 + wwv_flow_api.g_id_offset
- ,p_name => 'Icon Nav Bar'
- ,p_placeholder => 'REGION_POSITON_08'
- ,p_has_grid_support => false
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/page/one_level_tabs_no_sidebar
-prompt  ......Page template 27220832292692972
- 
-begin
- 
-wwv_flow_api.create_template (
-  p_id => 27220832292692972 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_theme_id => 25
- ,p_name => 'One Level Tabs - No Sidebar'
- ,p_is_popup => false
- ,p_javascript_file_urls => '#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'
- ,p_css_file_urls => '#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'
- ,p_header_template => '<!--[if HTML5]><![endif]-->'||unistr('\000a')||
-'<!doctype html>'||unistr('\000a')||
-'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->'||unistr('\000a')||
-'<head>'||unistr('\000a')||
-'<!--[if !HTML5]>'||unistr('\000a')||
-'  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">'||unistr('\000a')||
-'<![endif]-->'||unistr('\000a')||
-'  <meta charset="UTF-8">'||unistr('\000a')||
-'  <title>#TITLE#</title>'||unistr('\000a')||
-'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'#APEX_CSS#'||unistr('\000a')||
-'#TEMPLATE_CSS#'||unistr('\000a')||
-'#THEME_CSS#'||unistr('\000a')||
-'#PAGE_CSS#'||unistr('\000a')||
-'#APEX_JAVASCRIPT#'||unistr('\000a')||
-'#TEMPLATE_JAVASCRIPT#'||unistr('\000a')||
-'#APPLICATION_JAVASCRIPT#'||unistr('\000a')||
-'#PAGE_JAVASCRIPT#'||unistr('\000a')||
-'#HEAD#'||unistr('\000a')||
-'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />'||unistr('\000a')||
-'</head>'||unistr('\000a')||
-'<body #ONLOAD#>'||unistr('\000a')||
-'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->'||unistr('\000a')||
-'#FORM_OPEN#'||unistr('\000a')||
-'<header id="uHeader">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      #REGION_POSITION_07#'||unistr('\000a')||
-'      <div class="logoBar">'||unistr('\000a')||
-'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>'||unistr('\000a')||
-'        <div class="userBlock">'||unistr('\000a')||
-'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">'||unistr('\000a')||
-'          <span>&APP_USER.</span>'||unistr('\000a')||
-'          #NAVIGATION_BAR#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'  <nav>'||unistr('\000a')||
-'    <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'      <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'        <ul class="uMainNav">'||unistr('\000a')||
-'          #TAB_CELLS#'||unistr('\000a')||
-'          #REGION_POSITION_06#'||unistr('\000a')||
-'        </ul>'||unistr('\000a')||
-'        #REGION_POSITION_08#'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </nav>'||unistr('\000a')||
-'</header>'
- ,p_box => 
-'<div id="uBodyContainer">'||unistr('\000a')||
-'#REGION_POSITION_01#'||unistr('\000a')||
-'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#'||unistr('\000a')||
-'<div id="uOneCol">'||unistr('\000a')||
-'  <div class="apex_grid_container">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      #BOX_BODY#'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>'
- ,p_footer_template => 
-'<footer id="uFooter">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      <div class="uFooterContent">'||unistr('\000a')||
-'        #REGION_POSITION_05#'||unistr('\000a')||
-'        <div id="customize">#CUSTOMIZE#</div>'||unistr('\000a')||
-'        #SCREEN_READER_TOGGLE#'||unistr('\000a')||
-'        <span class="uFooterVersion">'||unistr('\000a')||
-'          #APP_VERSION#'||unistr('\000a')||
-'        </span>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</footer>'||unistr('\000a')||
-'#FORM_CLOSE#'||unistr('\000a')||
-'#DEVELOPER_TOOLBA'||
-'R#'||unistr('\000a')||
-'#GENERATED_CSS#'||unistr('\000a')||
-'#GENERATED_JAVASCRIPT#'||unistr('\000a')||
-'</body>'||unistr('\000a')||
-'</html>'
- ,p_success_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #SUCCESS_MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_current_tab => '<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_non_current_tab => '<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_notification_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_navigation_bar => '#BAR_BODY#'
- ,p_navbar_entry => '<a href="#LINK#">#TEXT#</a>#EDIT#'
- ,p_region_table_cattributes => 'class="regionColumns"'
- ,p_breadcrumb_def_reg_pos => 'REGION_POSITION_01'
- ,p_theme_class_id => 1
- ,p_grid_type => 'FIXED'
- ,p_grid_max_columns => 12
- ,p_grid_always_use_max_columns => false
- ,p_grid_has_column_span => true
- ,p_grid_emit_empty_leading_cols => true
- ,p_grid_emit_empty_trail_cols => false
- ,p_grid_template => '#ROWS#'
- ,p_grid_row_template => '<div class="apex_row">'||unistr('\000a')||
-'#COLUMNS#'||unistr('\000a')||
-'</div>'
- ,p_grid_column_template => '<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">'||unistr('\000a')||
-'#CONTENT#'||unistr('\000a')||
-'</div>'
- ,p_grid_first_column_attributes => 'alpha'
- ,p_grid_last_column_attributes => 'omega'
- ,p_grid_javascript_debug_code => 'apex.jQuery(document)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-on", showGrid)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-off", hideGrid);'
- ,p_has_edit_links => true
- ,p_translate_this_template => 'N'
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27220954817692973 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27220832292692972 + wwv_flow_api.g_id_offset
- ,p_name => 'Content Body'
- ,p_placeholder => 'BOX_BODY'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 12
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27221040577692973 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27220832292692972 + wwv_flow_api.g_id_offset
- ,p_name => 'Breadcrumb'
- ,p_placeholder => 'REGION_POSITION_01'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27221128169692973 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27220832292692972 + wwv_flow_api.g_id_offset
- ,p_name => 'Footer'
- ,p_placeholder => 'REGION_POSITION_05'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 12
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27221242334692973 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27220832292692972 + wwv_flow_api.g_id_offset
- ,p_name => 'Page Level Tabs'
- ,p_placeholder => 'REGION_POSITION_06'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27221338350692973 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27220832292692972 + wwv_flow_api.g_id_offset
- ,p_name => 'Header'
- ,p_placeholder => 'REGION_POSITION_07'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27221440451692973 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27220832292692972 + wwv_flow_api.g_id_offset
- ,p_name => 'Icon Nav Bar'
- ,p_placeholder => 'REGION_POSITION_08'
- ,p_has_grid_support => false
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/page/one_level_tabs_right_sidebar
-prompt  ......Page template 27221551444692973
- 
-begin
- 
-wwv_flow_api.create_template (
-  p_id => 27221551444692973 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_theme_id => 25
- ,p_name => 'One Level Tabs - Right Sidebar'
- ,p_is_popup => false
- ,p_javascript_file_urls => '#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'
- ,p_css_file_urls => '#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'
- ,p_header_template => '<!--[if HTML5]><![endif]-->'||unistr('\000a')||
-'<!doctype html>'||unistr('\000a')||
-'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->'||unistr('\000a')||
-'<head>'||unistr('\000a')||
-'<!--[if !HTML5]>'||unistr('\000a')||
-'  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">'||unistr('\000a')||
-'<![endif]-->'||unistr('\000a')||
-'  <meta charset="UTF-8">'||unistr('\000a')||
-'  <title>#TITLE#</title>'||unistr('\000a')||
-'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'#APEX_CSS#'||unistr('\000a')||
-'#TEMPLATE_CSS#'||unistr('\000a')||
-'#THEME_CSS#'||unistr('\000a')||
-'#PAGE_CSS#'||unistr('\000a')||
-'#APEX_JAVASCRIPT#'||unistr('\000a')||
-'#TEMPLATE_JAVASCRIPT#'||unistr('\000a')||
-'#APPLICATION_JAVASCRIPT#'||unistr('\000a')||
-'#PAGE_JAVASCRIPT#'||unistr('\000a')||
-'#HEAD#'||unistr('\000a')||
-'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />'||unistr('\000a')||
-'</head>'||unistr('\000a')||
-'<body #ONLOAD#>'||unistr('\000a')||
-'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->'||unistr('\000a')||
-'#FORM_OPEN#'||unistr('\000a')||
-'<header id="uHeader">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      #REGION_POSITION_07#'||unistr('\000a')||
-'      <div class="logoBar">'||unistr('\000a')||
-'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>'||unistr('\000a')||
-'        <div class="userBlock">'||unistr('\000a')||
-'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">'||unistr('\000a')||
-'          <span>&APP_USER.</span>'||unistr('\000a')||
-'          #NAVIGATION_BAR#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'  <nav>'||unistr('\000a')||
-'    <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'      <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'        <ul class="uMainNav">'||unistr('\000a')||
-'          #TAB_CELLS#'||unistr('\000a')||
-'          #REGION_POSITION_06#'||unistr('\000a')||
-'        </ul>'||unistr('\000a')||
-'        #REGION_POSITION_08#'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </nav>'||unistr('\000a')||
-'</header>'
- ,p_box => 
-'<div id="uBodyContainer">'||unistr('\000a')||
-'#REGION_POSITION_01#'||unistr('\000a')||
-'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#'||unistr('\000a')||
-'<div id="uTwoColumns" class="sideRightCol">'||unistr('\000a')||
-'  <div class="apex_grid_container">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_10" id="uMidCol">'||unistr('\000a')||
-'    #BOX_BODY#'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'    <div class="apex_cols apex_span_2" id="uRightCol">'||unistr('\000a')||
-'      <aside>'||unistr('\000a')||
-'        #REGION_POSITION_03#'||unistr('\000a')||
-'      </aside>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||
-''||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>'
- ,p_footer_template => 
-'<footer id="uFooter">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      <div class="uFooterContent">'||unistr('\000a')||
-'        #REGION_POSITION_05#'||unistr('\000a')||
-'        <div id="customize">#CUSTOMIZE#</div>'||unistr('\000a')||
-'        #SCREEN_READER_TOGGLE#'||unistr('\000a')||
-'        <span class="uFooterVersion">'||unistr('\000a')||
-'          #APP_VERSION#'||unistr('\000a')||
-'        </span>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</footer>'||unistr('\000a')||
-'#FORM_CLOSE#'||unistr('\000a')||
-'#DEVELOPER_TOOLBA'||
-'R#'||unistr('\000a')||
-'#GENERATED_CSS#'||unistr('\000a')||
-'#GENERATED_JAVASCRIPT#'||unistr('\000a')||
-'</body>'||unistr('\000a')||
-'</html>'
- ,p_success_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #SUCCESS_MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_current_tab => '<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_non_current_tab => '<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_notification_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_navigation_bar => '#BAR_BODY#'
- ,p_navbar_entry => '<a href="#LINK#">#TEXT#</a>#EDIT#'
- ,p_sidebar_def_reg_pos => 'REGION_POSITION_03'
- ,p_breadcrumb_def_reg_pos => 'REGION_POSITION_01'
- ,p_theme_class_id => 16
- ,p_grid_type => 'FIXED'
- ,p_grid_max_columns => 12
- ,p_grid_always_use_max_columns => false
- ,p_grid_has_column_span => true
- ,p_grid_emit_empty_leading_cols => true
- ,p_grid_emit_empty_trail_cols => false
- ,p_grid_template => '#ROWS#'
- ,p_grid_row_template => '<div class="apex_row">'||unistr('\000a')||
-'#COLUMNS#'||unistr('\000a')||
-'</div>'
- ,p_grid_column_template => '<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">'||unistr('\000a')||
-'#CONTENT#'||unistr('\000a')||
-'</div>'
- ,p_grid_first_column_attributes => 'alpha'
- ,p_grid_last_column_attributes => 'omega'
- ,p_grid_javascript_debug_code => '// show / hide grid'||unistr('\000a')||
-'function showGrid() {'||unistr('\000a')||
-'  apex.jQuery(''.apex_grid_container'').addClass(''showGrid'');'||unistr('\000a')||
-'};'||unistr('\000a')||
-'function hideGrid() {'||unistr('\000a')||
-'  apex.jQuery(''.apex_grid_container'').removeClass(''showGrid'');'||unistr('\000a')||
-'};'||unistr('\000a')||
-'apex.jQuery(document)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-on", showGrid)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-off", hideGrid);'
- ,p_has_edit_links => false
- ,p_translate_this_template => 'N'
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27221644252692977 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27221551444692973 + wwv_flow_api.g_id_offset
- ,p_name => 'Content Body'
- ,p_placeholder => 'BOX_BODY'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 10
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27221757974692977 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27221551444692973 + wwv_flow_api.g_id_offset
- ,p_name => 'Breadcrumb'
- ,p_placeholder => 'REGION_POSITION_01'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27221844695692977 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27221551444692973 + wwv_flow_api.g_id_offset
- ,p_name => 'Right Column'
- ,p_placeholder => 'REGION_POSITION_03'
- ,p_has_grid_support => false
- ,p_max_fixed_grid_columns => 2
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27221932144692977 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27221551444692973 + wwv_flow_api.g_id_offset
- ,p_name => 'Footer'
- ,p_placeholder => 'REGION_POSITION_05'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 12
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27222032896692977 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27221551444692973 + wwv_flow_api.g_id_offset
- ,p_name => 'Page Level Tabs'
- ,p_placeholder => 'REGION_POSITION_06'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27222141136692977 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27221551444692973 + wwv_flow_api.g_id_offset
- ,p_name => 'Header'
- ,p_placeholder => 'REGION_POSITION_07'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27222230446692977 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27221551444692973 + wwv_flow_api.g_id_offset
- ,p_name => 'Icon Nav Bar'
- ,p_placeholder => 'REGION_POSITION_08'
- ,p_has_grid_support => false
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/page/one_level_tabs_wizard_page
-prompt  ......Page template 27222348281692977
- 
-begin
- 
-wwv_flow_api.create_template (
-  p_id => 27222348281692977 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_theme_id => 25
- ,p_name => 'One Level Tabs - Wizard Page'
- ,p_is_popup => false
- ,p_javascript_file_urls => '#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'
- ,p_javascript_code_onload => 
-'loadWizardTrain();'
- ,p_css_file_urls => '#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'
- ,p_header_template => '<!--[if HTML5]><![endif]-->'||unistr('\000a')||
-'<!doctype html>'||unistr('\000a')||
-'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->'||unistr('\000a')||
-'<head>'||unistr('\000a')||
-'<!--[if !HTML5]>'||unistr('\000a')||
-'  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">'||unistr('\000a')||
-'<![endif]-->'||unistr('\000a')||
-'  <meta charset="UTF-8">'||unistr('\000a')||
-'  <title>#TITLE#</title>'||unistr('\000a')||
-'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'#APEX_CSS#'||unistr('\000a')||
-'#TEMPLATE_CSS#'||unistr('\000a')||
-'#THEME_CSS#'||unistr('\000a')||
-'#PAGE_CSS#'||unistr('\000a')||
-'#APEX_JAVASCRIPT#'||unistr('\000a')||
-'#TEMPLATE_JAVASCRIPT#'||unistr('\000a')||
-'#APPLICATION_JAVASCRIPT#'||unistr('\000a')||
-'#PAGE_JAVASCRIPT#'||unistr('\000a')||
-'#HEAD#'||unistr('\000a')||
-'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />'||unistr('\000a')||
-'</head>'||unistr('\000a')||
-'<body #ONLOAD#>'||unistr('\000a')||
-'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->'||unistr('\000a')||
-'#FORM_OPEN#'||unistr('\000a')||
-'<header id="uHeader">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      #REGION_POSITION_07#'||unistr('\000a')||
-'      <div class="logoBar">'||unistr('\000a')||
-'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>'||unistr('\000a')||
-'        <div class="userBlock">'||unistr('\000a')||
-'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">'||unistr('\000a')||
-'          <span>&APP_USER.</span>'||unistr('\000a')||
-'          #NAVIGATION_BAR#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'  <nav>'||unistr('\000a')||
-'    <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'      <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'        <ul class="uMainNav">'||unistr('\000a')||
-'          #TAB_CELLS#'||unistr('\000a')||
-'          #REGION_POSITION_06#'||unistr('\000a')||
-'        </ul>'||unistr('\000a')||
-'        #REGION_POSITION_08#'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </nav>'||unistr('\000a')||
-'</header>'
- ,p_box => 
-'<div id="uBodyContainer">'||unistr('\000a')||
-'#REGION_POSITION_01#'||unistr('\000a')||
-'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#'||unistr('\000a')||
-'<div id="uOneCol">'||unistr('\000a')||
-'<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <div class="cWizard">'||unistr('\000a')||
-'      <div class="cWizardHeader">'||unistr('\000a')||
-'        #REGION_POSITION_02#'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'      <div class="cWizardContentContainer">'||unistr('\000a')||
-'        <div class="cWizardContent">'||unistr('\000a')||
-'            #BOX_'||
-'BODY#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>'
- ,p_footer_template => 
-'<footer id="uFooter">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      <div class="uFooterContent">'||unistr('\000a')||
-'        <div id="customize">#CUSTOMIZE#</div>'||unistr('\000a')||
-'        #REGION_POSITION_05#'||unistr('\000a')||
-'        #SCREEN_READER_TOGGLE#'||unistr('\000a')||
-'        <span class="uFooterVersion">'||unistr('\000a')||
-'          #APP_VERSION#'||unistr('\000a')||
-'        </span>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</footer>'||unistr('\000a')||
-'#FORM_CLOSE#'||unistr('\000a')||
-'#DEVELOPER_TOOLBA'||
-'R#'||unistr('\000a')||
-'#GENERATED_CSS#'||unistr('\000a')||
-'#GENERATED_JAVASCRIPT#'||unistr('\000a')||
-'</body>'||unistr('\000a')||
-'</html>'
- ,p_success_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #SUCCESS_MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_current_tab => '<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_non_current_tab => '<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_notification_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_navigation_bar => '#BAR_BODY#'
- ,p_navbar_entry => '<a href="#LINK#">#TEXT#</a>#EDIT#'
- ,p_breadcrumb_def_reg_pos => 'REGION_POSITION_01'
- ,p_theme_class_id => 8
- ,p_grid_type => 'FIXED'
- ,p_grid_max_columns => 12
- ,p_grid_always_use_max_columns => false
- ,p_grid_has_column_span => true
- ,p_grid_emit_empty_leading_cols => true
- ,p_grid_emit_empty_trail_cols => false
- ,p_grid_template => '#ROWS#'
- ,p_grid_row_template => '<div class="apex_row">'||unistr('\000a')||
-'#COLUMNS#'||unistr('\000a')||
-'</div>'
- ,p_grid_column_template => '<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">'||unistr('\000a')||
-'#CONTENT#'||unistr('\000a')||
-'</div>'
- ,p_grid_first_column_attributes => 'alpha'
- ,p_grid_last_column_attributes => 'omega'
- ,p_grid_javascript_debug_code => 'apex.jQuery(document)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-on", showGrid)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-off", hideGrid);'
- ,p_has_edit_links => true
- ,p_translate_this_template => 'N'
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27222459550692978 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27222348281692977 + wwv_flow_api.g_id_offset
- ,p_name => 'Wizard Content Body'
- ,p_placeholder => 'BOX_BODY'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 11
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27222557616692979 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27222348281692977 + wwv_flow_api.g_id_offset
- ,p_name => 'Breadcrumb'
- ,p_placeholder => 'REGION_POSITION_01'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27222650752692979 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27222348281692977 + wwv_flow_api.g_id_offset
- ,p_name => 'Wizard Header'
- ,p_placeholder => 'REGION_POSITION_02'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27222758801692979 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27222348281692977 + wwv_flow_api.g_id_offset
- ,p_name => 'Footer'
- ,p_placeholder => 'REGION_POSITION_05'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 12
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27222833713692979 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27222348281692977 + wwv_flow_api.g_id_offset
- ,p_name => 'Page Level Tabs'
- ,p_placeholder => 'REGION_POSITION_06'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27222930912692979 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27222348281692977 + wwv_flow_api.g_id_offset
- ,p_name => 'Header'
- ,p_placeholder => 'REGION_POSITION_07'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27223046227692979 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27222348281692977 + wwv_flow_api.g_id_offset
- ,p_name => 'Icon Nav Bar'
- ,p_placeholder => 'REGION_POSITION_08'
- ,p_has_grid_support => false
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/page/popup
-prompt  ......Page template 27223157106692979
- 
-begin
- 
-wwv_flow_api.create_template (
-  p_id => 27223157106692979 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_theme_id => 25
- ,p_name => 'Popup'
- ,p_is_popup => false
- ,p_javascript_file_urls => '#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'
- ,p_css_file_urls => '#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'
- ,p_header_template => '<!--[if HTML5]><![endif]-->'||unistr('\000a')||
-'<!doctype html>'||unistr('\000a')||
-'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->'||unistr('\000a')||
-'<head>'||unistr('\000a')||
-'<!--[if !HTML5]>'||unistr('\000a')||
-'  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">'||unistr('\000a')||
-'<![endif]-->'||unistr('\000a')||
-'  <meta charset="UTF-8">'||unistr('\000a')||
-'  <title>#TITLE#</title>'||unistr('\000a')||
-'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'#APEX_CSS#'||unistr('\000a')||
-'#TEMPLATE_CSS#'||unistr('\000a')||
-'#THEME_CSS#'||unistr('\000a')||
-'#PAGE_CSS#'||unistr('\000a')||
-'#APEX_JAVASCRIPT#'||unistr('\000a')||
-'#TEMPLATE_JAVASCRIPT#'||unistr('\000a')||
-'#APPLICATION_JAVASCRIPT#'||unistr('\000a')||
-'#PAGE_JAVASCRIPT#'||unistr('\000a')||
-'#HEAD#'||unistr('\000a')||
-'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />'||unistr('\000a')||
-'</head>'||unistr('\000a')||
-'<body #ONLOAD# id="uPopup">'||unistr('\000a')||
-'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->'||unistr('\000a')||
-'#FORM_OPEN#'
- ,p_box => 
-'<div id="uBodyContainer">'||unistr('\000a')||
-'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#'||unistr('\000a')||
-'<div id="uOneCol">'||unistr('\000a')||
-'  <div class="apex_grid_container">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      #BOX_BODY#'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>'
- ,p_footer_template => 
-'#FORM_CLOSE#'||unistr('\000a')||
-'#DEVELOPER_TOOLBAR#'||unistr('\000a')||
-'#GENERATED_CSS#'||unistr('\000a')||
-'#GENERATED_JAVASCRIPT#'||unistr('\000a')||
-'</body>'||unistr('\000a')||
-'</html>'
- ,p_success_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #SUCCESS_MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_notification_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_navigation_bar => '#BAR_BODY#'
- ,p_navbar_entry => '<a href="#LINK#">#TEXT#</a>'
- ,p_region_table_cattributes => ' summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
- ,p_theme_class_id => 4
- ,p_grid_type => 'FIXED'
- ,p_grid_max_columns => 12
- ,p_grid_always_use_max_columns => false
- ,p_grid_has_column_span => true
- ,p_grid_emit_empty_leading_cols => true
- ,p_grid_emit_empty_trail_cols => false
- ,p_grid_template => '#ROWS#'
- ,p_grid_row_template => '<div class="apex_row">'||unistr('\000a')||
-'#COLUMNS#'||unistr('\000a')||
-'</div>'
- ,p_grid_column_template => '<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">'||unistr('\000a')||
-'#CONTENT#'||unistr('\000a')||
-'</div>'
- ,p_grid_first_column_attributes => 'alpha'
- ,p_grid_last_column_attributes => 'omega'
- ,p_grid_javascript_debug_code => 'apex.jQuery(document)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-on", showGrid)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-off", hideGrid);'
- ,p_has_edit_links => true
- ,p_translate_this_template => 'N'
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27223247167692980 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27223157106692979 + wwv_flow_api.g_id_offset
- ,p_name => 'Content Body'
- ,p_placeholder => 'BOX_BODY'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 12
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/page/printer_friendly
-prompt  ......Page template 27223332605692980
- 
-begin
- 
-wwv_flow_api.create_template (
-  p_id => 27223332605692980 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_theme_id => 25
- ,p_name => 'Printer Friendly'
- ,p_is_popup => false
- ,p_javascript_file_urls => '#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'
- ,p_css_file_urls => '#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'
- ,p_header_template => '<!--[if HTML5]><![endif]-->'||unistr('\000a')||
-'<!doctype html>'||unistr('\000a')||
-'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->'||unistr('\000a')||
-'<head>'||unistr('\000a')||
-'<!--[if !HTML5]>'||unistr('\000a')||
-'  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">'||unistr('\000a')||
-'<![endif]-->'||unistr('\000a')||
-'  <meta charset="UTF-8">'||unistr('\000a')||
-'  <title>#TITLE#</title>'||unistr('\000a')||
-'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'#APEX_CSS#'||unistr('\000a')||
-'#TEMPLATE_CSS#'||unistr('\000a')||
-'#THEME_CSS#'||unistr('\000a')||
-'#PAGE_CSS#'||unistr('\000a')||
-'#APEX_JAVASCRIPT#'||unistr('\000a')||
-'#TEMPLATE_JAVASCRIPT#'||unistr('\000a')||
-'#APPLICATION_JAVASCRIPT#'||unistr('\000a')||
-'#PAGE_JAVASCRIPT#'||unistr('\000a')||
-'#HEAD#'||unistr('\000a')||
-'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />'||unistr('\000a')||
-'</head>'||unistr('\000a')||
-'<body #ONLOAD# class="printerFriendly">'||unistr('\000a')||
-'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->'||unistr('\000a')||
-'#FORM_OPEN#'||unistr('\000a')||
-'<header id="uHeader">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      #REGION_POSITION_07#'||unistr('\000a')||
-'      <div class="logoBar">'||unistr('\000a')||
-'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>'||unistr('\000a')||
-'        <div class="userBlock">'||unistr('\000a')||
-'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">'||unistr('\000a')||
-'          <span>&APP_USER.</span>'||unistr('\000a')||
-'          #NAVIGATION_BAR#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</header>'
- ,p_box => 
-'<div id="uBodyContainer">'||unistr('\000a')||
-'#REGION_POSITION_01#'||unistr('\000a')||
-'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#'||unistr('\000a')||
-'<div id="uOneCol">'||unistr('\000a')||
-'  <div class="apex_grid_container">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      #BOX_BODY#'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>'
- ,p_footer_template => 
-'<footer id="uFooter">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      <div class="uFooterContent">'||unistr('\000a')||
-'        #REGION_POSITION_05#'||unistr('\000a')||
-'        <div id="customize">#CUSTOMIZE#</div>'||unistr('\000a')||
-'        #SCREEN_READER_TOGGLE#'||unistr('\000a')||
-'        <span class="uFooterVersion">'||unistr('\000a')||
-'          #APP_VERSION#'||unistr('\000a')||
-'        </span>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</footer>'||unistr('\000a')||
-'#FORM_CLOSE#'||unistr('\000a')||
-'#DEVELOPER_TOOLBA'||
-'R#'||unistr('\000a')||
-'#GENERATED_CSS#'||unistr('\000a')||
-'#GENERATED_JAVASCRIPT#'||unistr('\000a')||
-'</body>'||unistr('\000a')||
-'</html>'
- ,p_success_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #SUCCESS_MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_notification_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_navigation_bar => '#BAR_BODY#'
- ,p_navbar_entry => '<a href="#LINK#">#TEXT#</a>#EDIT#'
- ,p_region_table_cattributes => ' summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
- ,p_breadcrumb_def_reg_pos => 'REGION_POSITION_01'
- ,p_theme_class_id => 5
- ,p_error_page_template => '<div class="apex_cols apex_span_12">'||unistr('\000a')||
-'  <section class="uRegion uNoHeading uErrorRegion">'||unistr('\000a')||
-'    <div class="uRegionContent">'||unistr('\000a')||
-'      <p class="errorIcon"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" class="iconLarge error"/></p>'||unistr('\000a')||
-'      <p><strong>#MESSAGE#</strong></p>'||unistr('\000a')||
-'      <p>#ADDITIONAL_INFO#</p>'||unistr('\000a')||
-'      <div class="uErrorTechInfo">#TECHNICAL_INFO#</div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'    <div class="uRegionHeading">'||unistr('\000a')||
-'      <span class="uButtonContainer">'||unistr('\000a')||
-'        <button onclick="#BACK_LINK#" class="uButtonLarge uHotButton" type="button"><span>#OK#</span></button>'||unistr('\000a')||
-'      </span>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </section>'||unistr('\000a')||
-'</div>'
- ,p_grid_type => 'FIXED'
- ,p_grid_max_columns => 12
- ,p_grid_always_use_max_columns => false
- ,p_grid_has_column_span => true
- ,p_grid_emit_empty_leading_cols => true
- ,p_grid_emit_empty_trail_cols => false
- ,p_grid_template => '#ROWS#'
- ,p_grid_row_template => '<div class="apex_row">'||unistr('\000a')||
-'#COLUMNS#'||unistr('\000a')||
-'</div>'
- ,p_grid_column_template => '<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">'||unistr('\000a')||
-'#CONTENT#'||unistr('\000a')||
-'</div>'
- ,p_grid_first_column_attributes => 'alpha'
- ,p_grid_last_column_attributes => 'omega'
- ,p_grid_javascript_debug_code => 'apex.jQuery(document)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-on", showGrid)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-off", hideGrid);'
- ,p_has_edit_links => true
- ,p_translate_this_template => 'N'
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27223447433692981 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27223332605692980 + wwv_flow_api.g_id_offset
- ,p_name => 'Content Body'
- ,p_placeholder => 'BOX_BODY'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 12
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27223559539692981 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27223332605692980 + wwv_flow_api.g_id_offset
- ,p_name => 'Breadcrumb'
- ,p_placeholder => 'REGION_POSITION_01'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27223643786692981 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27223332605692980 + wwv_flow_api.g_id_offset
- ,p_name => 'Footer'
- ,p_placeholder => 'REGION_POSITION_05'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27223744565692981 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27223332605692980 + wwv_flow_api.g_id_offset
- ,p_name => 'Header'
- ,p_placeholder => 'REGION_POSITION_07'
- ,p_has_grid_support => false
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/page/two_level_tabs_left_sidebar
-prompt  ......Page template 27223858349692982
- 
-begin
- 
-wwv_flow_api.create_template (
-  p_id => 27223858349692982 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_theme_id => 25
- ,p_name => 'Two Level Tabs - Left Sidebar'
- ,p_is_popup => false
- ,p_javascript_file_urls => '#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'
- ,p_css_file_urls => '#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'
- ,p_header_template => '<!--[if HTML5]><![endif]-->'||unistr('\000a')||
-'<!doctype html>'||unistr('\000a')||
-'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->'||unistr('\000a')||
-'<head>'||unistr('\000a')||
-'<!--[if !HTML5]>'||unistr('\000a')||
-'  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">'||unistr('\000a')||
-'<![endif]-->'||unistr('\000a')||
-'  <meta charset="UTF-8">'||unistr('\000a')||
-'  <title>#TITLE#</title>'||unistr('\000a')||
-'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'#APEX_CSS#'||unistr('\000a')||
-'#TEMPLATE_CSS#'||unistr('\000a')||
-'#THEME_CSS#'||unistr('\000a')||
-'#PAGE_CSS#'||unistr('\000a')||
-'#APEX_JAVASCRIPT#'||unistr('\000a')||
-'#TEMPLATE_JAVASCRIPT#'||unistr('\000a')||
-'#APPLICATION_JAVASCRIPT#'||unistr('\000a')||
-'#PAGE_JAVASCRIPT#'||unistr('\000a')||
-'#HEAD#'||unistr('\000a')||
-'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />'||unistr('\000a')||
-'</head>'||unistr('\000a')||
-'<body #ONLOAD#>'||unistr('\000a')||
-'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->'||unistr('\000a')||
-'#FORM_OPEN#'||unistr('\000a')||
-'<div class="uParentTabs">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      <ul>'||unistr('\000a')||
-'        #PARENT_TAB_CELLS#'||unistr('\000a')||
-'      </ul>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>  '||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'<header id="uHeader">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      #REGION_POSITION_07#'||unistr('\000a')||
-'      <div class="logoBar">'||unistr('\000a')||
-'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>'||unistr('\000a')||
-'        <div class="userBlock">'||unistr('\000a')||
-'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">'||unistr('\000a')||
-'          <span>&APP_USER.</span>'||unistr('\000a')||
-'          #NAVIGATION_BAR#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'  <nav>'||unistr('\000a')||
-'    <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'      <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'        <ul class="uMainNav">'||unistr('\000a')||
-'          #TAB_CELLS#'||unistr('\000a')||
-'          #REGION_POSITION_06#'||unistr('\000a')||
-'        </ul>'||unistr('\000a')||
-'        #REGION_POSITION_08#'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </nav>'||unistr('\000a')||
-'</header>'
- ,p_box => 
-'<div id="uBodyContainer">'||unistr('\000a')||
-'#REGION_POSITION_01#'||unistr('\000a')||
-'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#'||unistr('\000a')||
-'<div id="uTwoColumns" class="sideLeftCol">'||unistr('\000a')||
-'  <div class="apex_grid_container">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_2" id="uLeftCol">'||unistr('\000a')||
-'      <aside>'||unistr('\000a')||
-'        #REGION_POSITION_02#'||unistr('\000a')||
-'      </aside>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'    <div class="apex_cols apex_span_10" id="uMidCol">'||unistr('\000a')||
-'    #BOX_BODY#'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'<'||
-'/div>'||unistr('\000a')||
-'</div>'
- ,p_footer_template => 
-'<footer id="uFooter">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      <div class="uFooterContent">'||unistr('\000a')||
-'        #REGION_POSITION_05#'||unistr('\000a')||
-'        <div id="customize">#CUSTOMIZE#</div>'||unistr('\000a')||
-'        #SCREEN_READER_TOGGLE#'||unistr('\000a')||
-'        <span class="uFooterVersion">'||unistr('\000a')||
-'          #APP_VERSION#'||unistr('\000a')||
-'        </span>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</footer>'||unistr('\000a')||
-'#FORM_CLOSE#'||unistr('\000a')||
-'#DEVELOPER_TOOLBA'||
-'R#'||unistr('\000a')||
-'#GENERATED_CSS#'||unistr('\000a')||
-'#GENERATED_JAVASCRIPT#'||unistr('\000a')||
-'</body>'||unistr('\000a')||
-'</html>'
- ,p_success_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #SUCCESS_MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_current_tab => '<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_non_current_tab => '<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_top_current_tab => '<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_top_non_curr_tab => '<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_notification_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_navigation_bar => '#BAR_BODY#'
- ,p_navbar_entry => '<a href="#LINK#">#TEXT#</a>#EDIT#'
- ,p_region_table_cattributes => ' summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
- ,p_sidebar_def_reg_pos => 'REGION_POSITION_02'
- ,p_breadcrumb_def_reg_pos => 'REGION_POSITION_01'
- ,p_theme_class_id => 18
- ,p_grid_type => 'FIXED'
- ,p_grid_max_columns => 12
- ,p_grid_always_use_max_columns => false
- ,p_grid_has_column_span => true
- ,p_grid_emit_empty_leading_cols => true
- ,p_grid_emit_empty_trail_cols => false
- ,p_grid_template => '#ROWS#'
- ,p_grid_row_template => '<div class="apex_row">'||unistr('\000a')||
-'#COLUMNS#'||unistr('\000a')||
-'</div>'
- ,p_grid_column_template => '<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">'||unistr('\000a')||
-'#CONTENT#'||unistr('\000a')||
-'</div>'
- ,p_grid_first_column_attributes => 'alpha'
- ,p_grid_last_column_attributes => 'omega'
- ,p_grid_javascript_debug_code => 'apex.jQuery(document)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-on", showGrid)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-off", hideGrid);'
- ,p_has_edit_links => true
- ,p_translate_this_template => 'N'
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27223934270692986 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27223858349692982 + wwv_flow_api.g_id_offset
- ,p_name => 'Content Body'
- ,p_placeholder => 'BOX_BODY'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 10
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27224034168692986 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27223858349692982 + wwv_flow_api.g_id_offset
- ,p_name => 'Breadcrumb'
- ,p_placeholder => 'REGION_POSITION_01'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27224156318692986 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27223858349692982 + wwv_flow_api.g_id_offset
- ,p_name => 'Left Column'
- ,p_placeholder => 'REGION_POSITION_02'
- ,p_has_grid_support => false
- ,p_max_fixed_grid_columns => 2
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27224241791692986 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27223858349692982 + wwv_flow_api.g_id_offset
- ,p_name => 'Footer'
- ,p_placeholder => 'REGION_POSITION_05'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 12
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27224356304692986 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27223858349692982 + wwv_flow_api.g_id_offset
- ,p_name => 'Page Level Tabs'
- ,p_placeholder => 'REGION_POSITION_06'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27224438981692986 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27223858349692982 + wwv_flow_api.g_id_offset
- ,p_name => 'Header'
- ,p_placeholder => 'REGION_POSITION_07'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27224537817692986 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27223858349692982 + wwv_flow_api.g_id_offset
- ,p_name => 'Icon Nav Bar'
- ,p_placeholder => 'REGION_POSITION_08'
- ,p_has_grid_support => false
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/page/two_level_tabs_left_and_right_sidebar
-prompt  ......Page template 27224650813692987
- 
-begin
- 
-wwv_flow_api.create_template (
-  p_id => 27224650813692987 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_theme_id => 25
- ,p_name => 'Two Level Tabs - Left and Right Sidebar'
- ,p_is_popup => false
- ,p_javascript_file_urls => '#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'
- ,p_css_file_urls => '#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'
- ,p_header_template => '<!--[if HTML5]><![endif]-->'||unistr('\000a')||
-'<!doctype html>'||unistr('\000a')||
-'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->'||unistr('\000a')||
-'<head>'||unistr('\000a')||
-'<!--[if !HTML5]>'||unistr('\000a')||
-'  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">'||unistr('\000a')||
-'<![endif]-->'||unistr('\000a')||
-'  <meta charset="UTF-8">'||unistr('\000a')||
-'  <title>#TITLE#</title>'||unistr('\000a')||
-'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'#APEX_CSS#'||unistr('\000a')||
-'#TEMPLATE_CSS#'||unistr('\000a')||
-'#THEME_CSS#'||unistr('\000a')||
-'#PAGE_CSS#'||unistr('\000a')||
-'#APEX_JAVASCRIPT#'||unistr('\000a')||
-'#TEMPLATE_JAVASCRIPT#'||unistr('\000a')||
-'#APPLICATION_JAVASCRIPT#'||unistr('\000a')||
-'#PAGE_JAVASCRIPT#'||unistr('\000a')||
-'#HEAD#'||unistr('\000a')||
-'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />'||unistr('\000a')||
-'</head>'||unistr('\000a')||
-'<body #ONLOAD#>'||unistr('\000a')||
-'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->'||unistr('\000a')||
-'#FORM_OPEN#'||unistr('\000a')||
-'<div class="uParentTabs">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      <ul>'||unistr('\000a')||
-'        #PARENT_TAB_CELLS#'||unistr('\000a')||
-'      </ul>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>  '||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'<header id="uHeader">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      #REGION_POSITION_07#'||unistr('\000a')||
-'      <div class="logoBar">'||unistr('\000a')||
-'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>'||unistr('\000a')||
-'        <div class="userBlock">'||unistr('\000a')||
-'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">'||unistr('\000a')||
-'          <span>&APP_USER.</span>'||unistr('\000a')||
-'          #NAVIGATION_BAR#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'  <nav>'||unistr('\000a')||
-'    <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'      <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'        <ul class="uMainNav">'||unistr('\000a')||
-'          #TAB_CELLS#'||unistr('\000a')||
-'          #REGION_POSITION_06#'||unistr('\000a')||
-'        </ul>'||unistr('\000a')||
-'        #REGION_POSITION_08#'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </nav>'||unistr('\000a')||
-'</header>'
- ,p_box => 
-'<div id="uBodyContainer">'||unistr('\000a')||
-'#REGION_POSITION_01#'||unistr('\000a')||
-'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#'||unistr('\000a')||
-'<div id="uThreeColumns">'||unistr('\000a')||
-'  <div class="apex_grid_container">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_2" id="uLeftCol">'||unistr('\000a')||
-'      <aside>'||unistr('\000a')||
-'        #REGION_POSITION_02#'||unistr('\000a')||
-'      </aside>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'    <div class="apex_cols apex_span_8" id="uMidCol">'||unistr('\000a')||
-'    #BOX_BODY#'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'    <div class="apex_cols ape'||
-'x_span_2" id="uRightCol">'||unistr('\000a')||
-'      <aside>'||unistr('\000a')||
-'        #REGION_POSITION_03#'||unistr('\000a')||
-'      </aside>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>'
- ,p_footer_template => 
-'<footer id="uFooter">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      <div class="uFooterContent">'||unistr('\000a')||
-'        #REGION_POSITION_05#'||unistr('\000a')||
-'        <div id="customize">#CUSTOMIZE#</div>'||unistr('\000a')||
-'        #SCREEN_READER_TOGGLE#'||unistr('\000a')||
-'        <span class="uFooterVersion">'||unistr('\000a')||
-'          #APP_VERSION#'||unistr('\000a')||
-'        </span>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</footer>'||unistr('\000a')||
-'#FORM_CLOSE#'||unistr('\000a')||
-'#DEVELOPER_TOOLBA'||
-'R#'||unistr('\000a')||
-'#GENERATED_CSS#'||unistr('\000a')||
-'#GENERATED_JAVASCRIPT#'||unistr('\000a')||
-'</body>'||unistr('\000a')||
-'</html>'
- ,p_success_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #SUCCESS_MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_current_tab => '<li><a class="active" href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_non_current_tab => '<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_top_current_tab => '<li><a class="active" href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_top_non_curr_tab => '<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_notification_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_navigation_bar => '#BAR_BODY#'
- ,p_navbar_entry => '<a href="#LINK#">#TEXT#</a>#EDIT#'
- ,p_region_table_cattributes => ' summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
- ,p_sidebar_def_reg_pos => 'REGION_POSITION_03'
- ,p_breadcrumb_def_reg_pos => 'REGION_POSITION_01'
- ,p_theme_class_id => 18
- ,p_grid_type => 'FIXED'
- ,p_grid_max_columns => 12
- ,p_grid_always_use_max_columns => false
- ,p_grid_has_column_span => true
- ,p_grid_emit_empty_leading_cols => true
- ,p_grid_emit_empty_trail_cols => false
- ,p_grid_template => '#ROWS#'
- ,p_grid_row_template => '<div class="apex_row">'||unistr('\000a')||
-'#COLUMNS#'||unistr('\000a')||
-'</div>'
- ,p_grid_column_template => '<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">'||unistr('\000a')||
-'#CONTENT#'||unistr('\000a')||
-'</div>'
- ,p_grid_first_column_attributes => 'alpha'
- ,p_grid_last_column_attributes => 'omega'
- ,p_grid_javascript_debug_code => 'apex.jQuery(document)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-on", showGrid)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-off", hideGrid);'
- ,p_has_edit_links => true
- ,p_translate_this_template => 'N'
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27224740402692988 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27224650813692987 + wwv_flow_api.g_id_offset
- ,p_name => 'Content Body'
- ,p_placeholder => 'BOX_BODY'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 8
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27224842599692988 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27224650813692987 + wwv_flow_api.g_id_offset
- ,p_name => 'Left Column'
- ,p_placeholder => 'REGION_POSITION_02'
- ,p_has_grid_support => false
- ,p_max_fixed_grid_columns => 2
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27224932327692988 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27224650813692987 + wwv_flow_api.g_id_offset
- ,p_name => 'Breadcrumb'
- ,p_placeholder => 'REGION_POSITON_01'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27225042228692988 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27224650813692987 + wwv_flow_api.g_id_offset
- ,p_name => 'Right Column'
- ,p_placeholder => 'REGION_POSITON_03'
- ,p_has_grid_support => false
- ,p_max_fixed_grid_columns => 2
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27225158518692988 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27224650813692987 + wwv_flow_api.g_id_offset
- ,p_name => 'Footer'
- ,p_placeholder => 'REGION_POSITON_05'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 12
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27225258433692988 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27224650813692987 + wwv_flow_api.g_id_offset
- ,p_name => 'Page Level Tabs'
- ,p_placeholder => 'REGION_POSITON_06'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27225340747692988 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27224650813692987 + wwv_flow_api.g_id_offset
- ,p_name => 'Header'
- ,p_placeholder => 'REGION_POSITON_07'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27225438856692988 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27224650813692987 + wwv_flow_api.g_id_offset
- ,p_name => 'Icon Nav Bar'
- ,p_placeholder => 'REGION_POSITON_08'
- ,p_has_grid_support => false
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/page/two_level_tabs_no_sidebar
-prompt  ......Page template 27225536500692989
- 
-begin
- 
-wwv_flow_api.create_template (
-  p_id => 27225536500692989 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_theme_id => 25
- ,p_name => 'Two Level Tabs - No Sidebar'
- ,p_is_popup => false
- ,p_javascript_file_urls => '#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'
- ,p_css_file_urls => '#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'
- ,p_header_template => '<!--[if HTML5]><![endif]-->'||unistr('\000a')||
-'<!doctype html>'||unistr('\000a')||
-'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->'||unistr('\000a')||
-'<head>'||unistr('\000a')||
-'<!--[if !HTML5]>'||unistr('\000a')||
-'  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">'||unistr('\000a')||
-'<![endif]-->'||unistr('\000a')||
-'  <meta charset="UTF-8">'||unistr('\000a')||
-'  <title>#TITLE#</title>'||unistr('\000a')||
-'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'#APEX_CSS#'||unistr('\000a')||
-'#TEMPLATE_CSS#'||unistr('\000a')||
-'#THEME_CSS#'||unistr('\000a')||
-'#PAGE_CSS#'||unistr('\000a')||
-'#APEX_JAVASCRIPT#'||unistr('\000a')||
-'#TEMPLATE_JAVASCRIPT#'||unistr('\000a')||
-'#APPLICATION_JAVASCRIPT#'||unistr('\000a')||
-'#PAGE_JAVASCRIPT#'||unistr('\000a')||
-'#HEAD#'||unistr('\000a')||
-'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />'||unistr('\000a')||
-'</head>'||unistr('\000a')||
-'<body #ONLOAD#>'||unistr('\000a')||
-'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->'||unistr('\000a')||
-'#FORM_OPEN#'||unistr('\000a')||
-'<div class="uParentTabs">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      <ul>'||unistr('\000a')||
-'        #PARENT_TAB_CELLS#'||unistr('\000a')||
-'      </ul>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>  '||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'<header id="uHeader">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      #REGION_POSITION_07#'||unistr('\000a')||
-'      <div class="logoBar">'||unistr('\000a')||
-'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>'||unistr('\000a')||
-'        <div class="userBlock">'||unistr('\000a')||
-'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">'||unistr('\000a')||
-'          <span>&APP_USER.</span>'||unistr('\000a')||
-'          #NAVIGATION_BAR#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'  <nav>'||unistr('\000a')||
-'    <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'      <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'        <ul class="uMainNav">'||unistr('\000a')||
-'          #TAB_CELLS#'||unistr('\000a')||
-'          #REGION_POSITION_06#'||unistr('\000a')||
-'        </ul>'||unistr('\000a')||
-'        #REGION_POSITION_08#'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </nav>'||unistr('\000a')||
-'</header>'
- ,p_box => 
-'<div id="uBodyContainer">'||unistr('\000a')||
-'#REGION_POSITION_01#'||unistr('\000a')||
-'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#'||unistr('\000a')||
-'<div id="uOneCol">'||unistr('\000a')||
-'  <div class="apex_grid_container">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      #BOX_BODY#'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>'
- ,p_footer_template => 
-'<footer id="uFooter">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      <div class="uFooterContent">'||unistr('\000a')||
-'        #REGION_POSITION_05#'||unistr('\000a')||
-'        <div id="customize">#CUSTOMIZE#</div>'||unistr('\000a')||
-'        #SCREEN_READER_TOGGLE#'||unistr('\000a')||
-'        <span class="uFooterVersion">'||unistr('\000a')||
-'          #APP_VERSION#'||unistr('\000a')||
-'        </span>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</footer>'||unistr('\000a')||
-'#FORM_CLOSE#'||unistr('\000a')||
-'#DEVELOPER_TOOLBA'||
-'R#'||unistr('\000a')||
-'#GENERATED_CSS#'||unistr('\000a')||
-'#GENERATED_JAVASCRIPT#'||unistr('\000a')||
-'</body>'||unistr('\000a')||
-'</html>'
- ,p_success_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #SUCCESS_MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_current_tab => '<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_non_current_tab => '<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_top_current_tab => '<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_top_non_curr_tab => '<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_notification_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_navigation_bar => '#BAR_BODY#'
- ,p_navbar_entry => '<a href="#LINK#">#TEXT#</a>#EDIT#'
- ,p_region_table_cattributes => ' summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
- ,p_breadcrumb_def_reg_pos => 'REGION_POSITION_01'
- ,p_theme_class_id => 2
- ,p_grid_type => 'FIXED'
- ,p_grid_max_columns => 12
- ,p_grid_always_use_max_columns => false
- ,p_grid_has_column_span => true
- ,p_grid_emit_empty_leading_cols => true
- ,p_grid_emit_empty_trail_cols => false
- ,p_grid_template => '#ROWS#'
- ,p_grid_row_template => '<div class="apex_row">'||unistr('\000a')||
-'#COLUMNS#'||unistr('\000a')||
-'</div>'
- ,p_grid_column_template => '<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">'||unistr('\000a')||
-'#CONTENT#'||unistr('\000a')||
-'</div>'
- ,p_grid_first_column_attributes => 'alpha'
- ,p_grid_last_column_attributes => 'omega'
- ,p_grid_javascript_debug_code => 'apex.jQuery(document)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-on", showGrid)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-off", hideGrid);'
- ,p_has_edit_links => true
- ,p_translate_this_template => 'N'
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27225630477692990 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27225536500692989 + wwv_flow_api.g_id_offset
- ,p_name => 'Content Body'
- ,p_placeholder => 'BOX_BODY'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 12
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27225740385692990 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27225536500692989 + wwv_flow_api.g_id_offset
- ,p_name => 'Breadcrumb'
- ,p_placeholder => 'REGION_POSITION_01'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27225845568692990 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27225536500692989 + wwv_flow_api.g_id_offset
- ,p_name => 'Footer'
- ,p_placeholder => 'REGION_POSITION_05'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 12
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27225933254692990 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27225536500692989 + wwv_flow_api.g_id_offset
- ,p_name => 'Page Level Tabs'
- ,p_placeholder => 'REGION_POSITION_06'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27226032899692990 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27225536500692989 + wwv_flow_api.g_id_offset
- ,p_name => 'Header'
- ,p_placeholder => 'REGION_POSITION_07'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27226138878692990 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27225536500692989 + wwv_flow_api.g_id_offset
- ,p_name => 'Icon Nav Bar'
- ,p_placeholder => 'REGION_POSITION_08'
- ,p_has_grid_support => false
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/page/two_level_tabs_right_sidebar
-prompt  ......Page template 27226258069692991
- 
-begin
- 
-wwv_flow_api.create_template (
-  p_id => 27226258069692991 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_theme_id => 25
- ,p_name => 'Two Level Tabs - Right Sidebar'
- ,p_is_popup => false
- ,p_javascript_file_urls => '#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'
- ,p_css_file_urls => '#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#'||unistr('\000a')||
-'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'
- ,p_header_template => '<!--[if HTML5]><![endif]-->'||unistr('\000a')||
-'<!doctype html>'||unistr('\000a')||
-'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->'||unistr('\000a')||
-'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->'||unistr('\000a')||
-'<head>'||unistr('\000a')||
-'<!--[if !HTML5]>'||unistr('\000a')||
-'  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">'||unistr('\000a')||
-'<![endif]-->'||unistr('\000a')||
-'  <meta charset="UTF-8">'||unistr('\000a')||
-'  <title>#TITLE#</title>'||unistr('\000a')||
-'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'#APEX_CSS#'||unistr('\000a')||
-'#TEMPLATE_CSS#'||unistr('\000a')||
-'#THEME_CSS#'||unistr('\000a')||
-'#PAGE_CSS#'||unistr('\000a')||
-'#APEX_JAVASCRIPT#'||unistr('\000a')||
-'#TEMPLATE_JAVASCRIPT#'||unistr('\000a')||
-'#APPLICATION_JAVASCRIPT#'||unistr('\000a')||
-'#PAGE_JAVASCRIPT#'||unistr('\000a')||
-'#HEAD#'||unistr('\000a')||
-'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />'||unistr('\000a')||
-'</head>'||unistr('\000a')||
-'<body #ONLOAD#>'||unistr('\000a')||
-'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->'||unistr('\000a')||
-'#FORM_OPEN#'||unistr('\000a')||
-'<div class="uParentTabs">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      <ul>'||unistr('\000a')||
-'        #PARENT_TAB_CELLS#'||unistr('\000a')||
-'      </ul>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>  '||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'<header id="uHeader">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      #REGION_POSITION_07#'||unistr('\000a')||
-'      <div class="logoBar">'||unistr('\000a')||
-'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>'||unistr('\000a')||
-'        <div class="userBlock">'||unistr('\000a')||
-'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">'||unistr('\000a')||
-'          <span>&APP_USER.</span>'||unistr('\000a')||
-'          #NAVIGATION_BAR#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'  <nav>'||unistr('\000a')||
-'    <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'      <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'        <ul class="uMainNav">'||unistr('\000a')||
-'          #TAB_CELLS#'||unistr('\000a')||
-'          #REGION_POSITION_06#'||unistr('\000a')||
-'        </ul>'||unistr('\000a')||
-'        #REGION_POSITION_08#'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </nav>'||unistr('\000a')||
-'</header>'
- ,p_box => 
-'<div id="uBodyContainer">'||unistr('\000a')||
-'#REGION_POSITION_01#'||unistr('\000a')||
-'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#'||unistr('\000a')||
-'<div id="uTwoColumns" class="sideRightCol">'||unistr('\000a')||
-'  <div class="apex_grid_container">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_10" id="uMidCol">'||unistr('\000a')||
-'    #BOX_BODY#'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'    <div class="apex_cols apex_span_2" id="uRightCol">'||unistr('\000a')||
-'      <aside>'||unistr('\000a')||
-'        #REGION_POSITION_03#'||unistr('\000a')||
-'      </aside>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||
-''||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>'
- ,p_footer_template => 
-'<footer id="uFooter">'||unistr('\000a')||
-'  <div class="apex_grid_container clearfix">'||unistr('\000a')||
-'    <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'      <div class="uFooterContent">'||unistr('\000a')||
-'        #REGION_POSITION_05#'||unistr('\000a')||
-'        <div id="customize">#CUSTOMIZE#</div>'||unistr('\000a')||
-'        #SCREEN_READER_TOGGLE#'||unistr('\000a')||
-'        <span class="uFooterVersion">'||unistr('\000a')||
-'          #APP_VERSION#'||unistr('\000a')||
-'        </span>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</footer>'||unistr('\000a')||
-'#FORM_CLOSE#'||unistr('\000a')||
-'#DEVELOPER_TOOLBA'||
-'R#'||unistr('\000a')||
-'#GENERATED_CSS#'||unistr('\000a')||
-'#GENERATED_JAVASCRIPT#'||unistr('\000a')||
-'</body>'||unistr('\000a')||
-'</html>'
- ,p_success_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #SUCCESS_MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_current_tab => '<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_non_current_tab => '<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_top_current_tab => '<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_top_non_curr_tab => '<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
- ,p_notification_message => '<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />'||unistr('\000a')||
-'        <div class="uMessageText">'||unistr('\000a')||
-'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>'||unistr('\000a')||
-'          #MESSAGE#'||unistr('\000a')||
-'        </div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_navigation_bar => '#BAR_BODY#'
- ,p_navbar_entry => '<a href="#LINK#">#TEXT#</a>#EDIT#'
- ,p_region_table_cattributes => ' summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
- ,p_sidebar_def_reg_pos => 'REGION_POSITION_03'
- ,p_breadcrumb_def_reg_pos => 'REGION_POSITION_01'
- ,p_theme_class_id => 2
- ,p_grid_type => 'FIXED'
- ,p_grid_max_columns => 12
- ,p_grid_always_use_max_columns => false
- ,p_grid_has_column_span => true
- ,p_grid_emit_empty_leading_cols => true
- ,p_grid_emit_empty_trail_cols => false
- ,p_grid_template => '#ROWS#'
- ,p_grid_row_template => '<div class="apex_row">'||unistr('\000a')||
-'#COLUMNS#'||unistr('\000a')||
-'</div>'
- ,p_grid_column_template => '<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">'||unistr('\000a')||
-'#CONTENT#'||unistr('\000a')||
-'</div>'
- ,p_grid_first_column_attributes => 'alpha'
- ,p_grid_last_column_attributes => 'omega'
- ,p_grid_javascript_debug_code => 'apex.jQuery(document)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-on", showGrid)'||unistr('\000a')||
-'    .on("apex-devbar-grid-debug-off", hideGrid);'
- ,p_has_edit_links => true
- ,p_translate_this_template => 'N'
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27226328194692992 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27226258069692991 + wwv_flow_api.g_id_offset
- ,p_name => 'Content Body'
- ,p_placeholder => 'BOX_BODY'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 10
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27226433487692992 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27226258069692991 + wwv_flow_api.g_id_offset
- ,p_name => 'Breadcrumb'
- ,p_placeholder => 'REGION_POSITION_01'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27226547529692992 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27226258069692991 + wwv_flow_api.g_id_offset
- ,p_name => 'Right Column'
- ,p_placeholder => 'REGION_POSITION_03'
- ,p_has_grid_support => false
- ,p_max_fixed_grid_columns => 2
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27226628219692992 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27226258069692991 + wwv_flow_api.g_id_offset
- ,p_name => 'Footer'
- ,p_placeholder => 'REGION_POSITION_05'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 12
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27226759735692992 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27226258069692991 + wwv_flow_api.g_id_offset
- ,p_name => 'Page Level Tabs'
- ,p_placeholder => 'REGION_POSITION_06'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27226843186692992 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27226258069692991 + wwv_flow_api.g_id_offset
- ,p_name => 'Header'
- ,p_placeholder => 'REGION_POSITION_07'
- ,p_has_grid_support => false
-  );
-wwv_flow_api.create_page_tmpl_display_point (
-  p_id => 27226938586692992 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_page_template_id => 27226258069692991 + wwv_flow_api.g_id_offset
- ,p_name => 'Icon Nav Bar'
- ,p_placeholder => 'REGION_POSITION_08'
- ,p_has_grid_support => false
-  );
-null;
- 
-end;
-/
-
-prompt  ...button templates
---
---application/shared_components/user_interface/templates/button/button
-prompt  ......Button Template 27232435147693043
- 
-begin
- 
-wwv_flow_api.create_button_templates (
-  p_id => 27232435147693043 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_template_name => 'Button'
- ,p_template => 
-'<button class="uButton #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button"><span>#LABEL#</span></button> '
- ,p_hot_template => 
-'<button class="uButton uHotButton #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button"><span>#LABEL#</span></button> '
- ,p_translate_this_template => 'N'
- ,p_theme_class_id => 1
- ,p_theme_id => 25
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/button/button_icon
-prompt  ......Button Template 27232537123693047
- 
-begin
- 
-wwv_flow_api.create_button_templates (
-  p_id => 27232537123693047 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_template_name => 'Button - Icon'
- ,p_template => 
-'<button class="uButton iconButton #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button"><span><i class="iL"></i>#LABEL#<i class="iR"></i></span></button> '
- ,p_hot_template => 
-'<button class="uButton uHotButton iconButton #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button"><span><i class="iL"></i>#LABEL#<i class="iR"></i></span></button> '
- ,p_translate_this_template => 'N'
- ,p_theme_class_id => 6
- ,p_theme_id => 25
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/button/button_icon_only
-prompt  ......Button Template 27232651890693047
- 
-begin
- 
-wwv_flow_api.create_button_templates (
-  p_id => 27232651890693047 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_template_name => 'Button - Icon Only'
- ,p_template => 
-'<button class="uButton iconOnly iconButton #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button" title="#LABEL#"><span><i></i></span></button> '
- ,p_hot_template => 
-'<button class="uButton uHotButton iconOnly iconButton #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button" title="#LABEL#"><span><i></i></span></button> '
- ,p_translate_this_template => 'N'
- ,p_theme_class_id => 7
- ,p_theme_id => 25
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/button/large_button
-prompt  ......Button Template 27232739282693047
- 
-begin
- 
-wwv_flow_api.create_button_templates (
-  p_id => 27232739282693047 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_template_name => 'Large Button'
- ,p_template => 
-'<button class="uButtonLarge #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button"><span>#LABEL#</span></button> '
- ,p_hot_template => 
-'<button class="uButtonLarge uHotButton #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button"><span>#LABEL#</span></button> '
- ,p_translate_this_template => 'N'
- ,p_theme_class_id => 5
- ,p_template_comment => 'Standard Button'
- ,p_theme_id => 25
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/button/large_button_icon
-prompt  ......Button Template 27232849994693047
- 
-begin
- 
-wwv_flow_api.create_button_templates (
-  p_id => 27232849994693047 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_template_name => 'Large Button - Icon'
- ,p_template => 
-'<button class="uButtonLarge iconButton #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button"><span><i class="iL"></i>#LABEL#<i class="iR"></i></span></button> '
- ,p_hot_template => 
-'<button class="uButtonLarge uHotButton iconButton #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button"><span><i class="iL"></i>#LABEL#<i class="iR"></i></span></button> '
- ,p_translate_this_template => 'N'
- ,p_theme_class_id => 5
- ,p_theme_id => 25
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/button/large_button_icon_only
-prompt  ......Button Template 27232940695693048
- 
-begin
- 
-wwv_flow_api.create_button_templates (
-  p_id => 27232940695693048 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_template_name => 'Large Button - Icon Only'
- ,p_template => 
-'<button class="uButtonLarge iconButton iconOnly #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button" title="#LABEL#"><span><i></i></span></button> '
- ,p_hot_template => 
-'<button class="uButtonLarge uHotButton iconButton iconOnly #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button" title="#LABEL#"><span><i></i></span></button> '
- ,p_translate_this_template => 'N'
- ,p_theme_class_id => 8
- ,p_theme_id => 25
-  );
-null;
- 
-end;
-/
-
----------------------------------------
-prompt  ...region templates
---
---application/shared_components/user_interface/templates/region/accessible_region_with_heading
-prompt  ......region template 27227059313692994
- 
-begin
- 
-wwv_flow_api.create_plug_template (
-  p_id => 27227059313692994 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_layout => 'TABLE'
- ,p_template => 
-'<section id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES# class="#REGION_CSS_CLASSES#">'||unistr('\000a')||
-'  <h1 class="visuallyhidden">#TITLE#</h1>'||unistr('\000a')||
-'  #BODY#'||unistr('\000a')||
-'</section>'
- ,p_page_plug_template_name => 'Accessible Region with Heading'
- ,p_theme_id => 25
- ,p_theme_class_id => 21
- ,p_default_label_alignment => 'RIGHT'
- ,p_default_field_alignment => 'LEFT'
- ,p_translate_this_template => 'N'
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/region/alert_region
-prompt  ......region template 27227133866693005
- 
-begin
- 
-wwv_flow_api.create_plug_template (
-  p_id => 27227133866693005 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_layout => 'TABLE'
- ,p_template => 
-'<section class="uRegion uWhiteRegion uAlertRegion #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>'||unistr('\000a')||
-'  <div class="uRegionHeading">'||unistr('\000a')||
-'    <h1>#TITLE#</h1>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'  <div class="uRegionContent clearfix">'||unistr('\000a')||
-'    #BODY#'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'    <span class="uButtonContainer">'||unistr('\000a')||
-'      #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#'||unistr('\000a')||
-'    </span>'||unistr('\000a')||
-'</section>'
- ,p_page_plug_template_name => 'Alert Region'
- ,p_plug_table_bgcolor => '#ffffff'
- ,p_theme_id => 25
- ,p_theme_class_id => 10
- ,p_plug_heading_bgcolor => '#ffffff'
- ,p_plug_font_size => '-1'
- ,p_default_label_alignment => 'RIGHT'
- ,p_default_field_alignment => 'LEFT'
- ,p_translate_this_template => 'N'
- ,p_template_comment => 'Used for alerts and confirmations.  Please use a region image for the success/warning icon'
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/region/borderless_region
-prompt  ......region template 27227248630693006
- 
-begin
- 
-wwv_flow_api.create_plug_template (
-  p_id => 27227248630693006 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_layout => 'TABLE'
- ,p_template => 
-'<section class="uRegion uBorderlessRegion #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>'||unistr('\000a')||
-'  <div class="uRegionHeading">'||unistr('\000a')||
-'    <h1>#TITLE#</h1>'||unistr('\000a')||
-'    <span class="uButtonContainer">'||unistr('\000a')||
-'      #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#'||unistr('\000a')||
-'    </span>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'  <div class="uRegionContent clearfix">'||unistr('\000a')||
-'    #BODY#'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</section>'
- ,p_page_plug_template_name => 'Borderless Region'
- ,p_theme_id => 25
- ,p_theme_class_id => 7
- ,p_default_label_alignment => 'RIGHT'
- ,p_default_field_alignment => 'LEFT'
- ,p_translate_this_template => 'N'
- ,p_template_comment => 'Use this region template when you want to contain content without a border.'||unistr('\000a')||
-''||unistr('\000a')||
-'TITLE=YES'||unistr('\000a')||
-'BUTTONS=YES'||unistr('\000a')||
-'100% WIDTH=NO'
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/region/breadcrumb_region
-prompt  ......region template 27227332881693006
- 
-begin
- 
-wwv_flow_api.create_plug_template (
-  p_id => 27227332881693006 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_layout => 'TABLE'
- ,p_template => 
-'<div class="uBreadcrumbsContainer #REGION_CSS_CLASSES#" #REGION_ATTRIBUTES# id="#REGION_STATIC_ID#">'||unistr('\000a')||
-'<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <div class="uBreadcrumbs">'||unistr('\000a')||
-'      #BODY#'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>'
- ,p_page_plug_template_name => 'Breadcrumb Region'
- ,p_theme_id => 25
- ,p_theme_class_id => 6
- ,p_default_label_alignment => 'RIGHT'
- ,p_default_field_alignment => 'LEFT'
- ,p_translate_this_template => 'N'
- ,p_template_comment => 'Use this region template to contain breadcrumb menus.  Breadcrumb menus are implemented using breadcrumbs.  Breadcrumb menus are designed to displayed in #REGION_POSITION_01#'||unistr('\000a')||
-''||unistr('\000a')||
-''||unistr('\000a')||
-''||unistr('\000a')||
-'<div id="uBreadcrumbsContainer #REGION_CSS_CLASSES#" #REGION_ATTRIBUTES# id="#REGION_STATIC_ID#">'||unistr('\000a')||
-'<div class="apex_grid_container">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_12">'||unistr('\000a')||
-'    <div id="uBreadcrumbs">'||unistr('\000a')||
-'      #BODY#'||unistr('\000a')||
-'      <div class="uBreadcrumbsBG">'||unistr('\000a')||
-'        <div class="uLeft"></div>'||unistr('\000a')||
-'        <div class="uRight"></div>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'    </div>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>'
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/region/button_region_with_title
-prompt  ......region template 27227439750693007
- 
-begin
- 
-wwv_flow_api.create_plug_template (
-  p_id => 27227439750693007 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_layout => 'TABLE'
- ,p_template => 
-'<section class="uButtonRegion #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>'||unistr('\000a')||
-'  <div class="uButtonRegionContentContainer">'||unistr('\000a')||
-'    <h1>#TITLE#</h1>'||unistr('\000a')||
-'    <span class="uButtonContainer">'||unistr('\000a')||
-'      #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#'||unistr('\000a')||
-'    </span>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</section>'
- ,p_page_plug_template_name => 'Button Region with Title'
- ,p_theme_id => 25
- ,p_theme_class_id => 4
- ,p_default_label_alignment => 'RIGHT'
- ,p_default_field_alignment => 'LEFT'
- ,p_translate_this_template => 'N'
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/region/button_region_without_title
-prompt  ......region template 27227545554693008
- 
-begin
- 
-wwv_flow_api.create_plug_template (
-  p_id => 27227545554693008 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_layout => 'TABLE'
- ,p_template => 
-'<section class="uButtonRegion #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>'||unistr('\000a')||
-'  <div class="uButtonRegionContentContainer">'||unistr('\000a')||
-'    <div class="uButtonRegionContent">#BODY#</div>'||unistr('\000a')||
-'    <span class="uButtonContainer">'||unistr('\000a')||
-'      #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#'||unistr('\000a')||
-'    </span>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</section>'
- ,p_page_plug_template_name => 'Button Region without Title'
- ,p_theme_id => 25
- ,p_theme_class_id => 17
- ,p_default_label_alignment => 'RIGHT'
- ,p_default_field_alignment => 'LEFT'
- ,p_translate_this_template => 'N'
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/region/content_frame_body_container
-prompt  ......region template 27227658392693008
- 
-begin
- 
-wwv_flow_api.create_plug_template (
-  p_id => 27227658392693008 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_layout => 'TABLE'
- ,p_template => 
-'#SUB_REGION_HEADERS#'||unistr('\000a')||
-'#BODY#'||unistr('\000a')||
-'<div class="uFrameContainer" class="#REGION_CSS_CLASSES# #REGION_ATTRIBUTES# id="#REGION_STATIC_ID#">'||unistr('\000a')||
-'#SUB_REGIONS#'||unistr('\000a')||
-'</div>'
- ,p_sub_plug_header_template => '<div class="uFrameRegionSelector clearfix">'||unistr('\000a')||
-'  <ul>'||unistr('\000a')||
-'    <li><a href="javascript:void(0);" class="showAllLink active"><span>Show All</span></a></li>'||unistr('\000a')||
-'    #ENTRIES#'||unistr('\000a')||
-'  </ul>'||unistr('\000a')||
-'</div>'
- ,p_sub_plug_header_entry_templ => '<li><a href="javascript:void(0);" id="sub_#SUB_REGION_ID#"><span>#SUB_REGION_TITLE#</span></a></li>'
- ,p_page_plug_template_name => 'Content Frame Body Container'
- ,p_theme_id => 25
- ,p_theme_class_id => 7
- ,p_default_label_alignment => 'RIGHT'
- ,p_default_field_alignment => 'LEFT'
- ,p_translate_this_template => 'N'
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/region/div_region_with_id
-prompt  ......region template 27227754680693009
- 
-begin
- 
-wwv_flow_api.create_plug_template (
-  p_id => 27227754680693009 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_layout => 'TABLE'
- ,p_template => 
-'<div id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES# class="#REGION_CSS_CLASSES#"> '||unistr('\000a')||
-'#BODY#'||unistr('\000a')||
-'#CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#'||unistr('\000a')||
-'</div>'
- ,p_page_plug_template_name => 'DIV Region with ID'
- ,p_theme_id => 25
- ,p_theme_class_id => 22
- ,p_default_label_alignment => 'RIGHT'
- ,p_default_field_alignment => 'LEFT'
- ,p_translate_this_template => 'N'
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/region/form_region
-prompt  ......region template 27227837100693009
- 
-begin
- 
-wwv_flow_api.create_plug_template (
-  p_id => 27227837100693009 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_layout => 'TABLE'
- ,p_template => 
-'<section class="uRegion #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>'||unistr('\000a')||
-'  <div class="uRegionHeading">'||unistr('\000a')||
-'    <h1>#TITLE#</h1>'||unistr('\000a')||
-'    <span class="uButtonContainer">'||unistr('\000a')||
-'      #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#'||unistr('\000a')||
-'    </span>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'  <div class="uRegionContent clearfix">'||unistr('\000a')||
-'    #BODY#'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</section>'
- ,p_page_plug_template_name => 'Form Region'
- ,p_plug_table_bgcolor => '#f7f7e7'
- ,p_theme_id => 25
- ,p_theme_class_id => 8
- ,p_plug_heading_bgcolor => '#f7f7e7'
- ,p_plug_font_size => '-1'
- ,p_default_label_alignment => 'RIGHT'
- ,p_default_field_alignment => 'LEFT'
- ,p_translate_this_template => 'N'
- ,p_template_comment => 'Red Theme'
-  );
-wwv_flow_api.create_plug_tmpl_display_point (
-  p_id => 27227940497693009 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_plug_template_id => 27227837100693009 + wwv_flow_api.g_id_offset
- ,p_name => 'Region Body'
- ,p_placeholder => 'BODY'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => -1
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/region/hide_and_show_region_expanded
-prompt  ......region template 27228053041693010
- 
-begin
- 
-wwv_flow_api.create_plug_template (
-  p_id => 27228053041693010 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_layout => 'TABLE'
- ,p_template => 
-'<section class="uRegion uHideShowRegion #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>'||unistr('\000a')||
-'  <div class="uRegionHeading">'||unistr('\000a')||
-'    <h1>'||unistr('\000a')||
-'      <a href="javascript:void(0)" class="uRegionControl"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="Hide/Show"/></a>'||unistr('\000a')||
-'      #TITLE#'||unistr('\000a')||
-'    </h1>'||unistr('\000a')||
-'    <span class="uButtonContainer">'||unistr('\000a')||
-'      #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE'||
-'2##EXPAND##COPY##HELP#'||unistr('\000a')||
-'    </span>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'  <div class="uRegionContent clearfix">'||unistr('\000a')||
-'    #BODY#'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</section>'
- ,p_page_plug_template_name => 'Hide and Show Region (Expanded)'
- ,p_theme_id => 25
- ,p_theme_class_id => 1
- ,p_default_label_alignment => 'RIGHT'
- ,p_default_field_alignment => 'LEFT'
- ,p_translate_this_template => 'N'
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/region/hide_and_show_region_hidden
-prompt  ......region template 27228134620693011
- 
-begin
- 
-wwv_flow_api.create_plug_template (
-  p_id => 27228134620693011 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_layout => 'TABLE'
- ,p_template => 
-'<section class="uRegion uHideShowRegion #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>'||unistr('\000a')||
-'  <div class="uRegionHeading">'||unistr('\000a')||
-'    <h1>'||unistr('\000a')||
-'      <a href="javascript:void(0)" class="uRegionControl uRegionCollapsed"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="Hide/Show"/></a>'||unistr('\000a')||
-'      #TITLE#'||unistr('\000a')||
-'    </h1>'||unistr('\000a')||
-'    <span class="uButtonContainer">'||unistr('\000a')||
-'      #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANG'||
-'E##CREATE##CREATE2##EXPAND##COPY##HELP#'||unistr('\000a')||
-'    </span>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'  <div class="uRegionContent clearfix" style="display: none;">'||unistr('\000a')||
-'    #BODY#'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</section>'
- ,p_page_plug_template_name => 'Hide and Show Region (Hidden)'
- ,p_theme_id => 25
- ,p_theme_class_id => 1
- ,p_default_label_alignment => 'RIGHT'
- ,p_default_field_alignment => 'LEFT'
- ,p_translate_this_template => 'N'
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/region/interactive_report_region
-prompt  ......region template 27228238402693011
- 
-begin
- 
-wwv_flow_api.create_plug_template (
-  p_id => 27228238402693011 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_layout => 'TABLE'
- ,p_template => 
-'<section class="uIRRegion" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES# class="#REGION_CSS_CLASSES#">'||unistr('\000a')||
-'  <h1 class="visuallyhidden">#TITLE#</h1>'||unistr('\000a')||
-'  #BODY#'||unistr('\000a')||
-'</section>'
- ,p_page_plug_template_name => 'Interactive Report Region'
- ,p_theme_id => 25
- ,p_theme_class_id => 21
- ,p_default_label_alignment => 'RIGHT'
- ,p_default_field_alignment => 'LEFT'
- ,p_translate_this_template => 'N'
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/region/modal_region
-prompt  ......region template 27228353205693011
- 
-begin
- 
-wwv_flow_api.create_plug_template (
-  p_id => 27228353205693011 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_layout => 'TABLE'
- ,p_template => 
-'<div class="apex_grid_container modal_grid">'||unistr('\000a')||
-'  <div class="apex_cols apex_span_8 modal_col">'||unistr('\000a')||
-'    <section class="uRegion uWhiteRegion uModalRegion uAlertRegion #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>'||unistr('\000a')||
-'      <div class="uRegionHeading">'||unistr('\000a')||
-'        <h1>#TITLE#</h1>'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'      <div class="uRegionContent clearfix">'||unistr('\000a')||
-'        #BODY#'||unistr('\000a')||
-'      </div>'||unistr('\000a')||
-'        <span class'||
-'="uButtonContainer">'||unistr('\000a')||
-'          #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#'||unistr('\000a')||
-'        </span>'||unistr('\000a')||
-'    </section>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</div>'
- ,p_page_plug_template_name => 'Modal Region'
- ,p_plug_table_bgcolor => '#ffffff'
- ,p_theme_id => 25
- ,p_theme_class_id => 9
- ,p_plug_heading_bgcolor => '#ffffff'
- ,p_plug_font_size => '-1'
- ,p_default_label_alignment => 'RIGHT'
- ,p_default_field_alignment => 'LEFT'
- ,p_translate_this_template => 'N'
- ,p_template_comment => 'Red Theme'
-  );
-wwv_flow_api.create_plug_tmpl_display_point (
-  p_id => 27228438694693011 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_plug_template_id => 27228353205693011 + wwv_flow_api.g_id_offset
- ,p_name => 'Region Body'
- ,p_placeholder => 'BODY'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => 6
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/region/region_without_buttons_and_titles
-prompt  ......region template 27228552936693011
- 
-begin
- 
-wwv_flow_api.create_plug_template (
-  p_id => 27228552936693011 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_layout => 'TABLE'
- ,p_template => 
-'<section class="uRegion uNoHeading #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>'||unistr('\000a')||
-'  <div class="uRegionContent clearfix">'||unistr('\000a')||
-'    #BODY#'||unistr('\000a')||
-'#CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</section>'
- ,p_page_plug_template_name => 'Region without Buttons and Titles'
- ,p_theme_id => 25
- ,p_theme_class_id => 19
- ,p_default_label_alignment => 'RIGHT'
- ,p_default_field_alignment => 'LEFT'
- ,p_translate_this_template => 'N'
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/region/sidebar_region
-prompt  ......region template 27228631004693012
- 
-begin
- 
-wwv_flow_api.create_plug_template (
-  p_id => 27228631004693012 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_layout => 'TABLE'
- ,p_template => 
-'<section class="uRegion #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>'||unistr('\000a')||
-'  <div class="uRegionHeading">'||unistr('\000a')||
-'    <h1>#TITLE#</h1>'||unistr('\000a')||
-'    <span class="uButtonContainer">'||unistr('\000a')||
-'      #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#'||unistr('\000a')||
-'    </span>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'  <div class="uRegionContent clearfix">'||unistr('\000a')||
-'    #BODY#'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</section>'
- ,p_page_plug_template_name => 'Sidebar Region'
- ,p_plug_table_bgcolor => '#f7f7e7'
- ,p_theme_id => 25
- ,p_theme_class_id => 2
- ,p_plug_heading_bgcolor => '#f7f7e7'
- ,p_plug_font_size => '-1'
- ,p_default_label_alignment => 'RIGHT'
- ,p_default_field_alignment => 'LEFT'
- ,p_translate_this_template => 'N'
- ,p_template_comment => '<table border="0" cellpadding="0" cellspacing="0">'||unistr('\000a')||
-'        <tr>'||unistr('\000a')||
-'          <td rowspan="2" valign="top" width="4" bgcolor="#FF0000"><img src="#IMAGE_PREFIX#tl_img.gif" border="0" width="4" height="18" alt="" /></td>'||unistr('\000a')||
-'          <td bgcolor="#000000" height="1"><img src="#IMAGE_PREFIX#stretch.gif" width="142" height="1" border="0" alt="" /></td>'||unistr('\000a')||
-'          <td rowspan="2" valign="top" width="4" bgcolor="#FF0000"><img src="#IMAGE_PREFIX#tr_img.gif" border="0" width="4" height="18" alt="" /></td>'||unistr('\000a')||
-'        </tr>'||unistr('\000a')||
-'        <tr>'||unistr('\000a')||
-'          <td bgcolor="#FF0000" height="16">'||unistr('\000a')||
-'            <table border="0" cellpadding="0" cellspacing="0" width="100%">'||unistr('\000a')||
-'              <tr>'||unistr('\000a')||
-'                <td align=middle valign="top">'||unistr('\000a')||
-'                  <div align="center">'||unistr('\000a')||
-'                     <font color="#ffffff" face="Arial, Helvetica, sans-serif" size="1">'||unistr('\000a')||
-'                      <b>#TITLE# </b></font></div>'||unistr('\000a')||
-'                </td>'||unistr('\000a')||
-'              </tr>'||unistr('\000a')||
-'            </table>'||unistr('\000a')||
-'          </td>'||unistr('\000a')||
-'        </tr>'||unistr('\000a')||
-'</table>'||unistr('\000a')||
-'<table border="0" cellpadding="0" cellspacing="0">'||unistr('\000a')||
-'   <tr>'||unistr('\000a')||
-'   <td bgcolor="#000000" width="1" height="96"><img src="#IMAGE_PREFIX#stretch.gif" width="1" height="1" border="0" alt="" /></td>'||unistr('\000a')||
-'   <td valign="top" height="96"><img src="#IMAGE_PREFIX#stretch.gif" width="146" height="1" border="0" alt="" /><br />'||unistr('\000a')||
-'            <table border="0" cellpadding="1" cellspacing="0" width="146" summary="">'||unistr('\000a')||
-'              <tr>'||unistr('\000a')||
-'                <td colspan="2">'||unistr('\000a')||
-'                  <table border="0" cellpadding="2" cellspacing="0" width="124" summary="">'||unistr('\000a')||
-'                    <tr>'||unistr('\000a')||
-'                      <td>&nbsp;</td>'||unistr('\000a')||
-'                      <td valign="top" width="106">'||unistr('\000a')||
-'                        <P><FONT face="arial, helvetica" size="1">'||unistr('\000a')||
-'                            #BODY#'||unistr('\000a')||
-'                           </font>'||unistr('\000a')||
-'                        </P>'||unistr('\000a')||
-'                      </td>'||unistr('\000a')||
-'                    </tr>'||unistr('\000a')||
-'                  </table>'||unistr('\000a')||
-'            </table>'||unistr('\000a')||
-'          </td>'||unistr('\000a')||
-'          <td bgcolor="#000000" width="1" height="96"><img src="#IMAGE_PREFIX#stretch.gif" width="1" height="1" border="0" alt="" /></td>'||unistr('\000a')||
-'          <td bgcolor="#9a9c9a" width="1" height="96"><img src="#IMAGE_PREFIX#stretch.gif" width="1" height="1" border="0" alt="" /></td>'||unistr('\000a')||
-'          <td bgcolor="#b3b4b3" width="1" height="96"><img src="#IMAGE_PREFIX#stretch.gif" width="1" height="1" border="0" alt="" /></td>'||unistr('\000a')||
-'        </tr>'||unistr('\000a')||
-'      </table>'||unistr('\000a')||
-'      <table border="0" cellpadding="0" cellspacing="0">'||unistr('\000a')||
-'        <tr>'||unistr('\000a')||
-'          <td rowspan="4" valign="top" width="4"><img src="#IMAGE_PREFIX#bl_img.gif" border="0" width="4" height="6" alt="" /></td>'||unistr('\000a')||
-'          <td bgcolor="#ffffff" height="2"><img src="#IMAGE_PREFIX#stretch.gif" width="142" height="1" border="0" alt="" /></td>'||unistr('\000a')||
-'          <td rowspan="4" valign="top" width="4"><img src="#IMAGE_PREFIX#br_img.gif" border="0" width="4" height="6" alt="" /></td>'||unistr('\000a')||
-'        </tr>'||unistr('\000a')||
-'        <tr>'||unistr('\000a')||
-'          <td bgcolor="#000000" width="1"><img src="#IMAGE_PREFIX#stretch.gif" width="1" height="1" border="0" alt="" /></td>'||unistr('\000a')||
-'        </tr>'||unistr('\000a')||
-'        <tr>'||unistr('\000a')||
-'          <td bgcolor="#9a9c9a" width="1"><img src="#IMAGE_PREFIX#stretch.gif" width="1" height="1" border="0" alt="" /></td>'||unistr('\000a')||
-'        </tr>'||unistr('\000a')||
-'        <tr>'||unistr('\000a')||
-'          <td bgcolor="#b3b4b3" width="1" height="2"><img src="#IMAGE_PREFIX#stretch.gif" width="1" height="1" border="0" alt="" /></td>'||unistr('\000a')||
-'        </tr>'||unistr('\000a')||
-'</table>'||unistr('\000a')||
-''
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/region/standard_region
-prompt  ......region template 27228745519693013
- 
-begin
- 
-wwv_flow_api.create_plug_template (
-  p_id => 27228745519693013 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_layout => 'TABLE'
- ,p_template => 
-'<section class="uRegion #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>'||unistr('\000a')||
-'  <div class="uRegionHeading">'||unistr('\000a')||
-'    <h1>#TITLE#</h1>'||unistr('\000a')||
-'    <span class="uButtonContainer">'||unistr('\000a')||
-'      #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#'||unistr('\000a')||
-'    </span>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'  <div class="uRegionContent clearfix">'||unistr('\000a')||
-'    #BODY#'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</section>'
- ,p_page_plug_template_name => 'Standard Region'
- ,p_plug_table_bgcolor => '#ffffff'
- ,p_theme_id => 25
- ,p_theme_class_id => 9
- ,p_plug_heading_bgcolor => '#ffffff'
- ,p_plug_font_size => '-1'
- ,p_default_label_alignment => 'RIGHT'
- ,p_default_field_alignment => 'LEFT'
- ,p_translate_this_template => 'N'
- ,p_template_comment => 'Red Theme'
-  );
-wwv_flow_api.create_plug_tmpl_display_point (
-  p_id => 27228859665693014 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_plug_template_id => 27228745519693013 + wwv_flow_api.g_id_offset
- ,p_name => 'Region Body'
- ,p_placeholder => 'BODY'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => -1
-  );
-wwv_flow_api.create_plug_tmpl_display_point (
-  p_id => 27228953603693014 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_plug_template_id => 27228745519693013 + wwv_flow_api.g_id_offset
- ,p_name => 'Sub Regions'
- ,p_placeholder => 'SUB_REGIONS'
- ,p_has_grid_support => true
- ,p_max_fixed_grid_columns => -1
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/region/standard_region_no_padding
-prompt  ......region template 27229058389693014
- 
-begin
- 
-wwv_flow_api.create_plug_template (
-  p_id => 27229058389693014 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_layout => 'TABLE'
- ,p_template => 
-'<section class="uRegion uRegionNoPadding #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>'||unistr('\000a')||
-'  <div class="uRegionHeading">'||unistr('\000a')||
-'    <h1>#TITLE#</h1>'||unistr('\000a')||
-'    <span class="uButtonContainer">'||unistr('\000a')||
-'      #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#'||unistr('\000a')||
-'    </span>'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'  <div class="uRegionContent clearfix">'||unistr('\000a')||
-'    #BODY#'||unistr('\000a')||
-'  </div>'||unistr('\000a')||
-'</section>'
- ,p_page_plug_template_name => 'Standard Region - No Padding'
- ,p_plug_table_bgcolor => '#ffffff'
- ,p_theme_id => 25
- ,p_theme_class_id => 13
- ,p_plug_heading_bgcolor => '#ffffff'
- ,p_plug_font_size => '-1'
- ,p_default_label_alignment => 'RIGHT'
- ,p_default_field_alignment => 'LEFT'
- ,p_translate_this_template => 'N'
- ,p_template_comment => 'Red Theme'
-  );
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/region/wizard_buttons
-prompt  ......region template 27229157266693014
- 
-begin
- 
-wwv_flow_api.create_plug_template (
-  p_id => 27229157266693014 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_layout => 'TABLE'
- ,p_template => 
-'<div class="cWizardButtons cWizardButtonsLeft">'||unistr('\000a')||
-'#PREVIOUS##CLOSE#'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'<div class="cWizardButtons cWizardButtonsRight">'||unistr('\000a')||
-'#NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#'||unistr('\000a')||
-'</div>'
- ,p_page_plug_template_name => 'Wizard Buttons'
- ,p_theme_id => 25
- ,p_theme_class_id => 28
- ,p_default_label_alignment => 'RIGHT'
- ,p_default_field_alignment => 'LEFT'
- ,p_translate_this_template => 'N'
-  );
-null;
- 
-end;
-/
-
-prompt  ...List Templates
---
---application/shared_components/user_interface/templates/list/button_list
-prompt  ......list template 27230328466693025
- 
-begin
- 
-declare
-  t varchar2(32767) := null;
-  t2 varchar2(32767) := null;
-  t3 varchar2(32767) := null;
-  t4 varchar2(32767) := null;
-  t5 varchar2(32767) := null;
-  t6 varchar2(32767) := null;
-  t7 varchar2(32767) := null;
-  t8 varchar2(32767) := null;
-  l_clob clob;
-  l_clob2 clob;
-  l_clob3 clob;
-  l_clob4 clob;
-  l_clob5 clob;
-  l_clob6 clob;
-  l_clob7 clob;
-  l_clob8 clob;
-  l_length number := 1;
-begin
-t:=t||'<button onclick="javascript:location.href=''#LINK#''" class="uButton uHotButton #A01#" type="button"><span>#TEXT#</span></a> ';
-
-t2:=t2||'<button onclick="javascript:location.href=''#LINK#''" class="uButton #A01#" type="button"><span>#TEXT#</span></a> ';
-
-t3 := null;
-t4 := null;
-t5 := null;
-t6 := null;
-t7 := null;
-t8 := null;
-wwv_flow_api.create_list_template (
-  p_id=>27230328466693025 + wwv_flow_api.g_id_offset,
-  p_flow_id=>wwv_flow.g_flow_id,
-  p_list_template_current=>t,
-  p_list_template_noncurrent=> t2,
-  p_list_template_name=>'Button List',
-  p_theme_id  => 25,
-  p_theme_class_id => 6,
-  p_list_template_before_rows=>'<div class="uButtonList">',
-  p_list_template_after_rows=>'</div>',
-  p_translate_this_template => 'N',
-  p_list_template_comment=>'');
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/list/featured_list_with_subtext
-prompt  ......list template 27230450551693030
- 
-begin
- 
-declare
-  t varchar2(32767) := null;
-  t2 varchar2(32767) := null;
-  t3 varchar2(32767) := null;
-  t4 varchar2(32767) := null;
-  t5 varchar2(32767) := null;
-  t6 varchar2(32767) := null;
-  t7 varchar2(32767) := null;
-  t8 varchar2(32767) := null;
-  l_clob clob;
-  l_clob2 clob;
-  l_clob3 clob;
-  l_clob4 clob;
-  l_clob5 clob;
-  l_clob6 clob;
-  l_clob7 clob;
-  l_clob8 clob;
-  l_length number := 1;
-begin
-t:=t||'<li>'||unistr('\000a')||
-'  <a href="#LINK#">'||unistr('\000a')||
-'    <h3>#TEXT#</h3>'||unistr('\000a')||
-'    <p>#A01#</p>'||unistr('\000a')||
-'  </a>'||unistr('\000a')||
-'</li>';
-
-t2:=t2||'<li>'||unistr('\000a')||
-'  <a href="#LINK#">'||unistr('\000a')||
-'    <h3>#TEXT#</h3>'||unistr('\000a')||
-'    <p>#A01#</p>'||unistr('\000a')||
-'  </a>'||unistr('\000a')||
-'</li>';
-
-t3 := null;
-t4 := null;
-t5 := null;
-t6 := null;
-t7 := null;
-t8 := null;
-wwv_flow_api.create_list_template (
-  p_id=>27230450551693030 + wwv_flow_api.g_id_offset,
-  p_flow_id=>wwv_flow.g_flow_id,
-  p_list_template_current=>t,
-  p_list_template_noncurrent=> t2,
-  p_list_template_name=>'Featured List with Subtext',
-  p_theme_id  => 25,
-  p_theme_class_id => 1,
-  p_list_template_before_rows=>'<ul class="featuredLinksList">',
-  p_list_template_after_rows=>'</ul>',
-  p_translate_this_template => 'N',
-  p_list_template_comment=>'');
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/list/horizontal_images_with_label_list
-prompt  ......list template 27230549456693031
- 
-begin
- 
-declare
-  t varchar2(32767) := null;
-  t2 varchar2(32767) := null;
-  t3 varchar2(32767) := null;
-  t4 varchar2(32767) := null;
-  t5 varchar2(32767) := null;
-  t6 varchar2(32767) := null;
-  t7 varchar2(32767) := null;
-  t8 varchar2(32767) := null;
-  l_clob clob;
-  l_clob2 clob;
-  l_clob3 clob;
-  l_clob4 clob;
-  l_clob5 clob;
-  l_clob6 clob;
-  l_clob7 clob;
-  l_clob8 clob;
-  l_length number := 1;
-begin
-t:=t||'    <li class="active">'||unistr('\000a')||
-'      <a href="#LINK#">'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX##IMAGE#" #IMAGE_ATTR# alt="" />'||unistr('\000a')||
-'        <span>#TEXT#</span>'||unistr('\000a')||
-'      </a>'||unistr('\000a')||
-'    </li>';
-
-t2:=t2||'    <li>'||unistr('\000a')||
-'      <a href="#LINK#">'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX##IMAGE#" #IMAGE_ATTR# alt="" />'||unistr('\000a')||
-'        <span>#TEXT#</span>'||unistr('\000a')||
-'      </a>'||unistr('\000a')||
-'    </li>';
-
-t3 := null;
-t4 := null;
-t5 := null;
-t6 := null;
-t7 := null;
-t8 := null;
-wwv_flow_api.create_list_template (
-  p_id=>27230549456693031 + wwv_flow_api.g_id_offset,
-  p_flow_id=>wwv_flow.g_flow_id,
-  p_list_template_current=>t,
-  p_list_template_noncurrent=> t2,
-  p_list_template_name=>'Horizontal Images with Label List',
-  p_theme_id  => 25,
-  p_theme_class_id => 4,
-  p_list_template_before_rows=>'<div class="uImagesList uHorizontalImagesList clearfix">'||unistr('\000a')||
-'  <ul>',
-  p_list_template_after_rows=>'  </ul>'||unistr('\000a')||
-'</div>',
-  p_translate_this_template => 'N',
-  p_list_template_comment=>'');
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/list/horizontal_links_list
-prompt  ......list template 27230640367693031
- 
-begin
- 
-declare
-  t varchar2(32767) := null;
-  t2 varchar2(32767) := null;
-  t3 varchar2(32767) := null;
-  t4 varchar2(32767) := null;
-  t5 varchar2(32767) := null;
-  t6 varchar2(32767) := null;
-  t7 varchar2(32767) := null;
-  t8 varchar2(32767) := null;
-  l_clob clob;
-  l_clob2 clob;
-  l_clob3 clob;
-  l_clob4 clob;
-  l_clob5 clob;
-  l_clob6 clob;
-  l_clob7 clob;
-  l_clob8 clob;
-  l_length number := 1;
-begin
-t:=t||'<li class="active"><a href="#LINK#">#TEXT#</a></li> ';
-
-t2:=t2||'<li><a href="#LINK#">#TEXT#</a></li> ';
-
-t3 := null;
-t4 := null;
-t5 := null;
-t6 := null;
-t7 := null;
-t8 := null;
-wwv_flow_api.create_list_template (
-  p_id=>27230640367693031 + wwv_flow_api.g_id_offset,
-  p_flow_id=>wwv_flow.g_flow_id,
-  p_list_template_current=>t,
-  p_list_template_noncurrent=> t2,
-  p_list_template_name=>'Horizontal Links List',
-  p_theme_id  => 25,
-  p_theme_class_id => 3,
-  p_list_template_before_rows=>'<ul class="uHorizontalLinksList">',
-  p_list_template_after_rows=>'</ul>',
-  p_translate_this_template => 'N',
-  p_list_template_comment=>'');
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/list/horizontal_wizard_progress_list
-prompt  ......list template 27230734822693031
- 
-begin
- 
-declare
-  t varchar2(32767) := null;
-  t2 varchar2(32767) := null;
-  t3 varchar2(32767) := null;
-  t4 varchar2(32767) := null;
-  t5 varchar2(32767) := null;
-  t6 varchar2(32767) := null;
-  t7 varchar2(32767) := null;
-  t8 varchar2(32767) := null;
-  l_clob clob;
-  l_clob2 clob;
-  l_clob3 clob;
-  l_clob4 clob;
-  l_clob5 clob;
-  l_clob6 clob;
-  l_clob7 clob;
-  l_clob8 clob;
-  l_length number := 1;
-begin
-t:=t||'    <li class="#LIST_STATUS#">'||unistr('\000a')||
-'      <span>#TEXT#</span>'||unistr('\000a')||
-'    </li>';
-
-t2:=t2||'    <li class="#LIST_STATUS#">'||unistr('\000a')||
-'      <span>#TEXT#</span>'||unistr('\000a')||
-'    </li>';
-
-t3 := null;
-t4 := null;
-t5 := null;
-t6 := null;
-t7 := null;
-t8 := null;
-wwv_flow_api.create_list_template (
-  p_id=>27230734822693031 + wwv_flow_api.g_id_offset,
-  p_flow_id=>wwv_flow.g_flow_id,
-  p_list_template_current=>t,
-  p_list_template_noncurrent=> t2,
-  p_list_template_name=>'Horizontal Wizard Progress List',
-  p_theme_id  => 25,
-  p_theme_class_id => 17,
-  p_list_template_before_rows=>'<div class="uHorizontalProgressList hidden-phone">'||unistr('\000a')||
-'  <ul>',
-  p_list_template_after_rows=>'  </ul>'||unistr('\000a')||
-'</div>',
-  p_translate_this_template => 'N',
-  p_list_template_comment=>'');
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/list/page_level_tabs_list
-prompt  ......list template 27230836657693032
- 
-begin
- 
-declare
-  t varchar2(32767) := null;
-  t2 varchar2(32767) := null;
-  t3 varchar2(32767) := null;
-  t4 varchar2(32767) := null;
-  t5 varchar2(32767) := null;
-  t6 varchar2(32767) := null;
-  t7 varchar2(32767) := null;
-  t8 varchar2(32767) := null;
-  l_clob clob;
-  l_clob2 clob;
-  l_clob3 clob;
-  l_clob4 clob;
-  l_clob5 clob;
-  l_clob6 clob;
-  l_clob7 clob;
-  l_clob8 clob;
-  l_length number := 1;
-begin
-t:=t||'<li><a href="#LINK#" class="active">#TEXT#</a></li>';
-
-t2:=t2||'<li><a href="#LINK#">#TEXT#</a></li>';
-
-t3 := null;
-t4 := null;
-t5 := null;
-t6 := null;
-t7 := null;
-t8 := null;
-wwv_flow_api.create_list_template (
-  p_id=>27230836657693032 + wwv_flow_api.g_id_offset,
-  p_flow_id=>wwv_flow.g_flow_id,
-  p_list_template_current=>t,
-  p_list_template_noncurrent=> t2,
-  p_list_template_name=>'Page Level Tabs List',
-  p_theme_id  => 25,
-  p_theme_class_id => 7,
-  p_list_template_before_rows=>' ',
-  p_list_template_after_rows=>' ',
-  p_translate_this_template => 'N',
-  p_list_template_comment=>'');
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/list/tabbed_navigation_list
-prompt  ......list template 27230931651693032
- 
-begin
- 
-declare
-  t varchar2(32767) := null;
-  t2 varchar2(32767) := null;
-  t3 varchar2(32767) := null;
-  t4 varchar2(32767) := null;
-  t5 varchar2(32767) := null;
-  t6 varchar2(32767) := null;
-  t7 varchar2(32767) := null;
-  t8 varchar2(32767) := null;
-  l_clob clob;
-  l_clob2 clob;
-  l_clob3 clob;
-  l_clob4 clob;
-  l_clob5 clob;
-  l_clob6 clob;
-  l_clob7 clob;
-  l_clob8 clob;
-  l_length number := 1;
-begin
-t:=t||'<li class="active"><a href="#LINK#">#TEXT#</a></li>';
-
-t2:=t2||'<li><a href="#LINK#">#TEXT#</a></li>';
-
-t3 := null;
-t4 := null;
-t5 := null;
-t6 := null;
-t7 := null;
-t8 := null;
-wwv_flow_api.create_list_template (
-  p_id=>27230931651693032 + wwv_flow_api.g_id_offset,
-  p_flow_id=>wwv_flow.g_flow_id,
-  p_list_template_current=>t,
-  p_list_template_noncurrent=> t2,
-  p_list_template_name=>'Tabbed Navigation List',
-  p_theme_id  => 25,
-  p_theme_class_id => 7,
-  p_list_template_before_rows=>'<div class="uHorizontalTabs">'||unistr('\000a')||
-'<ul>',
-  p_list_template_after_rows=>'</ul>'||unistr('\000a')||
-'</div>',
-  p_translate_this_template => 'N',
-  p_list_template_comment=>'');
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/list/vertical_images_list
-prompt  ......list template 27231047336693032
- 
-begin
- 
-declare
-  t varchar2(32767) := null;
-  t2 varchar2(32767) := null;
-  t3 varchar2(32767) := null;
-  t4 varchar2(32767) := null;
-  t5 varchar2(32767) := null;
-  t6 varchar2(32767) := null;
-  t7 varchar2(32767) := null;
-  t8 varchar2(32767) := null;
-  l_clob clob;
-  l_clob2 clob;
-  l_clob3 clob;
-  l_clob4 clob;
-  l_clob5 clob;
-  l_clob6 clob;
-  l_clob7 clob;
-  l_clob8 clob;
-  l_length number := 1;
-begin
-t:=t||'    <li class="active">'||unistr('\000a')||
-'      <a href="#LINK#">'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX##IMAGE#" #IMAGE_ATTR# alt="" />'||unistr('\000a')||
-'        <span>#TEXT#</span>'||unistr('\000a')||
-'      </a>'||unistr('\000a')||
-'    </li>';
-
-t2:=t2||'    <li>'||unistr('\000a')||
-'      <a href="#LINK#">'||unistr('\000a')||
-'        <img src="#IMAGE_PREFIX##IMAGE#" #IMAGE_ATTR# alt="" />'||unistr('\000a')||
-'        <span>#TEXT#</span>'||unistr('\000a')||
-'      </a>'||unistr('\000a')||
-'    </li>';
-
-t3 := null;
-t4 := null;
-t5 := null;
-t6 := null;
-t7 := null;
-t8 := null;
-wwv_flow_api.create_list_template (
-  p_id=>27231047336693032 + wwv_flow_api.g_id_offset,
-  p_flow_id=>wwv_flow.g_flow_id,
-  p_list_template_current=>t,
-  p_list_template_noncurrent=> t2,
-  p_list_template_name=>'Vertical Images List',
-  p_theme_id  => 25,
-  p_theme_class_id => 5,
-  p_list_template_before_rows=>'<div class="uImagesList uVerticalImagesList clearfix">'||unistr('\000a')||
-'  <ul>',
-  p_list_template_after_rows=>'  </ul>'||unistr('\000a')||
-'</div>',
-  p_translate_this_template => 'N',
-  p_list_template_comment=>'');
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/list/vertical_list_with_subtext_and_icon
-prompt  ......list template 27231128810693032
- 
-begin
- 
-declare
-  t varchar2(32767) := null;
-  t2 varchar2(32767) := null;
-  t3 varchar2(32767) := null;
-  t4 varchar2(32767) := null;
-  t5 varchar2(32767) := null;
-  t6 varchar2(32767) := null;
-  t7 varchar2(32767) := null;
-  t8 varchar2(32767) := null;
-  l_clob clob;
-  l_clob2 clob;
-  l_clob3 clob;
-  l_clob4 clob;
-  l_clob5 clob;
-  l_clob6 clob;
-  l_clob7 clob;
-  l_clob8 clob;
-  l_length number := 1;
-begin
-t:=t||'  <li>'||unistr('\000a')||
-'    <a href="#LINK#">'||unistr('\000a')||
-'      <img src="#IMAGE_PREFIX#f_spacer.gif" class="#A02#" alt="#LIST_LABEL#"/>'||unistr('\000a')||
-'      <h3>#TEXT#</h3>'||unistr('\000a')||
-'      <h4>#A01#</h4>'||unistr('\000a')||
-'    </a>'||unistr('\000a')||
-'  </li>';
-
-t2:=t2||'  <li>'||unistr('\000a')||
-'    <a href="#LINK#">'||unistr('\000a')||
-'      <img src="#IMAGE_PREFIX#f_spacer.gif" class="#A02#" alt="#LIST_LABEL#"/>'||unistr('\000a')||
-'      <h3>#TEXT#</h3>'||unistr('\000a')||
-'      <h4>#A01#</h4>'||unistr('\000a')||
-'    </a>'||unistr('\000a')||
-'  </li>';
-
-t3 := null;
-t4 := null;
-t5 := null;
-t6 := null;
-t7 := null;
-t8 := null;
-wwv_flow_api.create_list_template (
-  p_id=>27231128810693032 + wwv_flow_api.g_id_offset,
-  p_flow_id=>wwv_flow.g_flow_id,
-  p_list_template_current=>t,
-  p_list_template_noncurrent=> t2,
-  p_list_template_name=>'Vertical List with Subtext and Icon',
-  p_theme_id  => 25,
-  p_theme_class_id => 1,
-  p_list_template_before_rows=>'<ul class="largeLinkList">',
-  p_list_template_after_rows=>'</ul>',
-  p_translate_this_template => 'N',
-  p_list_template_comment=>'');
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/list/vertical_ordered_list
-prompt  ......list template 27231244564693033
- 
-begin
- 
-declare
-  t varchar2(32767) := null;
-  t2 varchar2(32767) := null;
-  t3 varchar2(32767) := null;
-  t4 varchar2(32767) := null;
-  t5 varchar2(32767) := null;
-  t6 varchar2(32767) := null;
-  t7 varchar2(32767) := null;
-  t8 varchar2(32767) := null;
-  l_clob clob;
-  l_clob2 clob;
-  l_clob3 clob;
-  l_clob4 clob;
-  l_clob5 clob;
-  l_clob6 clob;
-  l_clob7 clob;
-  l_clob8 clob;
-  l_length number := 1;
-begin
-t:=t||'<li class="active"><a href="#LINK#">#TEXT#</a></li>';
-
-t2:=t2||'<li><a href="#LINK#">#TEXT#</a></li>';
-
-t3 := null;
-t4 := null;
-t5 := null;
-t6 := null;
-t7 := null;
-t8 := null;
-wwv_flow_api.create_list_template (
-  p_id=>27231244564693033 + wwv_flow_api.g_id_offset,
-  p_flow_id=>wwv_flow.g_flow_id,
-  p_list_template_current=>t,
-  p_list_template_noncurrent=> t2,
-  p_list_template_name=>'Vertical Ordered List',
-  p_theme_id  => 25,
-  p_theme_class_id => 2,
-  p_list_template_before_rows=>'<ol class="uNumberedList">',
-  p_list_template_after_rows=>'</ol>',
-  p_translate_this_template => 'N',
-  p_list_template_comment=>'');
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/list/vertical_sidebar_list
-prompt  ......list template 27231347116693033
- 
-begin
- 
-declare
-  t varchar2(32767) := null;
-  t2 varchar2(32767) := null;
-  t3 varchar2(32767) := null;
-  t4 varchar2(32767) := null;
-  t5 varchar2(32767) := null;
-  t6 varchar2(32767) := null;
-  t7 varchar2(32767) := null;
-  t8 varchar2(32767) := null;
-  l_clob clob;
-  l_clob2 clob;
-  l_clob3 clob;
-  l_clob4 clob;
-  l_clob5 clob;
-  l_clob6 clob;
-  l_clob7 clob;
-  l_clob8 clob;
-  l_length number := 1;
-begin
-t:=t||'<li class="active"><a href="#LINK#">#TEXT#</a></li>';
-
-t2:=t2||'<li><a href="#LINK#">#TEXT#</a></li>';
-
-t3 := null;
-t4 := null;
-t5 := null;
-t6 := null;
-t7 := null;
-t8 := null;
-wwv_flow_api.create_list_template (
-  p_id=>27231347116693033 + wwv_flow_api.g_id_offset,
-  p_flow_id=>wwv_flow.g_flow_id,
-  p_list_template_current=>t,
-  p_list_template_noncurrent=> t2,
-  p_list_template_name=>'Vertical Sidebar List',
-  p_theme_id  => 25,
-  p_theme_class_id => 19,
-  p_list_template_before_rows=>'<ul class="uVerticalSidebarList">',
-  p_list_template_after_rows=>'</ul>',
-  p_translate_this_template => 'N',
-  p_list_template_comment=>'');
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/list/vertical_unordered_list_with_bullets
-prompt  ......list template 27231447574693033
- 
-begin
- 
-declare
-  t varchar2(32767) := null;
-  t2 varchar2(32767) := null;
-  t3 varchar2(32767) := null;
-  t4 varchar2(32767) := null;
-  t5 varchar2(32767) := null;
-  t6 varchar2(32767) := null;
-  t7 varchar2(32767) := null;
-  t8 varchar2(32767) := null;
-  l_clob clob;
-  l_clob2 clob;
-  l_clob3 clob;
-  l_clob4 clob;
-  l_clob5 clob;
-  l_clob6 clob;
-  l_clob7 clob;
-  l_clob8 clob;
-  l_length number := 1;
-begin
-t:=t||'<li class="active"><a href="#LINK#">#TEXT#</a></li>';
-
-t2:=t2||'<li><a href="#LINK#">#TEXT#</a></li>';
-
-t3 := null;
-t4 := null;
-t5 := null;
-t6 := null;
-t7 := null;
-t8 := null;
-wwv_flow_api.create_list_template (
-  p_id=>27231447574693033 + wwv_flow_api.g_id_offset,
-  p_flow_id=>wwv_flow.g_flow_id,
-  p_list_template_current=>t,
-  p_list_template_noncurrent=> t2,
-  p_list_template_name=>'Vertical Unordered List with Bullets',
-  p_theme_id  => 25,
-  p_theme_class_id => 1,
-  p_list_template_before_rows=>'<ul class="uVerticalList">',
-  p_list_template_after_rows=>'</ul>',
-  p_translate_this_template => 'N',
-  p_list_template_comment=>'');
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/list/vertical_unordered_list_without_bullets
-prompt  ......list template 27231544101693033
- 
-begin
- 
-declare
-  t varchar2(32767) := null;
-  t2 varchar2(32767) := null;
-  t3 varchar2(32767) := null;
-  t4 varchar2(32767) := null;
-  t5 varchar2(32767) := null;
-  t6 varchar2(32767) := null;
-  t7 varchar2(32767) := null;
-  t8 varchar2(32767) := null;
-  l_clob clob;
-  l_clob2 clob;
-  l_clob3 clob;
-  l_clob4 clob;
-  l_clob5 clob;
-  l_clob6 clob;
-  l_clob7 clob;
-  l_clob8 clob;
-  l_length number := 1;
-begin
-t:=t||'<li class="active"><a href="#LINK#">#TEXT#</a></li>';
-
-t2:=t2||'<li><a href="#LINK#">#TEXT#</a></li>';
-
-t3 := null;
-t4 := null;
-t5 := null;
-t6 := null;
-t7 := null;
-t8 := null;
-wwv_flow_api.create_list_template (
-  p_id=>27231544101693033 + wwv_flow_api.g_id_offset,
-  p_flow_id=>wwv_flow.g_flow_id,
-  p_list_template_current=>t,
-  p_list_template_noncurrent=> t2,
-  p_list_template_name=>'Vertical Unordered List without Bullets',
-  p_theme_id  => 25,
-  p_theme_class_id => 18,
-  p_list_template_before_rows=>'<ul class="uVerticalList noBullets">',
-  p_list_template_after_rows=>'</ul>',
-  p_translate_this_template => 'N',
-  p_list_template_comment=>'');
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/list/wizard_progress_list_vertical
-prompt  ......list template 27231647238693033
- 
-begin
- 
-declare
-  t varchar2(32767) := null;
-  t2 varchar2(32767) := null;
-  t3 varchar2(32767) := null;
-  t4 varchar2(32767) := null;
-  t5 varchar2(32767) := null;
-  t6 varchar2(32767) := null;
-  t7 varchar2(32767) := null;
-  t8 varchar2(32767) := null;
-  l_clob clob;
-  l_clob2 clob;
-  l_clob3 clob;
-  l_clob4 clob;
-  l_clob5 clob;
-  l_clob6 clob;
-  l_clob7 clob;
-  l_clob8 clob;
-  l_length number := 1;
-begin
-t:=t||'<li class="#LIST_STATUS#"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /><span>#TEXT#</span></li>';
-
-t2:=t2||'<li class="#LIST_STATUS#"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /><span>#TEXT#</span></li>';
-
-t3 := null;
-t4 := null;
-t5 := null;
-t6 := null;
-t7 := null;
-t8 := null;
-wwv_flow_api.create_list_template (
-  p_id=>27231647238693033 + wwv_flow_api.g_id_offset,
-  p_flow_id=>wwv_flow.g_flow_id,
-  p_list_template_current=>t,
-  p_list_template_noncurrent=> t2,
-  p_list_template_name=>'Wizard Progress List - Vertical',
-  p_theme_id  => 25,
-  p_theme_class_id => 17,
-  p_list_template_before_rows=>'<div class="uVerticalProgressList" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#><ul>',
-  p_list_template_after_rows=>'</ul></div>',
-  p_translate_this_template => 'N',
-  p_list_template_comment=>'');
-end;
-null;
- 
-end;
-/
-
-prompt  ...report templates
---
---application/shared_components/user_interface/templates/report/borderless_report
-prompt  ......report template 27229242223693015
- 
-begin
- 
-declare
-  c1 varchar2(32767) := null;
-  c2 varchar2(32767) := null;
-  c3 varchar2(32767) := null;
-  c4 varchar2(32767) := null;
-begin
-c1:=c1||'<td #ALIGNMENT# headers="#COLUMN_HEADER_NAME#">#COLUMN_VALUE#</td>';
-
-c2 := null;
-c3 := null;
-c4 := null;
-wwv_flow_api.create_row_template (
-  p_id=> 27229242223693015 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_row_template_name=> 'Borderless Report',
-  p_row_template1=> c1,
-  p_row_template_condition1=> '',
-  p_row_template2=> c2,
-  p_row_template_condition2=> '',
-  p_row_template3=> c3,
-  p_row_template_condition3=> '',
-  p_row_template4=> c4,
-  p_row_template_condition4=> '',
-  p_row_template_before_rows=>'<table class="uReportContainer uBorderlessReportContainer" #REPORT_ATTRIBUTES# id="report_#REGION_STATIC_ID#" summary="">'||unistr('\000a')||
-'<tbody class="uReportPagination">'||unistr('\000a')||
-'#TOP_PAGINATION#'||unistr('\000a')||
-'</tbody>'||unistr('\000a')||
-'<tbody class="uReportBody">'||unistr('\000a')||
-'<tr><td>'||unistr('\000a')||
-'<table summary="#REGION_TITLE#" class="uReport uReportBorderless">',
-  p_row_template_after_rows =>'</tbody>'||unistr('\000a')||
-'</table>'||unistr('\000a')||
-'</td>'||unistr('\000a')||
-'</tr>'||unistr('\000a')||
-'</tbody>'||unistr('\000a')||
-'<tbody class="uReportPagination">'||unistr('\000a')||
-'#PAGINATION#'||unistr('\000a')||
-'</tbody>'||unistr('\000a')||
-'</table>'||unistr('\000a')||
-'<div class="uReportDownloadLinks">#EXTERNAL_LINK##CSV_LINK#</div>',
-  p_row_template_table_attr =>'',
-  p_row_template_type =>'GENERIC_COLUMNS',
-  p_before_column_heading=>'<thead>',
-  p_column_heading_template=>'<th #ALIGNMENT# id="#COLUMN_HEADER_NAME#" #COLUMN_WIDTH#>#COLUMN_HEADER#</th>',
-  p_after_column_heading=>'</thead>'||unistr('\000a')||
-'<tbody>',
-  p_row_template_display_cond1=>'0',
-  p_row_template_display_cond2=>'0',
-  p_row_template_display_cond3=>'0',
-  p_row_template_display_cond4=>'0',
-  p_next_page_template=>'<a href="#LINK#" class="uPaginationNext">#PAGINATION_NEXT# <img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /></a>',
-  p_previous_page_template=>'<a href="#LINK#" class="uPaginationPrev"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /> #PAGINATION_PREVIOUS#</a>',
-  p_next_set_template=>'<a href="#LINK#" class="uPaginationNext">#PAGINATION_NEXT_SET# <img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /></a>',
-  p_previous_set_template=>'<a href="#LINK#" class="uPaginationPrev"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /> #PAGINATION_PREVIOUS_SET#</a>',
-  p_row_style_mouse_over=>'#F0F0F0',
-  p_row_style_checked=>'#E8E8E8',
-  p_theme_id  => 25,
-  p_theme_class_id => 1,
-  p_translate_this_template => 'N',
-  p_row_template_comment=> '');
-end;
-null;
- 
-end;
-/
-
- 
-begin
- 
-begin
-wwv_flow_api.create_row_template_patch (
-  p_id => 27229242223693015 + wwv_flow_api.g_id_offset,
-  p_row_template_before_first =>'<tr>',
-  p_row_template_after_last =>'</tr>');
-exception when others then null;
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/report/comment_bubbles
-prompt  ......report template 27229344172693020
- 
-begin
- 
-declare
-  c1 varchar2(32767) := null;
-  c2 varchar2(32767) := null;
-  c3 varchar2(32767) := null;
-  c4 varchar2(32767) := null;
-begin
-c1:=c1||'<li class="#1#">'||unistr('\000a')||
-'<div>'||unistr('\000a')||
-'	<em>#2#</em>'||unistr('\000a')||
-'	#3##4##5##6##7#'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'<span>'||unistr('\000a')||
-'	#8# (#9#) #10#'||unistr('\000a')||
-'</span>'||unistr('\000a')||
-'</li>';
-
-c2 := null;
-c3 := null;
-c4 := null;
-wwv_flow_api.create_row_template (
-  p_id=> 27229344172693020 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_row_template_name=> 'Comment Bubbles',
-  p_row_template1=> c1,
-  p_row_template_condition1=> '',
-  p_row_template2=> c2,
-  p_row_template_condition2=> '',
-  p_row_template3=> c3,
-  p_row_template_condition3=> '',
-  p_row_template4=> c4,
-  p_row_template_condition4=> '',
-  p_row_template_before_rows=>'<ul class="commentBubbles">',
-  p_row_template_after_rows =>'</ul>'||unistr('\000a')||
-'<table class="uPaginationTable">'||unistr('\000a')||
-'#PAGINATION#'||unistr('\000a')||
-'</table>',
-  p_row_template_table_attr =>'',
-  p_row_template_type =>'NAMED_COLUMNS',
-  p_column_heading_template=>'',
-  p_row_template_display_cond1=>'0',
-  p_row_template_display_cond2=>'0',
-  p_row_template_display_cond3=>'0',
-  p_row_template_display_cond4=>'0',
-  p_next_page_template=>'<a href="#LINK#" class="sPaginationNext">#PAGINATION_NEXT#</a>',
-  p_previous_page_template=>'<a href="#LINK#" class="sPaginationPrev">#PAGINATION_PREVIOUS#</a>',
-  p_next_set_template=>'<a href="#LINK#" class="sPaginationNext">#PAGINATION_NEXT_SET#</a>',
-  p_previous_set_template=>'<a href="#LINK#" class="sPaginationPrev">#PAGINATION_PREVIOUS_SET#</a>',
-  p_theme_id  => 25,
-  p_theme_class_id => 1,
-  p_translate_this_template => 'N',
-  p_row_template_comment=> '');
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/report/fixed_headers
-prompt  ......report template 27229432855693020
- 
-begin
- 
-declare
-  c1 varchar2(32767) := null;
-  c2 varchar2(32767) := null;
-  c3 varchar2(32767) := null;
-  c4 varchar2(32767) := null;
-begin
-c1:=c1||'<td #ALIGNMENT# headers="#COLUMN_HEADER_NAME#" #COLUMN_WIDTH#>#COLUMN_VALUE#</td>';
-
-c2 := null;
-c3 := null;
-c4 := null;
-wwv_flow_api.create_row_template (
-  p_id=> 27229432855693020 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_row_template_name=> 'Fixed Headers',
-  p_row_template1=> c1,
-  p_row_template_condition1=> '',
-  p_row_template2=> c2,
-  p_row_template_condition2=> '',
-  p_row_template3=> c3,
-  p_row_template_condition3=> '',
-  p_row_template4=> c4,
-  p_row_template_condition4=> '',
-  p_row_template_before_rows=>'<table class="uReportContainer" #REPORT_ATTRIBUTES# id="report_#REGION_STATIC_ID#" summary="">'||unistr('\000a')||
-'<tbody class="uReportPagination">'||unistr('\000a')||
-'#TOP_PAGINATION#'||unistr('\000a')||
-'</tbody>'||unistr('\000a')||
-'<tbody class="uReportBody">'||unistr('\000a')||
-'<tr><td>'||unistr('\000a')||
-'<div class="uFixedHeadersContainer">'||unistr('\000a')||
-'<table summary="#REGION_TITLE#" class="uReport uReportFixedHeaders">',
-  p_row_template_after_rows =>'</tbody>'||unistr('\000a')||
-'</table>'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</td>'||unistr('\000a')||
-'</tr>'||unistr('\000a')||
-'</tbody>'||unistr('\000a')||
-'<tbody class="uReportPagination">'||unistr('\000a')||
-'#PAGINATION#'||unistr('\000a')||
-'</tbody>'||unistr('\000a')||
-'</table>'||unistr('\000a')||
-'<div class="uReportDownloadLinks">#EXTERNAL_LINK##CSV_LINK#</div>',
-  p_row_template_table_attr =>'OMIT',
-  p_row_template_type =>'GENERIC_COLUMNS',
-  p_before_column_heading=>'<thead>'||unistr('\000a')||
-'',
-  p_column_heading_template=>'<th #ALIGNMENT# id="#COLUMN_HEADER_NAME#" #COLUMN_WIDTH#>#COLUMN_HEADER#</th>',
-  p_after_column_heading=>'</thead>'||unistr('\000a')||
-'<tbody>'||unistr('\000a')||
-'',
-  p_row_template_display_cond1=>'0',
-  p_row_template_display_cond2=>'0',
-  p_row_template_display_cond3=>'0',
-  p_row_template_display_cond4=>'0',
-  p_next_page_template=>'<a href="#LINK#" class="uPaginationNext">#PAGINATION_NEXT# <img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /></a>',
-  p_previous_page_template=>'<a href="#LINK#" class="uPaginationPrev"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /> #PAGINATION_PREVIOUS#</a>',
-  p_next_set_template=>'<a href="#LINK#" class="uPaginationNext">#PAGINATION_NEXT_SET# <img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /></a>',
-  p_previous_set_template=>'<a href="#LINK#" class="uPaginationPrev"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /> #PAGINATION_PREVIOUS_SET#</a>',
-  p_row_style_mouse_over=>'#F0F0F0',
-  p_row_style_checked=>'#E8E8E8',
-  p_theme_id  => 25,
-  p_theme_class_id => 7,
-  p_translate_this_template => 'N',
-  p_row_template_comment=> '');
-end;
-null;
- 
-end;
-/
-
- 
-begin
- 
-begin
-wwv_flow_api.create_row_template_patch (
-  p_id => 27229432855693020 + wwv_flow_api.g_id_offset,
-  p_row_template_before_first =>'<tr>',
-  p_row_template_after_last =>'</tr>'||unistr('\000a')||
-'');
-exception when others then null;
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/report/horizontal_border
-prompt  ......report template 27229553615693021
- 
-begin
- 
-declare
-  c1 varchar2(32767) := null;
-  c2 varchar2(32767) := null;
-  c3 varchar2(32767) := null;
-  c4 varchar2(32767) := null;
-begin
-c1:=c1||'<td #ALIGNMENT# headers="#COLUMN_HEADER_NAME#">#COLUMN_VALUE#</td>';
-
-c2 := null;
-c3 := null;
-c4 := null;
-wwv_flow_api.create_row_template (
-  p_id=> 27229553615693021 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_row_template_name=> 'Horizontal Border',
-  p_row_template1=> c1,
-  p_row_template_condition1=> '',
-  p_row_template2=> c2,
-  p_row_template_condition2=> '',
-  p_row_template3=> c3,
-  p_row_template_condition3=> '',
-  p_row_template4=> c4,
-  p_row_template_condition4=> '',
-  p_row_template_before_rows=>'<table class="uReportContainer" #REPORT_ATTRIBUTES# id="report_#REGION_STATIC_ID#" summary="">'||unistr('\000a')||
-'<tbody class="uReportPagination">'||unistr('\000a')||
-'#TOP_PAGINATION#'||unistr('\000a')||
-'</tbody>'||unistr('\000a')||
-'<tbody class="uReportBody">'||unistr('\000a')||
-'<tr><td>'||unistr('\000a')||
-'<table summary="#REGION_TITLE#" class="uReport uReportHorizontal">',
-  p_row_template_after_rows =>'</tbody>'||unistr('\000a')||
-'</table>'||unistr('\000a')||
-'</td>'||unistr('\000a')||
-'</tr>'||unistr('\000a')||
-'</tbody>'||unistr('\000a')||
-'<tbody class="uReportPagination">'||unistr('\000a')||
-'#PAGINATION#'||unistr('\000a')||
-'</tbody>'||unistr('\000a')||
-'</table>'||unistr('\000a')||
-'<div class="uReportDownloadLinks">#EXTERNAL_LINK##CSV_LINK#</div>',
-  p_row_template_table_attr =>'',
-  p_row_template_type =>'GENERIC_COLUMNS',
-  p_before_column_heading=>'<thead>',
-  p_column_heading_template=>'<th #ALIGNMENT# id="#COLUMN_HEADER_NAME#" #COLUMN_WIDTH#>#COLUMN_HEADER#</th>',
-  p_after_column_heading=>'</thead>'||unistr('\000a')||
-'<tbody>',
-  p_row_template_display_cond1=>'0',
-  p_row_template_display_cond2=>'0',
-  p_row_template_display_cond3=>'0',
-  p_row_template_display_cond4=>'0',
-  p_next_page_template=>'<a href="#LINK#" class="uPaginationNext">#PAGINATION_NEXT# <img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /></a>',
-  p_previous_page_template=>'<a href="#LINK#" class="uPaginationPrev"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /> #PAGINATION_PREVIOUS#</a>',
-  p_next_set_template=>'<a href="#LINK#" class="uPaginationNext">#PAGINATION_NEXT_SET# <img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /></a>',
-  p_previous_set_template=>'<a href="#LINK#" class="uPaginationPrev"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /> #PAGINATION_PREVIOUS_SET#</a>',
-  p_row_style_mouse_over=>'#F0F0F0',
-  p_row_style_checked=>'#E8E8E8',
-  p_theme_id  => 25,
-  p_theme_class_id => 2,
-  p_translate_this_template => 'N',
-  p_row_template_comment=> '');
-end;
-null;
- 
-end;
-/
-
- 
-begin
- 
-begin
-wwv_flow_api.create_row_template_patch (
-  p_id => 27229553615693021 + wwv_flow_api.g_id_offset,
-  p_row_template_before_first =>'<tr>',
-  p_row_template_after_last =>'</tr>');
-exception when others then null;
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/report/one_column_unordered_list
-prompt  ......report template 27229645962693021
- 
-begin
- 
-declare
-  c1 varchar2(32767) := null;
-  c2 varchar2(32767) := null;
-  c3 varchar2(32767) := null;
-  c4 varchar2(32767) := null;
-begin
-c1:=c1||'<li>#COLUMN_VALUE#</li>';
-
-c2 := null;
-c3 := null;
-c4 := null;
-wwv_flow_api.create_row_template (
-  p_id=> 27229645962693021 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_row_template_name=> 'One Column Unordered List',
-  p_row_template1=> c1,
-  p_row_template_condition1=> '',
-  p_row_template2=> c2,
-  p_row_template_condition2=> '',
-  p_row_template3=> c3,
-  p_row_template_condition3=> '',
-  p_row_template4=> c4,
-  p_row_template_condition4=> '',
-  p_row_template_before_rows=>'<table class="uReportList" #REPORT_ATTRIBUTES# id="report_#REGION_STATIC_ID#" summary="">'||unistr('\000a')||
-'<tbody class="uReportPagination">'||unistr('\000a')||
-'#TOP_PAGINATION#'||unistr('\000a')||
-'</tbody>'||unistr('\000a')||
-'<tbody class="uReportBody">'||unistr('\000a')||
-'<tr><td>'||unistr('\000a')||
-'<ul class="uReportList">',
-  p_row_template_after_rows =>'</ul>'||unistr('\000a')||
-'</td>'||unistr('\000a')||
-'</tr>'||unistr('\000a')||
-'</tbody>'||unistr('\000a')||
-'<tbody class="uReportPagination">'||unistr('\000a')||
-'#PAGINATION#'||unistr('\000a')||
-'</tbody>'||unistr('\000a')||
-'</table>'||unistr('\000a')||
-'<div class="uReportDownloadLinks">#EXTERNAL_LINK##CSV_LINK#</div>',
-  p_row_template_table_attr =>'OMIT',
-  p_row_template_type =>'GENERIC_COLUMNS',
-  p_column_heading_template=>'',
-  p_row_template_display_cond1=>'NOT_CONDITIONAL',
-  p_row_template_display_cond2=>'NOT_CONDITIONAL',
-  p_row_template_display_cond3=>'NOT_CONDITIONAL',
-  p_row_template_display_cond4=>'NOT_CONDITIONAL',
-  p_next_page_template=>'<a href="#LINK#" class="sPaginationNext">#PAGINATION_NEXT#</a>',
-  p_previous_page_template=>'<a href="#LINK#" class="sPaginationPrev">#PAGINATION_PREVIOUS#</a>',
-  p_next_set_template=>'<a href="#LINK#" class="sPaginationNext">#PAGINATION_NEXT_SET#</a>',
-  p_previous_set_template=>'<a href="#LINK#" class="sPaginationPrev">#PAGINATION_PREVIOUS_SET#</a>',
-  p_theme_id  => 25,
-  p_theme_class_id => 3,
-  p_translate_this_template => 'N',
-  p_row_template_comment=> '');
-end;
-null;
- 
-end;
-/
-
- 
-begin
- 
-begin
-wwv_flow_api.create_row_template_patch (
-  p_id => 27229645962693021 + wwv_flow_api.g_id_offset,
-  p_row_template_before_first =>'OMIT',
-  p_row_template_after_last =>'OMIT');
-exception when others then null;
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/report/search_results_report_select_link_text_link_target_detail1_detail2_last_modified
-prompt  ......report template 27229742997693021
- 
-begin
- 
-declare
-  c1 varchar2(32767) := null;
-  c2 varchar2(32767) := null;
-  c3 varchar2(32767) := null;
-  c4 varchar2(32767) := null;
-begin
-c1:=c1||'<li>'||unistr('\000a')||
-'<span class="title"><a href="#2#">#1#</a></span>'||unistr('\000a')||
-'<span class="description"><span class="last_modified">#5#</span>#3#</span>'||unistr('\000a')||
-'<span class="type">#4#</span>'||unistr('\000a')||
-'</li>';
-
-c2 := null;
-c3 := null;
-c4 := null;
-wwv_flow_api.create_row_template (
-  p_id=> 27229742997693021 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_row_template_name=> 'Search Results Report (SELECT link_text, link_target, detail1, detail2, last_modified)',
-  p_row_template1=> c1,
-  p_row_template_condition1=> '',
-  p_row_template2=> c2,
-  p_row_template_condition2=> '',
-  p_row_template3=> c3,
-  p_row_template_condition3=> '',
-  p_row_template4=> c4,
-  p_row_template_condition4=> '',
-  p_row_template_before_rows=>'<ul class="sSearchResultsReport">',
-  p_row_template_after_rows =>'</ul>'||unistr('\000a')||
-'<table class="uPaginationTable">'||unistr('\000a')||
-'#PAGINATION#'||unistr('\000a')||
-'</table>',
-  p_row_template_table_attr =>'',
-  p_row_template_type =>'NAMED_COLUMNS',
-  p_column_heading_template=>'',
-  p_row_template_display_cond1=>'0',
-  p_row_template_display_cond2=>'0',
-  p_row_template_display_cond3=>'0',
-  p_row_template_display_cond4=>'0',
-  p_next_page_template=>'<a href="#LINK#" class="sPaginationNext">#PAGINATION_NEXT#</a>',
-  p_previous_page_template=>'<a href="#LINK#" class="sPaginationPrev">#PAGINATION_PREVIOUS#</a>',
-  p_next_set_template=>'<a href="#LINK#" class="sPaginationNext">#PAGINATION_NEXT_SET#</a>',
-  p_previous_set_template=>'<a href="#LINK#" class="sPaginationPrev">#PAGINATION_PREVIOUS_SET#</a>',
-  p_theme_id  => 25,
-  p_theme_class_id => 1,
-  p_translate_this_template => 'N',
-  p_row_template_comment=> '');
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/report/standard
-prompt  ......report template 27229853610693022
- 
-begin
- 
-declare
-  c1 varchar2(32767) := null;
-  c2 varchar2(32767) := null;
-  c3 varchar2(32767) := null;
-  c4 varchar2(32767) := null;
-begin
-c1:=c1||'<td #ALIGNMENT# headers="#COLUMN_HEADER_NAME#">#COLUMN_VALUE#</td>';
-
-c2 := null;
-c3 := null;
-c4 := null;
-wwv_flow_api.create_row_template (
-  p_id=> 27229853610693022 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_row_template_name=> 'Standard',
-  p_row_template1=> c1,
-  p_row_template_condition1=> '',
-  p_row_template2=> c2,
-  p_row_template_condition2=> '',
-  p_row_template3=> c3,
-  p_row_template_condition3=> '',
-  p_row_template4=> c4,
-  p_row_template_condition4=> '',
-  p_row_template_before_rows=>'<table class="uReportContainer" #REPORT_ATTRIBUTES# id="report_#REGION_STATIC_ID#" summary="">'||unistr('\000a')||
-'<tbody class="uReportPagination">'||unistr('\000a')||
-'#TOP_PAGINATION#'||unistr('\000a')||
-'</tbody>'||unistr('\000a')||
-'<tbody class="uReportBody">'||unistr('\000a')||
-'<tr><td>'||unistr('\000a')||
-'<table summary="#REGION_TITLE#" class="uReport uReportStandard">',
-  p_row_template_after_rows =>'</tbody>'||unistr('\000a')||
-'</table>'||unistr('\000a')||
-'</td>'||unistr('\000a')||
-'</tr>'||unistr('\000a')||
-'</tbody>'||unistr('\000a')||
-'<tbody class="uReportPagination">'||unistr('\000a')||
-'#PAGINATION#'||unistr('\000a')||
-'</tbody>'||unistr('\000a')||
-'</table>'||unistr('\000a')||
-'<div class="uReportDownloadLinks">#EXTERNAL_LINK##CSV_LINK#</div>',
-  p_row_template_table_attr =>'',
-  p_row_template_type =>'GENERIC_COLUMNS',
-  p_before_column_heading=>'<thead>',
-  p_column_heading_template=>'<th #ALIGNMENT# id="#COLUMN_HEADER_NAME#" #COLUMN_WIDTH#>#COLUMN_HEADER#</th>',
-  p_after_column_heading=>'</thead>'||unistr('\000a')||
-'<tbody>',
-  p_row_template_display_cond1=>'0',
-  p_row_template_display_cond2=>'0',
-  p_row_template_display_cond3=>'0',
-  p_row_template_display_cond4=>'0',
-  p_next_page_template=>'<a href="#LINK#" class="uPaginationNext">#PAGINATION_NEXT# <img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /></a>',
-  p_previous_page_template=>'<a href="#LINK#" class="uPaginationPrev"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /> #PAGINATION_PREVIOUS#</a>',
-  p_next_set_template=>'<a href="#LINK#" class="uPaginationNext">#PAGINATION_NEXT_SET# <img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /></a>',
-  p_previous_set_template=>'<a href="#LINK#" class="uPaginationPrev"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /> #PAGINATION_PREVIOUS_SET#</a>',
-  p_row_style_mouse_over=>'#F0F0F0',
-  p_row_style_checked=>'#E8E8E8',
-  p_theme_id  => 25,
-  p_theme_class_id => 4,
-  p_translate_this_template => 'N',
-  p_row_template_comment=> '');
-end;
-null;
- 
-end;
-/
-
- 
-begin
- 
-begin
-wwv_flow_api.create_row_template_patch (
-  p_id => 27229853610693022 + wwv_flow_api.g_id_offset,
-  p_row_template_before_first =>'<tr>',
-  p_row_template_after_last =>'</tr>');
-exception when others then null;
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/report/standard_alternative
-prompt  ......report template 27229949743693022
- 
-begin
- 
-declare
-  c1 varchar2(32767) := null;
-  c2 varchar2(32767) := null;
-  c3 varchar2(32767) := null;
-  c4 varchar2(32767) := null;
-begin
-c1:=c1||'<td #ALIGNMENT# headers="#COLUMN_HEADER_NAME#">#COLUMN_VALUE#</td>';
-
-c2 := null;
-c3:=c3||'<td #ALIGNMENT# headers="#COLUMN_HEADER_NAME#" class="uOddRow">#COLUMN_VALUE#</td>';
-
-c4 := null;
-wwv_flow_api.create_row_template (
-  p_id=> 27229949743693022 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_row_template_name=> 'Standard - Alternative',
-  p_row_template1=> c1,
-  p_row_template_condition1=> '',
-  p_row_template2=> c2,
-  p_row_template_condition2=> '',
-  p_row_template3=> c3,
-  p_row_template_condition3=> '',
-  p_row_template4=> c4,
-  p_row_template_condition4=> '',
-  p_row_template_before_rows=>'<table class="uReportContainer" #REPORT_ATTRIBUTES# id="report_#REGION_STATIC_ID#" summary="">'||unistr('\000a')||
-'<tbody class="uReportPagination">'||unistr('\000a')||
-'#TOP_PAGINATION#'||unistr('\000a')||
-'</tbody>'||unistr('\000a')||
-'<tbody class="uReportBody">'||unistr('\000a')||
-'<tr><td>'||unistr('\000a')||
-'<table summary="#REGION_TITLE#" class="uReport uReportAlternative">',
-  p_row_template_after_rows =>'</tbody>'||unistr('\000a')||
-'</table>'||unistr('\000a')||
-'</td>'||unistr('\000a')||
-'</tr>'||unistr('\000a')||
-'</tbody>'||unistr('\000a')||
-'<tbody class="uReportPagination">'||unistr('\000a')||
-'#PAGINATION#'||unistr('\000a')||
-'</tbody>'||unistr('\000a')||
-'</table>'||unistr('\000a')||
-'<div class="uReportDownloadLinks">#EXTERNAL_LINK##CSV_LINK#</div>',
-  p_row_template_table_attr =>'OMIT',
-  p_row_template_type =>'GENERIC_COLUMNS',
-  p_before_column_heading=>'<thead>',
-  p_column_heading_template=>'<th #ALIGNMENT# id="#COLUMN_HEADER_NAME#" #COLUMN_WIDTH#>#COLUMN_HEADER#</th>',
-  p_after_column_heading=>'</thead>'||unistr('\000a')||
-'<tbody>',
-  p_row_template_display_cond1=>'0',
-  p_row_template_display_cond2=>'ODD_ROW_NUMBERS',
-  p_row_template_display_cond3=>'0',
-  p_row_template_display_cond4=>'0',
-  p_next_page_template=>'<a href="#LINK#" class="uPaginationNext">#PAGINATION_NEXT# <img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /></a>',
-  p_previous_page_template=>'<a href="#LINK#" class="uPaginationPrev"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /> #PAGINATION_PREVIOUS#</a>',
-  p_next_set_template=>'<a href="#LINK#" class="uPaginationNext">#PAGINATION_NEXT_SET# <img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /></a>',
-  p_previous_set_template=>'<a href="#LINK#" class="uPaginationPrev"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /> #PAGINATION_PREVIOUS_SET#</a>',
-  p_theme_id  => 25,
-  p_theme_class_id => 5,
-  p_translate_this_template => 'N',
-  p_row_template_comment=> '');
-end;
-null;
- 
-end;
-/
-
- 
-begin
- 
-begin
-wwv_flow_api.create_row_template_patch (
-  p_id => 27229949743693022 + wwv_flow_api.g_id_offset,
-  p_row_template_before_first =>'<tr>',
-  p_row_template_after_last =>'</tr>'||unistr('\000a')||
-'');
-exception when others then null;
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/report/two_column_portlet
-prompt  ......report template 27230041129693022
- 
-begin
- 
-declare
-  c1 varchar2(32767) := null;
-  c2 varchar2(32767) := null;
-  c3 varchar2(32767) := null;
-  c4 varchar2(32767) := null;
-begin
-c1:=c1||'<li>'||unistr('\000a')||
-'  <span class="uValueHeading">'||unistr('\000a')||
-'    #1#'||unistr('\000a')||
-'  </span>'||unistr('\000a')||
-'  <span class="uValue">'||unistr('\000a')||
-'    #2#'||unistr('\000a')||
-'  </span>'||unistr('\000a')||
-'</li>';
-
-c2 := null;
-c3 := null;
-c4 := null;
-wwv_flow_api.create_row_template (
-  p_id=> 27230041129693022 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_row_template_name=> 'Two Column Portlet',
-  p_row_template1=> c1,
-  p_row_template_condition1=> '',
-  p_row_template2=> c2,
-  p_row_template_condition2=> '',
-  p_row_template3=> c3,
-  p_row_template_condition3=> '',
-  p_row_template4=> c4,
-  p_row_template_condition4=> '',
-  p_row_template_before_rows=>'<ul class="uValuePairs" #REPORT_ATTRIBUTES# id="report_#REGION_STATIC_ID#">',
-  p_row_template_after_rows =>'</ul>',
-  p_row_template_table_attr =>'',
-  p_row_template_type =>'NAMED_COLUMNS',
-  p_column_heading_template=>'',
-  p_row_template_display_cond1=>'0',
-  p_row_template_display_cond2=>'0',
-  p_row_template_display_cond3=>'0',
-  p_row_template_display_cond4=>'0',
-  p_theme_id  => 25,
-  p_theme_class_id => 7,
-  p_translate_this_template => 'N',
-  p_row_template_comment=> '');
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/report/value_attribute_pairs
-prompt  ......report template 27230134973693023
- 
-begin
- 
-declare
-  c1 varchar2(32767) := null;
-  c2 varchar2(32767) := null;
-  c3 varchar2(32767) := null;
-  c4 varchar2(32767) := null;
-begin
-c1:=c1||'<li>'||unistr('\000a')||
-'  <span class="uValueHeading">'||unistr('\000a')||
-'    #COLUMN_HEADER#'||unistr('\000a')||
-'  </span>'||unistr('\000a')||
-'  <span class="uValue">'||unistr('\000a')||
-'    #COLUMN_VALUE#'||unistr('\000a')||
-'  </span>'||unistr('\000a')||
-'</li>';
-
-c2 := null;
-c3 := null;
-c4 := null;
-wwv_flow_api.create_row_template (
-  p_id=> 27230134973693023 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_row_template_name=> 'Value Attribute Pairs',
-  p_row_template1=> c1,
-  p_row_template_condition1=> '',
-  p_row_template2=> c2,
-  p_row_template_condition2=> '',
-  p_row_template3=> c3,
-  p_row_template_condition3=> '',
-  p_row_template4=> c4,
-  p_row_template_condition4=> '',
-  p_row_template_before_rows=>'<ul class="uValuePairs" #REPORT_ATTRIBUTES#>',
-  p_row_template_after_rows =>'</ul>',
-  p_row_template_table_attr =>'',
-  p_row_template_type =>'GENERIC_COLUMNS',
-  p_column_heading_template=>'',
-  p_row_template_display_cond1=>'0',
-  p_row_template_display_cond2=>'0',
-  p_row_template_display_cond3=>'0',
-  p_row_template_display_cond4=>'0',
-  p_theme_id  => 25,
-  p_theme_class_id => 6,
-  p_translate_this_template => 'N',
-  p_row_template_comment=> '');
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/report/value_attribute_pairs_left_aligned
-prompt  ......report template 27230229115693023
- 
-begin
- 
-declare
-  c1 varchar2(32767) := null;
-  c2 varchar2(32767) := null;
-  c3 varchar2(32767) := null;
-  c4 varchar2(32767) := null;
-begin
-c1:=c1||'<li>'||unistr('\000a')||
-'  <label>'||unistr('\000a')||
-'    #COLUMN_HEADER#'||unistr('\000a')||
-'  </label>'||unistr('\000a')||
-'  <span>'||unistr('\000a')||
-'    #COLUMN_VALUE#'||unistr('\000a')||
-'  </span>'||unistr('\000a')||
-'</li>';
-
-c2 := null;
-c3 := null;
-c4 := null;
-wwv_flow_api.create_row_template (
-  p_id=> 27230229115693023 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_row_template_name=> 'Value Attribute Pairs - Left Aligned',
-  p_row_template1=> c1,
-  p_row_template_condition1=> '',
-  p_row_template2=> c2,
-  p_row_template_condition2=> '',
-  p_row_template3=> c3,
-  p_row_template_condition3=> '',
-  p_row_template4=> c4,
-  p_row_template_condition4=> '',
-  p_row_template_before_rows=>'<ul class="vapList tableBased" #REPORT_ATTRIBUTES# id="report_#REPORT_STATIC_ID#">',
-  p_row_template_after_rows =>'</ul>',
-  p_row_template_table_attr =>'',
-  p_row_template_type =>'GENERIC_COLUMNS',
-  p_column_heading_template=>'',
-  p_row_template_display_cond1=>'0',
-  p_row_template_display_cond2=>'0',
-  p_row_template_display_cond3=>'0',
-  p_row_template_display_cond4=>'0',
-  p_theme_id  => 25,
-  p_theme_class_id => 6,
-  p_translate_this_template => 'N',
-  p_row_template_comment=> 'shrahman 03/12/2012 Making table based ');
-end;
-null;
- 
-end;
-/
-
-prompt  ...label templates
---
---application/shared_components/user_interface/templates/label/hidden_label_read_by_screen_readers
-prompt  ......label template 27231731935693035
- 
-begin
- 
-begin
-wwv_flow_api.create_field_template (
-  p_id=> 27231731935693035 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_template_name=>'Hidden Label (Read by Screen Readers)',
-  p_template_body1=>'<label for="#CURRENT_ITEM_NAME#" class="visuallyhidden">',
-  p_template_body2=>'</label>',
-  p_before_item=>'<div id="#CURRENT_ITEM_CONTAINER_ID#">',
-  p_after_item=>'</div>',
-  p_on_error_before_label=>'',
-  p_on_error_after_label=>'<span class="uLabelError">#ERROR_MESSAGE#</span>',
-  p_theme_id  => 25,
-  p_theme_class_id => 13,
-  p_translate_this_template=> 'N',
-  p_template_comment=> '');
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/label/optional_horizontal_left_aligned
-prompt  ......label template 27231842882693039
- 
-begin
- 
-begin
-wwv_flow_api.create_field_template (
-  p_id=> 27231842882693039 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_template_name=>'Optional (Horizontal - Left Aligned)',
-  p_template_body1=>'<label for="#CURRENT_ITEM_NAME#" class="uOptional">',
-  p_template_body2=>'</label>'||unistr('\000a')||
-'<div class="fieldControls">',
-  p_before_item=>'<div class="fieldContainer horizontal" id="#CURRENT_ITEM_CONTAINER_ID#">',
-  p_after_item=>'<button class="uButton iconButton iconOnly altButton help itemHelpButton" onclick="uShowItemHelp(''#CURRENT_ITEM_NAME#'');return false;" id="hb_#CURRENT_ITEM_NAME#" type="button" title="#CURRENT_ITEM_HELP_LABEL#"><span><i></i></span></button>'||unistr('\000a')||
-'<span class="uItemHelp" data-item-id="#CURRENT_ITEM_NAME#">#CURRENT_ITEM_HELP_TEXT#</span>'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>',
-  p_on_error_before_label=>'',
-  p_on_error_after_label=>'<span class="uLabelError">#ERROR_MESSAGE#</span>',
-  p_theme_id  => 25,
-  p_theme_class_id => 3,
-  p_translate_this_template=> 'N',
-  p_template_comment=> '');
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/label/optional_horizontal_right_aligned
-prompt  ......label template 27231937313693039
- 
-begin
- 
-begin
-wwv_flow_api.create_field_template (
-  p_id=> 27231937313693039 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_template_name=>'Optional (Horizontal - Right Aligned)',
-  p_template_body1=>'<label for="#CURRENT_ITEM_NAME#" class="uOptional">',
-  p_template_body2=>'</label>'||unistr('\000a')||
-'<div class="fieldControls">',
-  p_before_item=>'<div class="fieldContainer horizontal rightlabels" id="#CURRENT_ITEM_CONTAINER_ID#">',
-  p_after_item=>'<button class="uButton iconButton iconOnly altButton help itemHelpButton" onclick="uShowItemHelp(''#CURRENT_ITEM_NAME#'');return false;" id="hb_#CURRENT_ITEM_NAME#" type="button"  title="#CURRENT_ITEM_HELP_LABEL#"><span><i></i></span></button>'||unistr('\000a')||
-'<span class="uItemHelp" data-item-id="#CURRENT_ITEM_NAME#">#CURRENT_ITEM_HELP_TEXT#</span>'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>',
-  p_on_error_before_label=>'',
-  p_on_error_after_label=>'<span class="uLabelError">#ERROR_MESSAGE#</span>',
-  p_theme_id  => 25,
-  p_theme_class_id => 3,
-  p_translate_this_template=> 'N',
-  p_template_comment=> '');
-end;
-null;
- 
-end;
-/
-
---application/shared_components/user_interface/templates/label/optional_label_above
-prompt  ......label template 27232036483693040
- 
-begin
- 
-begin
-wwv_flow_api.create_field_template (
-  p_id=> 27232036483693040 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_template_name=>'Optional (Label Above)',
-  p_template_body1=>'<label for="#CURRENT_ITEM_NAME#" class="uOptional">',
-  p_template_body2=>'</label>'||unistr('\000a')||
-'<button class="uButton iconButton iconOnly altButton help itemHelpButton" onclick="uShowItemHelp(''#CURRENT_ITEM_NAME#'');return false;" id="hb_#CURRENT_ITEM_NAME#" type="button" title="#CURRENT_ITEM_HELP_LABEL#"><span><i></i></span></button>'||unistr('\000a')||
-'<span class="uItemHelp" data-item-id="#CURRENT_ITEM_NAME#">#CURRENT_ITEM_HELP_TEXT#</span>'||unistr('\000a')||
-'<div class="fieldControls">',
-  p_before_item=>'<div class="fieldContainer vertical" id="#CURRENT_ITEM_CONTAINER_ID#">',
-  p_after_item=>'</div>'||unistr('\000a')||
-'</div>',
-  p_on_error_before_label=>'',
-  p_on_error_after_label=>'<span class="uLabelError">#ERROR_MESSAGE#</span>',
-  p_theme_id  => 25,
-  p_theme_class_id => 3,
-  p_translate_this_template=> 'N',
-  p_template_comment=> '');
-end;
 null;
- 
 end;
 /
-
---application/shared_components/user_interface/templates/label/required_horizontal_left_aligned
-prompt  ......label template 27232154191693040
- 
-begin
- 
+prompt --application/shared_components/navigation/trees
 begin
-wwv_flow_api.create_field_template (
-  p_id=> 27232154191693040 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_template_name=>'Required (Horizontal - Left Aligned)',
-  p_template_body1=>'<label for="#CURRENT_ITEM_NAME#" class="uRequired"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" class="uAsterisk" />',
-  p_template_body2=>'<span class="visuallyhidden">(#VALUE_REQUIRED#)</span></label>'||unistr('\000a')||
-'<div class="fieldControls">',
-  p_before_item=>'<div class="fieldContainer horizontal" id="#CURRENT_ITEM_CONTAINER_ID#">',
-  p_after_item=>'<button class="uButton iconButton iconOnly altButton help itemHelpButton" onclick="uShowItemHelp(''#CURRENT_ITEM_NAME#'');return false;" id="hb_#CURRENT_ITEM_NAME#" type="button" title="#CURRENT_ITEM_HELP_LABEL#"><span><i></i></span></button>'||unistr('\000a')||
-'<span class="uItemHelp" data-item-id="#CURRENT_ITEM_NAME#">#CURRENT_ITEM_HELP_TEXT#</span>'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>',
-  p_on_error_before_label=>'',
-  p_on_error_after_label=>'<span class="uLabelError">#ERROR_MESSAGE#</span>',
-  p_theme_id  => 25,
-  p_theme_class_id => 4,
-  p_translate_this_template=> 'N',
-  p_template_comment=> '');
-end;
 null;
- 
 end;
 /
-
---application/shared_components/user_interface/templates/label/required_horizontal_right_aligned
-prompt  ......label template 27232238295693041
- 
-begin
- 
+prompt --application/pages/page_groups
 begin
-wwv_flow_api.create_field_template (
-  p_id=> 27232238295693041 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_template_name=>'Required (Horizontal - Right Aligned)',
-  p_template_body1=>'<label for="#CURRENT_ITEM_NAME#" class="uRequired"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" class="uAsterisk" />',
-  p_template_body2=>' <span class="visuallyhidden">(#VALUE_REQUIRED#)</span></label>'||unistr('\000a')||
-'<div class="fieldControls">',
-  p_before_item=>'<div class="fieldContainer horizontal rightlabels" id="#CURRENT_ITEM_CONTAINER_ID#">',
-  p_after_item=>'<button class="uButton iconButton iconOnly altButton help itemHelpButton" onclick="uShowItemHelp(''#CURRENT_ITEM_NAME#'');return false;" id="hb_#CURRENT_ITEM_NAME#" type="button" title="#CURRENT_ITEM_HELP_LABEL#"><span><i></i></span></button>'||unistr('\000a')||
-'<span class="uItemHelp" data-item-id="#CURRENT_ITEM_NAME#">#CURRENT_ITEM_HELP_TEXT#</span>'||unistr('\000a')||
-'</div>'||unistr('\000a')||
-'</div>',
-  p_on_error_before_label=>'',
-  p_on_error_after_label=>'<span class="uLabelError">#ERROR_MESSAGE#</span>',
-  p_theme_id  => 25,
-  p_theme_class_id => 4,
-  p_translate_this_template=> 'N',
-  p_template_comment=> '');
-end;
 null;
- 
 end;
 /
-
---application/shared_components/user_interface/templates/label/required_label_above
-prompt  ......label template 27232341229693041
- 
+prompt --application/comments
 begin
- 
-begin
-wwv_flow_api.create_field_template (
-  p_id=> 27232341229693041 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_template_name=>'Required (Label Above)',
-  p_template_body1=>'<label for="#CURRENT_ITEM_NAME#" class="uRequired"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" class="uAsterisk" />',
-  p_template_body2=>'<span class="visuallyhidden">(#VALUE_REQUIRED#)</span></label>'||unistr('\000a')||
-'<button class="uButton iconButton iconOnly altButton help itemHelpButton" onclick="uShowItemHelp(''#CURRENT_ITEM_NAME#'');return false;" id="hb_#CURRENT_ITEM_NAME#" type="button" title="#CURRENT_ITEM_HELP_LABEL#"><span><i></i></span></button>'||unistr('\000a')||
-'<span class="uItemHelp" data-item-id="#CURRENT_ITEM_NAME#">#CURRENT_ITEM_HELP_TEXT#</span>'||unistr('\000a')||
-'<div class="fieldControls">',
-  p_before_item=>'<div class="fieldContainer vertical" id="#CURRENT_ITEM_CONTAINER_ID#">',
-  p_after_item=>'</div>'||unistr('\000a')||
-'</div>',
-  p_on_error_before_label=>'',
-  p_on_error_after_label=>'<span class="uLabelError">#ERROR_MESSAGE#</span>',
-  p_theme_id  => 25,
-  p_theme_class_id => 4,
-  p_translate_this_template=> 'N',
-  p_template_comment=> '');
-end;
 null;
- 
 end;
 /
-
-prompt  ...breadcrumb templates
---
---application/shared_components/user_interface/templates/breadcrumb/breadcrumb_menu
-prompt  ......template 27233031979693049
- 
+prompt --application/shared_components/navigation/breadcrumbs/breadcrumb
 begin
- 
-begin
-wwv_flow_api.create_menu_template (
-  p_id=> 27233031979693049 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_name=>'Breadcrumb Menu',
-  p_before_first=>'<ul>'||unistr('\000a')||
-'<li class="uStartCap"><span></span></li>',
-  p_current_page_option=>'<li class="active"><span>#NAME#</span></li> ',
-  p_non_current_page_option=>'<li><a href="#LINK#">#NAME#</a></li> ',
-  p_menu_link_attributes=>'',
-  p_between_levels=>'<li class="uSeparator"><span></span></li>',
-  p_after_last=>'<li class="uEndCap"><span></span></li>'||unistr('\000a')||
-'</ul>',
-  p_max_levels=>12,
-  p_start_with_node=>'PARENT_TO_LEAF',
-  p_theme_id  => 25,
-  p_theme_class_id => 1,
-  p_translate_this_template => 'N',
-  p_template_comments=>'');
-end;
-null;
- 
+wwv_flow_api.create_menu(
+ p_id=>wwv_flow_api.id(28171986958089048346)
+,p_name=>' Breadcrumb'
+);
 end;
 /
-
---application/shared_components/user_interface/templates/popuplov
-prompt  ...popup list of values templates
---
-prompt  ......template 27233233863693061
- 
-begin
- 
+prompt --application/shared_components/user_interface/templates/page
 begin
-wwv_flow_api.create_popup_lov_template (
-  p_id=> 27233233863693061 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_popup_icon=>'#IMAGE_PREFIX#f_spacer.gif',
-  p_popup_icon_attr=>'alt="#LIST_OF_VALUES#" title="#LIST_OF_VALUES#" class="uPopupLOVIcon"',
-  p_popup_icon2=>'',
-  p_popup_icon_attr2=>'',
-  p_page_name=>'winlov',
-  p_page_title=>'Search Dialog',
-  p_page_html_head=>'<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />'||unistr('\000a')||
-'<link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">'||unistr('\000a')||
-'<link rel="stylesheet" href="#IMAGE_PREFIX#themes/theme_25/css/4_2.css" type="text/css" media="all"/>'||unistr('\000a')||
+wwv_flow_api.create_template(
+ p_id=>wwv_flow_api.id(28171967883218048096)
+,p_theme_id=>25
+,p_name=>'Login'
+,p_is_popup=>false
+,p_javascript_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js',
+'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js',
+'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'))
+,p_css_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'))
+,p_header_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<!--[if HTML5]><![endif]-->',
+'<!doctype html>',
+'<meta http-equiv="x-ua-compatible" content="IE=edge" />',
+'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->',
+'<head>',
+'<!--[if !HTML5]>',
+'  ',
+'<![endif]-->',
+'  <meta charset="UTF-8">',
+'  <title>#TITLE#</title>',
+'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'#APEX_CSS#',
 '#THEME_CSS#',
-  p_page_body_attr=>'class="uPopUpLOV"',
-  p_before_field_text=>'<div class="uActionBar">',
-  p_page_heading_text=>'',
-  p_page_footer_text =>'',
-  p_filter_width     =>'20',
-  p_filter_max_width =>'100',
-  p_filter_text_attr =>'class="searchField"',
-  p_find_button_text =>'Search',
-  p_find_button_image=>'',
-  p_find_button_attr =>'class="lovButton hotButton"',
-  p_close_button_text=>'Close',
-  p_close_button_image=>'',
-  p_close_button_attr=>'class="lovButton"',
-  p_next_button_text =>'Next >',
-  p_next_button_image=>'',
-  p_next_button_attr =>'class="lovButton"',
-  p_prev_button_text =>'< Previous',
-  p_prev_button_image=>'',
-  p_prev_button_attr =>'class="lovButton"',
-  p_after_field_text=>'</div>',
-  p_scrollbars=>'1',
-  p_resizable=>'1',
-  p_width =>'400',
-  p_height=>'450',
-  p_result_row_x_of_y=>'<div class="lovPagination">Row(s) #FIRST_ROW# - #LAST_ROW#</div>',
-  p_result_rows_per_pg=>500,
-  p_before_result_set=>'<div class="lovLinks">',
-  p_theme_id  => 25,
-  p_theme_class_id => 1,
-  p_translate_this_template => 'N',
-  p_after_result_set   =>'</div>');
-end;
-null;
- 
+'#TEMPLATE_CSS#',
+'#THEME_STYLE_CSS#',
+'#APPLICATION_CSS#',
+'#PAGE_CSS#',
+'#APEX_JAVASCRIPT#',
+'#THEME_JAVASCRIPT#',
+'#TEMPLATE_JAVASCRIPT#',
+'#APPLICATION_JAVASCRIPT#',
+'#PAGE_JAVASCRIPT#',
+'#HEAD#',
+'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />',
+'</head>',
+'<body #ONLOAD# id="uLogin">',
+'  <!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->',
+'  #FORM_OPEN#'))
+,p_box=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div id="uOneCol">',
+'  <div class="apex_grid_container">',
+'    <div class="apex_cols apex_span_12">',
+'      <div id="uLoginContainer">',
+'      #SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#',
+'      #BODY#',
+'      </div>',
+'    </div>',
+'  </div>',
+'</div>'))
+,p_footer_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#FORM_CLOSE#',
+'#DEVELOPER_TOOLBAR#',
+'#GENERATED_CSS#',
+'#GENERATED_JAVASCRIPT#',
+'</body>',
+'</html>'))
+,p_success_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<section class="uRegion uWhiteRegion uMessageRegion clearfix" id="uSuccessMessage">',
+'  <div class="uRegionContent clearfix">',
+'    <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"></a>',
+'    <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />',
+'    <div class="uMessageText">',
+'      #SUCCESS_MESSAGE#',
+'    </div>',
+'  </div>',
+'</section>'))
+,p_notification_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<section class="uSingleAlertMessage red" id="uNotificationMessage">',
+'	<p>#MESSAGE#</p>',
+'	<a href="javascript:void(0)" class="closeMessage" onclick="apex.jQuery(''#uNotificationMessage'').remove();"></a>',
+'</section>'))
+,p_navigation_bar=>'#BAR_BODY#'
+,p_region_table_cattributes=>' summary="" cellpadding="0" border="0" cellspacing="0"'
+,p_theme_class_id=>6
+,p_grid_type=>'FIXED'
+,p_grid_max_columns=>12
+,p_grid_always_use_max_columns=>false
+,p_grid_has_column_span=>true
+,p_grid_always_emit=>false
+,p_grid_emit_empty_leading_cols=>true
+,p_grid_emit_empty_trail_cols=>false
+,p_grid_template=>'#ROWS#'
+,p_grid_row_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_row">',
+'#COLUMNS#',
+'</div>'))
+,p_grid_column_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">',
+'#CONTENT#',
+'</div>'))
+,p_grid_first_column_attributes=>'alpha'
+,p_grid_last_column_attributes=>'omega'
+,p_grid_javascript_debug_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'apex.jQuery(document)',
+'    .on("apex-devbar-grid-debug-on", showGrid)',
+'    .on("apex-devbar-grid-debug-off", hideGrid);'))
+,p_translate_this_template=>'N'
+,p_template_comment=>'18'
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171967977390048110)
+,p_page_template_id=>wwv_flow_api.id(28171967883218048096)
+,p_name=>'Content Body'
+,p_placeholder=>'BODY'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>4
+);
+wwv_flow_api.create_template(
+ p_id=>wwv_flow_api.id(28171968082007048112)
+,p_theme_id=>25
+,p_name=>'No Tabs - Left Sidebar'
+,p_is_popup=>false
+,p_javascript_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#',
+'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'))
+,p_css_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'))
+,p_header_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<!--[if HTML5]><![endif]-->',
+'<!doctype html>',
+'<meta http-equiv="x-ua-compatible" content="IE=edge" />',
+'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->',
+'<head>',
+'<!--[if !HTML5]>',
+'  ',
+'<![endif]-->',
+'  <meta charset="UTF-8">',
+'  <title>#TITLE#</title>',
+'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'#APEX_CSS#',
+'#THEME_CSS#',
+'#TEMPLATE_CSS#',
+'#THEME_STYLE_CSS#',
+'#APPLICATION_CSS#',
+'#PAGE_CSS#',
+'#APEX_JAVASCRIPT#',
+'#THEME_JAVASCRIPT#',
+'#TEMPLATE_JAVASCRIPT#',
+'#APPLICATION_JAVASCRIPT#',
+'#PAGE_JAVASCRIPT#',
+'#HEAD#',
+'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />',
+'</head>',
+'<body #ONLOAD#>',
+'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->',
+'#FORM_OPEN#',
+'<header id="uHeader">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      #REGION_POSITION_07#',
+'      <div class="logoBar">',
+'        <a href="#HOME_LINK#" id="uLogo">#LOGO#</a>',
+'        <div class="userBlock">',
+'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">',
+'          <span>&APP_USER.</span>',
+'          #NAVIGATION_BAR#',
+'        </div>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</header>'))
+,p_box=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div id="uBodyContainer">',
+'#REGION_POSITION_01#',
+'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#',
+'<div id="uTwoColumns" class="sideLeftCol">',
+'  <div class="apex_grid_container">',
+'    <div class="apex_cols apex_span_2" id="uLeftCol">',
+'      <aside>',
+'        #REGION_POSITION_02#',
+'      </aside>',
+'    </div>',
+'    <div class="apex_cols apex_span_10" id="uMidCol">',
+'    #BODY#',
+'    </div>',
+'  </div>',
+'</div>',
+'</div>'))
+,p_footer_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<footer id="uFooter">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      <div class="uFooterContent">',
+'        <div id="customize">#CUSTOMIZE#</div>',
+'        #REGION_POSITION_05#',
+'        #SCREEN_READER_TOGGLE#',
+'        <span class="uFooterVersion">',
+'          #APP_VERSION#',
+'        </span>',
+'      </div>',
+'      <div class="uFooterBG">',
+'        <div class="uLeft"></div>',
+'        <div class="uRight"></div>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</footer>',
+'#FORM_CLOSE#',
+'#DEVELOPER_TOOLBAR#',
+'#GENERATED_CSS#',
+'#GENERATED_JAVASCRIPT#',
+'</body>',
+'</html>'))
+,p_success_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<section class="uRegion uWhiteRegion uMessageRegion clearfix" id="uSuccessMessage">',
+'  <div class="uRegionContent clearfix">',
+'    <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"></a>',
+'    <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />',
+'    <div class="uMessageText">',
+'      #SUCCESS_MESSAGE#',
+'    </div>',
+'  </div>',
+'</section>'))
+,p_notification_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<section class="uRegion uWhiteRegion uMessageRegion clearfix" id="uNotificationMessage">',
+'  <div class="uRegionContent clearfix">',
+'    <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"></a>',
+'    <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />',
+'    <div class="uMessageText">',
+'      #MESSAGE#',
+'    </div>',
+'  </div>',
+'</section>'))
+,p_navigation_bar=>'#BAR_BODY#'
+,p_navbar_entry=>'<a href="#LINK#">#TEXT#</a>#EDIT#'
+,p_region_table_cattributes=>'summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
+,p_sidebar_def_reg_pos=>'REGION_POSITION_02'
+,p_breadcrumb_def_reg_pos=>'REGION_POSITION_01'
+,p_theme_class_id=>17
+,p_grid_type=>'FIXED'
+,p_grid_max_columns=>12
+,p_grid_always_use_max_columns=>false
+,p_grid_has_column_span=>true
+,p_grid_always_emit=>false
+,p_grid_emit_empty_leading_cols=>true
+,p_grid_emit_empty_trail_cols=>false
+,p_grid_template=>'#ROWS#'
+,p_grid_row_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_row">',
+'#COLUMNS#',
+'</div>'))
+,p_grid_column_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">',
+'#CONTENT#',
+'</div>'))
+,p_grid_first_column_attributes=>'alpha'
+,p_grid_last_column_attributes=>'omega'
+,p_grid_javascript_debug_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'apex.jQuery(document)',
+'    .on("apex-devbar-grid-debug-on", showGrid)',
+'    .on("apex-devbar-grid-debug-off", hideGrid);'))
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171968160047048113)
+,p_page_template_id=>wwv_flow_api.id(28171968082007048112)
+,p_name=>'Main Content'
+,p_placeholder=>'BODY'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>10
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171968270448048114)
+,p_page_template_id=>wwv_flow_api.id(28171968082007048112)
+,p_name=>'Breadcrumb'
+,p_placeholder=>'REGION_POSITION_01'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171968355727048114)
+,p_page_template_id=>wwv_flow_api.id(28171968082007048112)
+,p_name=>'Left Column'
+,p_placeholder=>'REGION_POSITION_02'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>2
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171968472046048114)
+,p_page_template_id=>wwv_flow_api.id(28171968082007048112)
+,p_name=>'Footer'
+,p_placeholder=>'REGION_POSITION_05'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>12
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171968579415048114)
+,p_page_template_id=>wwv_flow_api.id(28171968082007048112)
+,p_name=>'Header'
+,p_placeholder=>'REGION_POSITION_07'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_template(
+ p_id=>wwv_flow_api.id(28171968680772048114)
+,p_theme_id=>25
+,p_name=>'No Tabs - Left and Right Sidebar'
+,p_is_popup=>false
+,p_javascript_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js',
+'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js',
+'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'))
+,p_css_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'))
+,p_header_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<!--[if HTML5]><![endif]-->',
+'<!doctype html>',
+'<meta http-equiv="x-ua-compatible" content="IE=edge" />',
+'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->',
+'<head>',
+'<!--[if !HTML5]>',
+'  ',
+'<![endif]-->',
+'  <meta charset="UTF-8">',
+'  <title>#TITLE#</title>',
+'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'#APEX_CSS#',
+'#THEME_CSS#',
+'#TEMPLATE_CSS#',
+'#THEME_STYLE_CSS#',
+'#APPLICATION_CSS#',
+'#PAGE_CSS#',
+'#APEX_JAVASCRIPT#',
+'#THEME_JAVASCRIPT#',
+'#TEMPLATE_JAVASCRIPT#',
+'#APPLICATION_JAVASCRIPT#',
+'#PAGE_JAVASCRIPT#',
+'#HEAD#',
+'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />',
+'</head>',
+'<body #ONLOAD#>',
+'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->',
+'#FORM_OPEN#',
+'<header id="uHeader">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      #REGION_POSITION_07#',
+'      <div class="logoBar">',
+'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>',
+'        <div class="userBlock">',
+'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">',
+'          <span>&APP_USER.</span>',
+'          #NAVIGATION_BAR#',
+'        </div>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</header>'))
+,p_box=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div id="uBodyContainer">',
+'#REGION_POSITION_01#',
+'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#',
+'<div id="uThreeColumns">',
+'  <div class="apex_grid_container">',
+'    <div class="apex_cols apex_span_2" id="uLeftCol">',
+'      <aside>',
+'        #REGION_POSITION_02#',
+'      </aside>',
+'    </div>',
+'    <div class="apex_cols apex_span_8" id="uMidCol">',
+'    #BODY#',
+'    </div>',
+'    <div class="apex_cols apex_span_2" id="uRightCol">',
+'      <aside>',
+'        #REGION_POSITION_03#',
+'      </aside>',
+'    </div>',
+'  </div>',
+'</div>',
+'</div>'))
+,p_footer_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<footer id="uFooter">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      <div class="uFooterContent">',
+'        #REGION_POSITION_05#',
+'        <div id="customize">#CUSTOMIZE#</div>',
+'        #SCREEN_READER_TOGGLE#',
+'        <span class="uFooterVersion">',
+'          #APP_VERSION#',
+'        </span>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</footer>',
+'#FORM_CLOSE#',
+'#DEVELOPER_TOOLBAR#',
+'#GENERATED_CSS#',
+'#GENERATED_JAVASCRIPT#',
+'</body>',
+'</html>'))
+,p_success_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>',
+'          #SUCCESS_MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_notification_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>',
+'          #MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_navigation_bar=>'#BAR_BODY#'
+,p_navbar_entry=>'<a href="#LINK#">#TEXT#</a>#EDIT#'
+,p_region_table_cattributes=>'summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
+,p_sidebar_def_reg_pos=>'REGION_POSITION_03'
+,p_breadcrumb_def_reg_pos=>'REGION_POSITION_01'
+,p_theme_class_id=>17
+,p_grid_type=>'FIXED'
+,p_grid_max_columns=>12
+,p_grid_always_use_max_columns=>false
+,p_grid_has_column_span=>true
+,p_grid_always_emit=>false
+,p_grid_emit_empty_leading_cols=>true
+,p_grid_emit_empty_trail_cols=>false
+,p_grid_template=>'#ROWS#'
+,p_grid_row_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_row">',
+'#COLUMNS#',
+'</div>'))
+,p_grid_column_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">',
+'#CONTENT#',
+'</div>'))
+,p_grid_first_column_attributes=>'alpha'
+,p_grid_last_column_attributes=>'omega'
+,p_grid_javascript_debug_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'apex.jQuery(document)',
+'    .on("apex-devbar-grid-debug-on", showGrid)',
+'    .on("apex-devbar-grid-debug-off", hideGrid);'))
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171968756929048115)
+,p_page_template_id=>wwv_flow_api.id(28171968680772048114)
+,p_name=>'Content Body'
+,p_placeholder=>'BODY'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>8
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171968876669048115)
+,p_page_template_id=>wwv_flow_api.id(28171968680772048114)
+,p_name=>'Breadcrumb'
+,p_placeholder=>'REGION_POSITION_01'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171968967545048115)
+,p_page_template_id=>wwv_flow_api.id(28171968680772048114)
+,p_name=>'Left Column'
+,p_placeholder=>'REGION_POSITION_02'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>2
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171969085584048115)
+,p_page_template_id=>wwv_flow_api.id(28171968680772048114)
+,p_name=>'Footer'
+,p_placeholder=>'REGION_POSITION_05'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>12
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171969181904048115)
+,p_page_template_id=>wwv_flow_api.id(28171968680772048114)
+,p_name=>'Header'
+,p_placeholder=>'REGION_POSITION_07'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171969277251048115)
+,p_page_template_id=>wwv_flow_api.id(28171968680772048114)
+,p_name=>'Right Column'
+,p_placeholder=>'REGION_POSITOIN_03'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>2
+);
+wwv_flow_api.create_template(
+ p_id=>wwv_flow_api.id(28171969357302048115)
+,p_theme_id=>25
+,p_name=>'No Tabs - No Sidebar'
+,p_is_popup=>false
+,p_javascript_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#',
+'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'))
+,p_css_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'))
+,p_header_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<!--[if HTML5]><![endif]-->',
+'<!doctype html>',
+'<meta http-equiv="x-ua-compatible" content="IE=edge" />',
+'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->',
+'<head>',
+'<!--[if !HTML5]>',
+'  ',
+'<![endif]-->',
+'  <meta charset="UTF-8">',
+'  <title>#TITLE#</title>',
+'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'#APEX_CSS#',
+'#THEME_CSS#',
+'#TEMPLATE_CSS#',
+'#THEME_STYLE_CSS#',
+'#APPLICATION_CSS#',
+'#PAGE_CSS#',
+'#APEX_JAVASCRIPT#',
+'#THEME_JAVASCRIPT#',
+'#TEMPLATE_JAVASCRIPT#',
+'#APPLICATION_JAVASCRIPT#',
+'#PAGE_JAVASCRIPT#',
+'#HEAD#',
+'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />',
+'</head>',
+'<body #ONLOAD#>',
+'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->',
+'#FORM_OPEN#',
+'<header id="uHeader">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      #REGION_POSITION_07#',
+'      <div class="logoBar">',
+'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>',
+'        <div class="userBlock">',
+'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">',
+'          <span>&APP_USER.</span>',
+'          #NAVIGATION_BAR#',
+'        </div>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</header>'))
+,p_box=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div id="uBodyContainer">',
+'#REGION_POSITION_01#',
+'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#',
+'<div id="uOneCol">',
+'  <div class="apex_grid_container">',
+'    <div class="apex_cols apex_span_12">',
+'      #BODY#',
+'    </div>',
+'  </div>',
+'</div>',
+'</div>'))
+,p_footer_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<footer id="uFooter">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      <div class="uFooterContent">',
+'        #REGION_POSITION_05#',
+'        <div id="customize">#CUSTOMIZE#</div>',
+'        #SCREEN_READER_TOGGLE#',
+'        <span class="uFooterVersion">',
+'          #APP_VERSION#',
+'        </span>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</footer>',
+'#FORM_CLOSE#',
+'#DEVELOPER_TOOLBAR#',
+'#GENERATED_CSS#',
+'#GENERATED_JAVASCRIPT#',
+'</body>',
+'</html>'))
+,p_success_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>',
+'          #SUCCESS_MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_notification_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>',
+'          #MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_navigation_bar=>'#BAR_BODY#'
+,p_navbar_entry=>'<a href="#LINK#">#TEXT#</a>#EDIT#'
+,p_region_table_cattributes=>' summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
+,p_breadcrumb_def_reg_pos=>'REGION_POSITION_01'
+,p_theme_class_id=>3
+,p_error_page_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_cols apex_span_12">',
+'  <section class="uRegion uNoHeading uErrorRegion">',
+'    <div class="uRegionContent">',
+'      <p class="errorIcon"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" class="iconLarge error"/></p>',
+'      <p><strong>#MESSAGE#</strong></p>',
+'      <p>#ADDITIONAL_INFO#</p>',
+'      <div class="uErrorTechInfo">#TECHNICAL_INFO#</div>',
+'    </div>',
+'    <div class="uRegionHeading">',
+'      <span class="uButtonContainer">',
+'        <button onclick="#BACK_LINK#" class="uButtonLarge uHotButton" type="button"><span>#OK#</span></button>',
+'      </span>',
+'    </div>',
+'  </section>',
+'</div>'))
+,p_grid_type=>'FIXED'
+,p_grid_max_columns=>12
+,p_grid_always_use_max_columns=>false
+,p_grid_has_column_span=>true
+,p_grid_always_emit=>false
+,p_grid_emit_empty_leading_cols=>true
+,p_grid_emit_empty_trail_cols=>false
+,p_grid_template=>'#ROWS#'
+,p_grid_row_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_row">',
+'#COLUMNS#',
+'</div>'))
+,p_grid_column_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">',
+'#CONTENT#',
+'</div>'))
+,p_grid_first_column_attributes=>'alpha'
+,p_grid_last_column_attributes=>'omega'
+,p_grid_javascript_debug_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'apex.jQuery(document)',
+'    .on("apex-devbar-grid-debug-on", showGrid)',
+'    .on("apex-devbar-grid-debug-off", hideGrid);'))
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171969462803048117)
+,p_page_template_id=>wwv_flow_api.id(28171969357302048115)
+,p_name=>'Content Body'
+,p_placeholder=>'BODY'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>12
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171969567506048117)
+,p_page_template_id=>wwv_flow_api.id(28171969357302048115)
+,p_name=>'Breadcrumb'
+,p_placeholder=>'REGION_POSITION_01'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171969678054048117)
+,p_page_template_id=>wwv_flow_api.id(28171969357302048115)
+,p_name=>'Footer'
+,p_placeholder=>'REGION_POSITION_05'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171969766727048118)
+,p_page_template_id=>wwv_flow_api.id(28171969357302048115)
+,p_name=>'Header'
+,p_placeholder=>'REGION_POSITION_07'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_template(
+ p_id=>wwv_flow_api.id(28171969854830048118)
+,p_theme_id=>25
+,p_name=>'No Tabs - Right Sidebar'
+,p_is_popup=>false
+,p_javascript_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#',
+'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'))
+,p_css_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'))
+,p_header_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<!--[if HTML5]><![endif]-->',
+'<!doctype html>',
+'<meta http-equiv="x-ua-compatible" content="IE=edge" />',
+'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->',
+'<head>',
+'<!--[if !HTML5]>',
+'  ',
+'<![endif]-->',
+'  <meta charset="UTF-8">',
+'  <title>#TITLE#</title>',
+'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'#APEX_CSS#',
+'#THEME_CSS#',
+'#TEMPLATE_CSS#',
+'#THEME_STYLE_CSS#',
+'#APPLICATION_CSS#',
+'#PAGE_CSS#',
+'#APEX_JAVASCRIPT#',
+'#THEME_JAVASCRIPT#',
+'#TEMPLATE_JAVASCRIPT#',
+'#APPLICATION_JAVASCRIPT#',
+'#PAGE_JAVASCRIPT#',
+'#HEAD#',
+'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />',
+'</head>',
+'<body #ONLOAD#>',
+'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->',
+'#FORM_OPEN#',
+'<header id="uHeader">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      #REGION_POSITION_07#',
+'      <div class="logoBar">',
+'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>',
+'        <div class="userBlock">',
+'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">',
+'          <span>&APP_USER.</span>',
+'          #NAVIGATION_BAR#',
+'        </div>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</header>'))
+,p_box=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div id="uBodyContainer">',
+'#REGION_POSITION_01#',
+'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#',
+'<div id="uTwoColumns" class="sideRightCol">',
+'  <div class="apex_grid_container">',
+'    <div class="apex_cols apex_span_10" id="uMidCol">',
+'    #BODY#',
+'    </div>',
+'    <div class="apex_cols apex_span_2" id="uRightCol">',
+'      <aside>',
+'        #REGION_POSITION_03#',
+'      </aside>',
+'    </div>',
+'  </div>',
+'</div>',
+'</div>'))
+,p_footer_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<footer id="uFooter">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      <div class="uFooterContent">',
+'        #REGION_POSITION_05#',
+'        <div id="customize">#CUSTOMIZE#</div>',
+'        #SCREEN_READER_TOGGLE#',
+'        <span class="uFooterVersion">',
+'          #APP_VERSION#',
+'        </span>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</footer>',
+'#FORM_CLOSE#',
+'#DEVELOPER_TOOLBAR#',
+'#GENERATED_CSS#',
+'#GENERATED_JAVASCRIPT#',
+'</body>',
+'</html>'))
+,p_success_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>',
+'          #SUCCESS_MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_notification_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>',
+'          #MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_navigation_bar=>'#BAR_BODY#'
+,p_navbar_entry=>'<a href="#LINK#">#TEXT#</a>#EDIT#'
+,p_region_table_cattributes=>' summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
+,p_sidebar_def_reg_pos=>'REGION_POSITION_03'
+,p_breadcrumb_def_reg_pos=>'REGION_POSITION_01'
+,p_theme_class_id=>3
+,p_grid_type=>'FIXED'
+,p_grid_max_columns=>12
+,p_grid_always_use_max_columns=>false
+,p_grid_has_column_span=>true
+,p_grid_always_emit=>false
+,p_grid_emit_empty_leading_cols=>true
+,p_grid_emit_empty_trail_cols=>false
+,p_grid_template=>'#ROWS#'
+,p_grid_row_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_row">',
+'#COLUMNS#',
+'</div>'))
+,p_grid_column_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">',
+'#CONTENT#',
+'</div>'))
+,p_grid_first_column_attributes=>'alpha'
+,p_grid_last_column_attributes=>'omega'
+,p_grid_javascript_debug_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'apex.jQuery(document)',
+'    .on("apex-devbar-grid-debug-on", showGrid)',
+'    .on("apex-devbar-grid-debug-off", hideGrid);'))
+,p_translate_this_template=>'N'
+);
 end;
 /
-
-prompt  ...calendar templates
---
---application/shared_components/user_interface/templates/calendar/calendar
-prompt  ......template 27233143636693054
- 
 begin
- 
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171969968909048118)
+,p_page_template_id=>wwv_flow_api.id(28171969854830048118)
+,p_name=>'Main Content'
+,p_placeholder=>'BODY'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>10
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171970074241048118)
+,p_page_template_id=>wwv_flow_api.id(28171969854830048118)
+,p_name=>'Breadcrumb'
+,p_placeholder=>'REGION_POSITION_01'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171970185073048118)
+,p_page_template_id=>wwv_flow_api.id(28171969854830048118)
+,p_name=>'Right Column'
+,p_placeholder=>'REGION_POSITION_03'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>2
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171970269912048118)
+,p_page_template_id=>wwv_flow_api.id(28171969854830048118)
+,p_name=>'Footer'
+,p_placeholder=>'REGION_POSITION_05'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>12
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171970371595048118)
+,p_page_template_id=>wwv_flow_api.id(28171969854830048118)
+,p_name=>'Header'
+,p_placeholder=>'REGION_POSITION_07'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_template(
+ p_id=>wwv_flow_api.id(28171970483953048119)
+,p_theme_id=>25
+,p_name=>'One Level Tabs - Content Frame'
+,p_is_popup=>false
+,p_javascript_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#',
+'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'))
+,p_javascript_code_onload=>'initContentFrameTabs();'
+,p_css_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'))
+,p_header_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<!--[if HTML5]><![endif]-->',
+'<!doctype html>',
+'<meta http-equiv="x-ua-compatible" content="IE=edge" />',
+'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->',
+'<head>',
+'<!--[if !HTML5]>',
+'  ',
+'<![endif]-->',
+'  <meta charset="UTF-8">',
+'  <title>#TITLE#</title>',
+'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'#APEX_CSS#',
+'#THEME_CSS#',
+'#TEMPLATE_CSS#',
+'#THEME_STYLE_CSS#',
+'#APPLICATION_CSS#',
+'#PAGE_CSS#',
+'#APEX_JAVASCRIPT#',
+'#THEME_JAVASCRIPT#',
+'#TEMPLATE_JAVASCRIPT#',
+'#APPLICATION_JAVASCRIPT#',
+'#PAGE_JAVASCRIPT#',
+'#HEAD#',
+'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />',
+'</head>',
+'<body #ONLOAD#>',
+'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->',
+'#FORM_OPEN#',
+'<header id="uHeader">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      #REGION_POSITION_07#',
+'      <div class="logoBar">',
+'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>',
+'        <div class="userBlock">',
+'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">',
+'          <span>&APP_USER.</span>',
+'          #NAVIGATION_BAR#',
+'        </div>',
+'      </div>',
+'    </div>',
+'  </div>',
+'  <nav>',
+'    <div class="apex_grid_container clearfix">',
+'      <div class="apex_cols apex_span_12">',
+'        <ul class="uMainNav">',
+'          #TAB_CELLS#',
+'          #REGION_POSITION_06#',
+'        </ul>',
+'        #REGION_POSITION_08#',
+'      </div>',
+'    </div>',
+'  </nav>',
+'</header>'))
+,p_box=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div id="uBodyContainer">',
+'#REGION_POSITION_01#',
+'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#',
+'<div id="uOneCol">',
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uRegion uRegionNoPadding clearfix uRegionFrame">',
+'      <div class="uRegionHeading">',
+'        <h1>#TITLE#</h1>',
+'        <span class="uButtonContainer">',
+'        #REGION_POSITION_02#',
+'        </span>',
+'      </div>',
+'      <div class="uFrameContent">',
+'        <div class="uFrameMain">',
+'            #BODY#',
+'        </div>',
+'        <div class="uFrameSide">',
+'          <div class="apex_cols apex_span_2 alpha omega">',
+'            #REGION_POSITION_03#',
+'          </div>',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>',
+'</div>',
+'</div>'))
+,p_footer_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<footer id="uFooter">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      <div class="uFooterContent">',
+'        #REGION_POSITION_05#',
+'        <div id="customize">#CUSTOMIZE#</div>',
+'        #SCREEN_READER_TOGGLE#',
+'        <span class="uFooterVersion">',
+'          #APP_VERSION#',
+'        </span>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</footer>',
+'#FORM_CLOSE#',
+'#DEVELOPER_TOOLBAR#',
+'#GENERATED_CSS#',
+'#GENERATED_JAVASCRIPT#',
+'</body>',
+'</html>'))
+,p_success_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>',
+'          #SUCCESS_MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_current_tab=>'<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_non_current_tab=>'<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_notification_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>',
+'          #MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_navigation_bar=>'#BAR_BODY#'
+,p_navbar_entry=>'<a href="#LINK#">#TEXT#</a>'
+,p_sidebar_def_reg_pos=>'BODY_3'
+,p_breadcrumb_def_reg_pos=>'REGION_POSITION_01'
+,p_theme_class_id=>10
+,p_grid_type=>'FIXED'
+,p_grid_max_columns=>12
+,p_grid_always_use_max_columns=>false
+,p_grid_has_column_span=>true
+,p_grid_always_emit=>false
+,p_grid_emit_empty_leading_cols=>true
+,p_grid_emit_empty_trail_cols=>false
+,p_grid_template=>'#ROWS#'
+,p_grid_row_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_row">',
+'#COLUMNS#',
+'</div>'))
+,p_grid_column_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">',
+'#CONTENT#',
+'</div>'))
+,p_grid_first_column_attributes=>'alpha'
+,p_grid_last_column_attributes=>'omega'
+,p_grid_javascript_debug_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'apex.jQuery(document)',
+'    .on("apex-devbar-grid-debug-on", showGrid)',
+'    .on("apex-devbar-grid-debug-off", hideGrid);'))
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171970579148048121)
+,p_page_template_id=>wwv_flow_api.id(28171970483953048119)
+,p_name=>'Content Body'
+,p_placeholder=>'BODY'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>10
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171970675718048121)
+,p_page_template_id=>wwv_flow_api.id(28171970483953048119)
+,p_name=>'Breadcrumb'
+,p_placeholder=>'REGION_POSITION_01'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171970770940048121)
+,p_page_template_id=>wwv_flow_api.id(28171970483953048119)
+,p_name=>'Content Frame Buttons'
+,p_placeholder=>'REGION_POSITION_02'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171970875484048121)
+,p_page_template_id=>wwv_flow_api.id(28171970483953048119)
+,p_name=>'Side Column'
+,p_placeholder=>'REGION_POSITION_03'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>2
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171970976246048121)
+,p_page_template_id=>wwv_flow_api.id(28171970483953048119)
+,p_name=>'Footer'
+,p_placeholder=>'REGION_POSITION_05'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>12
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171971055445048121)
+,p_page_template_id=>wwv_flow_api.id(28171970483953048119)
+,p_name=>'Page Level Tabs'
+,p_placeholder=>'REGION_POSITION_06'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171971157900048121)
+,p_page_template_id=>wwv_flow_api.id(28171970483953048119)
+,p_name=>'Header'
+,p_placeholder=>'REGION_POSITION_07'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171971262980048121)
+,p_page_template_id=>wwv_flow_api.id(28171970483953048119)
+,p_name=>'Icon Nav Bar'
+,p_placeholder=>'REGION_POSITION_08'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_template(
+ p_id=>wwv_flow_api.id(28171971368723048121)
+,p_theme_id=>25
+,p_name=>'One Level Tabs - Left Sidebar'
+,p_is_popup=>false
+,p_javascript_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#',
+'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'))
+,p_css_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'))
+,p_header_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<!--[if HTML5]><![endif]-->',
+'<!doctype html>',
+'<meta http-equiv="x-ua-compatible" content="IE=edge" />',
+'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->',
+'<head>',
+'<!--[if !HTML5]>',
+'  ',
+'<![endif]-->',
+'  <meta charset="UTF-8">',
+'  <title>#TITLE#</title>',
+'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'#APEX_CSS#',
+'#THEME_CSS#',
+'#TEMPLATE_CSS#',
+'#THEME_STYLE_CSS#',
+'#APPLICATION_CSS#',
+'#PAGE_CSS#',
+'#APEX_JAVASCRIPT#',
+'#THEME_JAVASCRIPT#',
+'#TEMPLATE_JAVASCRIPT#',
+'#APPLICATION_JAVASCRIPT#',
+'#PAGE_JAVASCRIPT#',
+'#HEAD#',
+'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />',
+'</head>',
+'<body #ONLOAD#>',
+'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->',
+'#FORM_OPEN#',
+'<header id="uHeader">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      #REGION_POSITION_07#',
+'      <div class="logoBar">',
+'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>',
+'        <div class="userBlock">',
+'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">',
+'          <span>&APP_USER.</span>',
+'          #NAVIGATION_BAR#',
+'        </div>',
+'      </div>',
+'    </div>',
+'  </div>',
+'  <nav>',
+'    <div class="apex_grid_container clearfix">',
+'      <div class="apex_cols apex_span_12">',
+'        <ul class="uMainNav">',
+'          #TAB_CELLS#',
+'          #REGION_POSITION_06#',
+'        </ul>',
+'        #REGION_POSITION_08#',
+'      </div>',
+'    </div>',
+'  </nav>',
+'</header>'))
+,p_box=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div id="uBodyContainer">',
+'#REGION_POSITION_01#',
+'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#',
+'<div id="uTwoColumns" class="sideLeftCol">',
+'  <div class="apex_grid_container">',
+'    <div class="apex_cols apex_span_2" id="uLeftCol">',
+'      <aside>',
+'        #REGION_POSITION_02#',
+'      </aside>',
+'    </div>',
+'    <div class="apex_cols apex_span_10" id="uMidCol">',
+'    #BODY#',
+'    </div>',
+'  </div>',
+'</div>',
+'</div>'))
+,p_footer_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<footer id="uFooter">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      <div class="uFooterContent">',
+'        #REGION_POSITION_05#',
+'        <div id="customize">#CUSTOMIZE#</div>',
+'        #SCREEN_READER_TOGGLE#',
+'        <span class="uFooterVersion">',
+'          #APP_VERSION#',
+'        </span>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</footer>',
+'#FORM_CLOSE#',
+'#DEVELOPER_TOOLBAR#',
+'#GENERATED_CSS#',
+'#GENERATED_JAVASCRIPT#',
+'</body>',
+'</html>'))
+,p_success_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>',
+'          #SUCCESS_MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_current_tab=>'<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_non_current_tab=>'<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_notification_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>',
+'          #MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_navigation_bar=>'#BAR_BODY#'
+,p_navbar_entry=>'<a href="#LINK#">#TEXT#</a>#EDIT#'
+,p_region_table_cattributes=>' summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
+,p_sidebar_def_reg_pos=>'REGION_POSITION_02'
+,p_breadcrumb_def_reg_pos=>'REGION_POSITION_01'
+,p_theme_class_id=>16
+,p_grid_type=>'FIXED'
+,p_grid_max_columns=>12
+,p_grid_always_use_max_columns=>false
+,p_grid_has_column_span=>true
+,p_grid_always_emit=>false
+,p_grid_emit_empty_leading_cols=>true
+,p_grid_emit_empty_trail_cols=>false
+,p_grid_template=>'#ROWS#'
+,p_grid_row_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_row">',
+'#COLUMNS#',
+'</div>'))
+,p_grid_column_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">',
+'#CONTENT#',
+'</div>'))
+,p_grid_first_column_attributes=>'alpha'
+,p_grid_last_column_attributes=>'omega'
+,p_grid_javascript_debug_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'apex.jQuery(document)',
+'    .on("apex-devbar-grid-debug-on", showGrid)',
+'    .on("apex-devbar-grid-debug-off", hideGrid);'))
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171971480378048123)
+,p_page_template_id=>wwv_flow_api.id(28171971368723048121)
+,p_name=>'Content Body'
+,p_placeholder=>'BODY'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>10
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171971557253048123)
+,p_page_template_id=>wwv_flow_api.id(28171971368723048121)
+,p_name=>'Breadcrumb'
+,p_placeholder=>'REGION_POSITION_01'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171971670603048123)
+,p_page_template_id=>wwv_flow_api.id(28171971368723048121)
+,p_name=>'Left Column'
+,p_placeholder=>'REGION_POSITION_02'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>2
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171971758663048123)
+,p_page_template_id=>wwv_flow_api.id(28171971368723048121)
+,p_name=>'Footer'
+,p_placeholder=>'REGION_POSITION_05'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>12
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171971874284048123)
+,p_page_template_id=>wwv_flow_api.id(28171971368723048121)
+,p_name=>'Page Level Tabs'
+,p_placeholder=>'REGION_POSITION_06'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171971986279048123)
+,p_page_template_id=>wwv_flow_api.id(28171971368723048121)
+,p_name=>'Header'
+,p_placeholder=>'REGION_POSITION_07'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171972074758048123)
+,p_page_template_id=>wwv_flow_api.id(28171971368723048121)
+,p_name=>'Icon Nav Bar'
+,p_placeholder=>'REGION_POSITION_08'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_template(
+ p_id=>wwv_flow_api.id(28171972185973048123)
+,p_theme_id=>25
+,p_name=>'One Level Tabs - Left and Right Sidebar'
+,p_is_popup=>false
+,p_javascript_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#',
+'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'))
+,p_css_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'))
+,p_header_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<!--[if HTML5]><![endif]-->',
+'<!doctype html>',
+'<meta http-equiv="x-ua-compatible" content="IE=edge" />',
+'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->',
+'<head>',
+'<!--[if !HTML5]>',
+'  ',
+'<![endif]-->',
+'  <meta charset="UTF-8">',
+'  <title>#TITLE#</title>',
+'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'#APEX_CSS#',
+'#THEME_CSS#',
+'#TEMPLATE_CSS#',
+'#THEME_STYLE_CSS#',
+'#APPLICATION_CSS#',
+'#PAGE_CSS#',
+'#APEX_JAVASCRIPT#',
+'#THEME_JAVASCRIPT#',
+'#TEMPLATE_JAVASCRIPT#',
+'#APPLICATION_JAVASCRIPT#',
+'#PAGE_JAVASCRIPT#',
+'#HEAD#',
+'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />',
+'</head>',
+'<body #ONLOAD#>',
+'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->',
+'#FORM_OPEN#',
+'<header id="uHeader">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      #REGION_POSITION_07#',
+'      <div class="logoBar">',
+'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>',
+'        <div class="userBlock">',
+'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">',
+'          <span>&APP_USER.</span>',
+'          #NAVIGATION_BAR#',
+'        </div>',
+'      </div>',
+'    </div>',
+'  </div>',
+'  <nav>',
+'    <div class="apex_grid_container clearfix">',
+'      <div class="apex_cols apex_span_12">',
+'        <ul class="uMainNav">',
+'          #TAB_CELLS#',
+'          #REGION_POSITION_06#',
+'        </ul>',
+'        #REGION_POSITION_08#',
+'      </div>',
+'    </div>',
+'  </nav>',
+'</header>'))
+,p_box=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div id="uBodyContainer">',
+'#REGION_POSITION_01#',
+'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#',
+'<div id="uThreeColumns">',
+'  <div class="apex_grid_container">',
+'    <div class="apex_cols apex_span_2" id="uLeftCol">',
+'      <aside>',
+'        #REGION_POSITION_02#',
+'      </aside>',
+'    </div>',
+'    <div class="apex_cols apex_span_8" id="uMidCol">',
+'    #BODY#',
+'    </div>',
+'    <div class="apex_cols apex_span_2" id="uRightCol">',
+'      <aside>',
+'        #REGION_POSITION_03#',
+'      </aside>',
+'    </div>',
+'  </div>',
+'</div>',
+'</div>'))
+,p_footer_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<footer id="uFooter">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      <div class="uFooterContent">',
+'        #REGION_POSITION_05#',
+'        <div id="customize">#CUSTOMIZE#</div>',
+'        #SCREEN_READER_TOGGLE#',
+'        <span class="uFooterVersion">',
+'          #APP_VERSION#',
+'        </span>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</footer>',
+'#FORM_CLOSE#',
+'#DEVELOPER_TOOLBAR#',
+'#GENERATED_CSS#',
+'#GENERATED_JAVASCRIPT#',
+'</body>',
+'</html>'))
+,p_success_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>',
+'          #SUCCESS_MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_current_tab=>'<li><a class="active" href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_non_current_tab=>'<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_notification_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>',
+'          #MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_navigation_bar=>'#BAR_BODY#'
+,p_navbar_entry=>'<a href="#LINK#">#TEXT#</a>#EDIT#'
+,p_region_table_cattributes=>' summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
+,p_sidebar_def_reg_pos=>'REGION_POSITION_03'
+,p_breadcrumb_def_reg_pos=>'REGION_POSITION_01'
+,p_theme_class_id=>16
+,p_grid_type=>'FIXED'
+,p_grid_max_columns=>12
+,p_grid_always_use_max_columns=>false
+,p_grid_has_column_span=>true
+,p_grid_always_emit=>false
+,p_grid_emit_empty_leading_cols=>true
+,p_grid_emit_empty_trail_cols=>false
+,p_grid_template=>'#ROWS#'
+,p_grid_row_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_row">',
+'#COLUMNS#',
+'</div>'))
+,p_grid_column_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">',
+'#CONTENT#',
+'</div>'))
+,p_grid_first_column_attributes=>'alpha'
+,p_grid_last_column_attributes=>'omega'
+,p_grid_javascript_debug_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'apex.jQuery(document)',
+'    .on("apex-devbar-grid-debug-on", showGrid)',
+'    .on("apex-devbar-grid-debug-off", hideGrid);'))
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171972275536048125)
+,p_page_template_id=>wwv_flow_api.id(28171972185973048123)
+,p_name=>'Content Body'
+,p_placeholder=>'BODY'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>8
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171972382021048125)
+,p_page_template_id=>wwv_flow_api.id(28171972185973048123)
+,p_name=>'Left Column'
+,p_placeholder=>'REGION_POSITION_02'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>2
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171972483078048125)
+,p_page_template_id=>wwv_flow_api.id(28171972185973048123)
+,p_name=>'Breadcrumb'
+,p_placeholder=>'REGION_POSITON_01'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171972566840048125)
+,p_page_template_id=>wwv_flow_api.id(28171972185973048123)
+,p_name=>'Right Column'
+,p_placeholder=>'REGION_POSITON_03'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>2
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171972682533048126)
+,p_page_template_id=>wwv_flow_api.id(28171972185973048123)
+,p_name=>'Footer'
+,p_placeholder=>'REGION_POSITON_05'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>12
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171972758242048126)
+,p_page_template_id=>wwv_flow_api.id(28171972185973048123)
+,p_name=>'Page Level Tabs'
+,p_placeholder=>'REGION_POSITON_06'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171972866532048126)
+,p_page_template_id=>wwv_flow_api.id(28171972185973048123)
+,p_name=>'Header'
+,p_placeholder=>'REGION_POSITON_07'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171972972323048126)
+,p_page_template_id=>wwv_flow_api.id(28171972185973048123)
+,p_name=>'Icon Nav Bar'
+,p_placeholder=>'REGION_POSITON_08'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_template(
+ p_id=>wwv_flow_api.id(28171973058928048126)
+,p_theme_id=>25
+,p_name=>'One Level Tabs - No Sidebar'
+,p_is_popup=>false
+,p_javascript_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#',
+'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'))
+,p_css_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'))
+,p_header_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<!--[if HTML5]><![endif]-->',
+'<!doctype html>',
+'<meta http-equiv="x-ua-compatible" content="IE=edge" />',
+'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->',
+'<head>',
+'<!--[if !HTML5]>',
+'  ',
+'<![endif]-->',
+'  <meta charset="UTF-8">',
+'  <title>#TITLE#</title>',
+'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'#APEX_CSS#',
+'#THEME_CSS#',
+'#TEMPLATE_CSS#',
+'#THEME_STYLE_CSS#',
+'#APPLICATION_CSS#',
+'#PAGE_CSS#',
+'#APEX_JAVASCRIPT#',
+'#THEME_JAVASCRIPT#',
+'#TEMPLATE_JAVASCRIPT#',
+'#APPLICATION_JAVASCRIPT#',
+'#PAGE_JAVASCRIPT#',
+'#HEAD#',
+'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />',
+'</head>',
+'<body #ONLOAD#>',
+'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->',
+'#FORM_OPEN#',
+'<header id="uHeader">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      #REGION_POSITION_07#',
+'      <div class="logoBar">',
+'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>',
+'        <div class="userBlock">',
+'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">',
+'          <span>&APP_USER.</span>',
+'          #NAVIGATION_BAR#',
+'        </div>',
+'      </div>',
+'    </div>',
+'  </div>',
+'  <nav>',
+'    <div class="apex_grid_container clearfix">',
+'      <div class="apex_cols apex_span_12">',
+'        <ul class="uMainNav">',
+'          #TAB_CELLS#',
+'          #REGION_POSITION_06#',
+'        </ul>',
+'        #REGION_POSITION_08#',
+'      </div>',
+'    </div>',
+'  </nav>',
+'</header>'))
+,p_box=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div id="uBodyContainer">',
+'#REGION_POSITION_01#',
+'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#',
+'<div id="uOneCol">',
+'  <div class="apex_grid_container">',
+'    <div class="apex_cols apex_span_12">',
+'      #BODY#',
+'    </div>',
+'  </div>',
+'</div>',
+'</div>'))
+,p_footer_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<footer id="uFooter">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      <div class="uFooterContent">',
+'        #REGION_POSITION_05#',
+'        <div id="customize">#CUSTOMIZE#</div>',
+'        #SCREEN_READER_TOGGLE#',
+'        <span class="uFooterVersion">',
+'          #APP_VERSION#',
+'        </span>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</footer>',
+'#FORM_CLOSE#',
+'#DEVELOPER_TOOLBAR#',
+'#GENERATED_CSS#',
+'#GENERATED_JAVASCRIPT#',
+'</body>',
+'</html>'))
+,p_success_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>',
+'          #SUCCESS_MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_current_tab=>'<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_non_current_tab=>'<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_notification_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>',
+'          #MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_navigation_bar=>'#BAR_BODY#'
+,p_navbar_entry=>'<a href="#LINK#">#TEXT#</a>#EDIT#'
+,p_region_table_cattributes=>'class="regionColumns"'
+,p_breadcrumb_def_reg_pos=>'REGION_POSITION_01'
+,p_theme_class_id=>1
+,p_grid_type=>'FIXED'
+,p_grid_max_columns=>12
+,p_grid_always_use_max_columns=>false
+,p_grid_has_column_span=>true
+,p_grid_always_emit=>false
+,p_grid_emit_empty_leading_cols=>true
+,p_grid_emit_empty_trail_cols=>false
+,p_grid_template=>'#ROWS#'
+,p_grid_row_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_row">',
+'#COLUMNS#',
+'</div>'))
+,p_grid_column_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">',
+'#CONTENT#',
+'</div>'))
+,p_grid_first_column_attributes=>'alpha'
+,p_grid_last_column_attributes=>'omega'
+,p_grid_javascript_debug_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'apex.jQuery(document)',
+'    .on("apex-devbar-grid-debug-on", showGrid)',
+'    .on("apex-devbar-grid-debug-off", hideGrid);'))
+,p_translate_this_template=>'N'
+);
+end;
+/
+begin
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171973181453048127)
+,p_page_template_id=>wwv_flow_api.id(28171973058928048126)
+,p_name=>'Content Body'
+,p_placeholder=>'BODY'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>12
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171973267213048127)
+,p_page_template_id=>wwv_flow_api.id(28171973058928048126)
+,p_name=>'Breadcrumb'
+,p_placeholder=>'REGION_POSITION_01'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171973354805048127)
+,p_page_template_id=>wwv_flow_api.id(28171973058928048126)
+,p_name=>'Footer'
+,p_placeholder=>'REGION_POSITION_05'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>12
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171973468970048127)
+,p_page_template_id=>wwv_flow_api.id(28171973058928048126)
+,p_name=>'Page Level Tabs'
+,p_placeholder=>'REGION_POSITION_06'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171973564986048127)
+,p_page_template_id=>wwv_flow_api.id(28171973058928048126)
+,p_name=>'Header'
+,p_placeholder=>'REGION_POSITION_07'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171973667087048127)
+,p_page_template_id=>wwv_flow_api.id(28171973058928048126)
+,p_name=>'Icon Nav Bar'
+,p_placeholder=>'REGION_POSITION_08'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_template(
+ p_id=>wwv_flow_api.id(28171973778080048127)
+,p_theme_id=>25
+,p_name=>'One Level Tabs - Right Sidebar'
+,p_is_popup=>false
+,p_javascript_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#',
+'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'))
+,p_css_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'))
+,p_header_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<!--[if HTML5]><![endif]-->',
+'<!doctype html>',
+'<meta http-equiv="x-ua-compatible" content="IE=edge" />',
+'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->',
+'<head>',
+'<!--[if !HTML5]>',
+'  ',
+'<![endif]-->',
+'  <meta charset="UTF-8">',
+'  <title>#TITLE#</title>',
+'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'#APEX_CSS#',
+'#THEME_CSS#',
+'#TEMPLATE_CSS#',
+'#THEME_STYLE_CSS#',
+'#APPLICATION_CSS#',
+'#PAGE_CSS#',
+'#APEX_JAVASCRIPT#',
+'#THEME_JAVASCRIPT#',
+'#TEMPLATE_JAVASCRIPT#',
+'#APPLICATION_JAVASCRIPT#',
+'#PAGE_JAVASCRIPT#',
+'#HEAD#',
+'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />',
+'</head>',
+'<body #ONLOAD#>',
+'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->',
+'#FORM_OPEN#',
+'<header id="uHeader">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      #REGION_POSITION_07#',
+'      <div class="logoBar">',
+'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>',
+'        <div class="userBlock">',
+'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">',
+'          <span>&APP_USER.</span>',
+'          #NAVIGATION_BAR#',
+'        </div>',
+'      </div>',
+'    </div>',
+'  </div>',
+'  <nav>',
+'    <div class="apex_grid_container clearfix">',
+'      <div class="apex_cols apex_span_12">',
+'        <ul class="uMainNav">',
+'          #TAB_CELLS#',
+'          #REGION_POSITION_06#',
+'        </ul>',
+'        #REGION_POSITION_08#',
+'      </div>',
+'    </div>',
+'  </nav>',
+'</header>'))
+,p_box=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div id="uBodyContainer">',
+'#REGION_POSITION_01#',
+'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#',
+'<div id="uTwoColumns" class="sideRightCol">',
+'  <div class="apex_grid_container">',
+'    <div class="apex_cols apex_span_10" id="uMidCol">',
+'    #BODY#',
+'    </div>',
+'    <div class="apex_cols apex_span_2" id="uRightCol">',
+'      <aside>',
+'        #REGION_POSITION_03#',
+'      </aside>',
+'    </div>',
+'  </div>',
+'</div>',
+'</div>'))
+,p_footer_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<footer id="uFooter">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      <div class="uFooterContent">',
+'        #REGION_POSITION_05#',
+'        <div id="customize">#CUSTOMIZE#</div>',
+'        #SCREEN_READER_TOGGLE#',
+'        <span class="uFooterVersion">',
+'          #APP_VERSION#',
+'        </span>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</footer>',
+'#FORM_CLOSE#',
+'#DEVELOPER_TOOLBAR#',
+'#GENERATED_CSS#',
+'#GENERATED_JAVASCRIPT#',
+'</body>',
+'</html>'))
+,p_success_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>',
+'          #SUCCESS_MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_current_tab=>'<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_non_current_tab=>'<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_notification_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>',
+'          #MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_navigation_bar=>'#BAR_BODY#'
+,p_navbar_entry=>'<a href="#LINK#">#TEXT#</a>#EDIT#'
+,p_sidebar_def_reg_pos=>'REGION_POSITION_03'
+,p_breadcrumb_def_reg_pos=>'REGION_POSITION_01'
+,p_theme_class_id=>16
+,p_grid_type=>'FIXED'
+,p_grid_max_columns=>12
+,p_grid_always_use_max_columns=>false
+,p_grid_has_column_span=>true
+,p_grid_always_emit=>false
+,p_grid_emit_empty_leading_cols=>true
+,p_grid_emit_empty_trail_cols=>false
+,p_grid_template=>'#ROWS#'
+,p_grid_row_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_row">',
+'#COLUMNS#',
+'</div>'))
+,p_grid_column_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">',
+'#CONTENT#',
+'</div>'))
+,p_grid_first_column_attributes=>'alpha'
+,p_grid_last_column_attributes=>'omega'
+,p_grid_javascript_debug_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'// show / hide grid',
+'function showGrid() {',
+'  apex.jQuery(''.apex_grid_container'').addClass(''showGrid'');',
+'};',
+'function hideGrid() {',
+'  apex.jQuery(''.apex_grid_container'').removeClass(''showGrid'');',
+'};',
+'apex.jQuery(document)',
+'    .on("apex-devbar-grid-debug-on", showGrid)',
+'    .on("apex-devbar-grid-debug-off", hideGrid);'))
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171973870888048131)
+,p_page_template_id=>wwv_flow_api.id(28171973778080048127)
+,p_name=>'Content Body'
+,p_placeholder=>'BODY'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>10
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171973984610048131)
+,p_page_template_id=>wwv_flow_api.id(28171973778080048127)
+,p_name=>'Breadcrumb'
+,p_placeholder=>'REGION_POSITION_01'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171974071331048131)
+,p_page_template_id=>wwv_flow_api.id(28171973778080048127)
+,p_name=>'Right Column'
+,p_placeholder=>'REGION_POSITION_03'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>2
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171974158780048131)
+,p_page_template_id=>wwv_flow_api.id(28171973778080048127)
+,p_name=>'Footer'
+,p_placeholder=>'REGION_POSITION_05'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>12
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171974259532048131)
+,p_page_template_id=>wwv_flow_api.id(28171973778080048127)
+,p_name=>'Page Level Tabs'
+,p_placeholder=>'REGION_POSITION_06'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171974367772048131)
+,p_page_template_id=>wwv_flow_api.id(28171973778080048127)
+,p_name=>'Header'
+,p_placeholder=>'REGION_POSITION_07'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171974457082048131)
+,p_page_template_id=>wwv_flow_api.id(28171973778080048127)
+,p_name=>'Icon Nav Bar'
+,p_placeholder=>'REGION_POSITION_08'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_template(
+ p_id=>wwv_flow_api.id(28171974574917048131)
+,p_theme_id=>25
+,p_name=>'One Level Tabs - Wizard Page'
+,p_is_popup=>false
+,p_javascript_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#',
+'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'))
+,p_javascript_code_onload=>'loadWizardTrain();'
+,p_css_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'))
+,p_header_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<!--[if HTML5]><![endif]-->',
+'<!doctype html>',
+'<meta http-equiv="x-ua-compatible" content="IE=edge" />',
+'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->',
+'<head>',
+'<!--[if !HTML5]>',
+'  ',
+'<![endif]-->',
+'  <meta charset="UTF-8">',
+'  <title>#TITLE#</title>',
+'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'#APEX_CSS#',
+'#THEME_CSS#',
+'#TEMPLATE_CSS#',
+'#THEME_STYLE_CSS#',
+'#APPLICATION_CSS#',
+'#PAGE_CSS#',
+'#APEX_JAVASCRIPT#',
+'#THEME_JAVASCRIPT#',
+'#TEMPLATE_JAVASCRIPT#',
+'#APPLICATION_JAVASCRIPT#',
+'#PAGE_JAVASCRIPT#',
+'#HEAD#',
+'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />',
+'</head>',
+'<body #ONLOAD#>',
+'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->',
+'#FORM_OPEN#',
+'<header id="uHeader">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      #REGION_POSITION_07#',
+'      <div class="logoBar">',
+'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>',
+'        <div class="userBlock">',
+'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">',
+'          <span>&APP_USER.</span>',
+'          #NAVIGATION_BAR#',
+'        </div>',
+'      </div>',
+'    </div>',
+'  </div>',
+'  <nav>',
+'    <div class="apex_grid_container clearfix">',
+'      <div class="apex_cols apex_span_12">',
+'        <ul class="uMainNav">',
+'          #TAB_CELLS#',
+'          #REGION_POSITION_06#',
+'        </ul>',
+'        #REGION_POSITION_08#',
+'      </div>',
+'    </div>',
+'  </nav>',
+'</header>'))
+,p_box=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div id="uBodyContainer">',
+'#REGION_POSITION_01#',
+'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#',
+'<div id="uOneCol">',
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <div class="cWizard">',
+'      <div class="cWizardHeader">',
+'        #REGION_POSITION_02#',
+'      </div>',
+'      <div class="cWizardContentContainer">',
+'        <div class="cWizardContent">',
+'            #BODY#',
+'        </div>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</div>',
+'</div>',
+'</div>'))
+,p_footer_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<footer id="uFooter">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      <div class="uFooterContent">',
+'        <div id="customize">#CUSTOMIZE#</div>',
+'        #REGION_POSITION_05#',
+'        #SCREEN_READER_TOGGLE#',
+'        <span class="uFooterVersion">',
+'          #APP_VERSION#',
+'        </span>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</footer>',
+'#FORM_CLOSE#',
+'#DEVELOPER_TOOLBAR#',
+'#GENERATED_CSS#',
+'#GENERATED_JAVASCRIPT#',
+'</body>',
+'</html>'))
+,p_success_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>',
+'          #SUCCESS_MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_current_tab=>'<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_non_current_tab=>'<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_notification_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>',
+'          #MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_navigation_bar=>'#BAR_BODY#'
+,p_navbar_entry=>'<a href="#LINK#">#TEXT#</a>#EDIT#'
+,p_breadcrumb_def_reg_pos=>'REGION_POSITION_01'
+,p_theme_class_id=>8
+,p_grid_type=>'FIXED'
+,p_grid_max_columns=>12
+,p_grid_always_use_max_columns=>false
+,p_grid_has_column_span=>true
+,p_grid_always_emit=>false
+,p_grid_emit_empty_leading_cols=>true
+,p_grid_emit_empty_trail_cols=>false
+,p_grid_template=>'#ROWS#'
+,p_grid_row_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_row">',
+'#COLUMNS#',
+'</div>'))
+,p_grid_column_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">',
+'#CONTENT#',
+'</div>'))
+,p_grid_first_column_attributes=>'alpha'
+,p_grid_last_column_attributes=>'omega'
+,p_grid_javascript_debug_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'apex.jQuery(document)',
+'    .on("apex-devbar-grid-debug-on", showGrid)',
+'    .on("apex-devbar-grid-debug-off", hideGrid);'))
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171974686186048132)
+,p_page_template_id=>wwv_flow_api.id(28171974574917048131)
+,p_name=>'Wizard Content Body'
+,p_placeholder=>'BODY'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>11
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171974784252048133)
+,p_page_template_id=>wwv_flow_api.id(28171974574917048131)
+,p_name=>'Breadcrumb'
+,p_placeholder=>'REGION_POSITION_01'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171974877388048133)
+,p_page_template_id=>wwv_flow_api.id(28171974574917048131)
+,p_name=>'Wizard Header'
+,p_placeholder=>'REGION_POSITION_02'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171974985437048133)
+,p_page_template_id=>wwv_flow_api.id(28171974574917048131)
+,p_name=>'Footer'
+,p_placeholder=>'REGION_POSITION_05'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>12
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171975060349048133)
+,p_page_template_id=>wwv_flow_api.id(28171974574917048131)
+,p_name=>'Page Level Tabs'
+,p_placeholder=>'REGION_POSITION_06'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171975157548048133)
+,p_page_template_id=>wwv_flow_api.id(28171974574917048131)
+,p_name=>'Header'
+,p_placeholder=>'REGION_POSITION_07'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171975272863048133)
+,p_page_template_id=>wwv_flow_api.id(28171974574917048131)
+,p_name=>'Icon Nav Bar'
+,p_placeholder=>'REGION_POSITION_08'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_template(
+ p_id=>wwv_flow_api.id(28171975383742048133)
+,p_theme_id=>25
+,p_name=>'Popup'
+,p_is_popup=>false
+,p_javascript_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#',
+'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'))
+,p_css_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'))
+,p_header_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<!--[if HTML5]><![endif]-->',
+'<!doctype html>',
+'<meta http-equiv="x-ua-compatible" content="IE=edge" />',
+'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->',
+'<head>',
+'<!--[if !HTML5]>',
+'  ',
+'<![endif]-->',
+'  <meta charset="UTF-8">',
+'  <title>#TITLE#</title>',
+'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'#APEX_CSS#',
+'#THEME_CSS#',
+'#TEMPLATE_CSS#',
+'#THEME_STYLE_CSS#',
+'#APPLICATION_CSS#',
+'#PAGE_CSS#',
+'#APEX_JAVASCRIPT#',
+'#THEME_JAVASCRIPT#',
+'#TEMPLATE_JAVASCRIPT#',
+'#APPLICATION_JAVASCRIPT#',
+'#PAGE_JAVASCRIPT#',
+'#HEAD#',
+'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />',
+'</head>',
+'<body #ONLOAD# id="uPopup">',
+'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->',
+'#FORM_OPEN#'))
+,p_box=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div id="uBodyContainer">',
+'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#',
+'<div id="uOneCol">',
+'  <div class="apex_grid_container">',
+'    <div class="apex_cols apex_span_12">',
+'      #BODY#',
+'    </div>',
+'  </div>',
+'</div>',
+'</div>'))
+,p_footer_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#FORM_CLOSE#',
+'#DEVELOPER_TOOLBAR#',
+'#GENERATED_CSS#',
+'#GENERATED_JAVASCRIPT#',
+'</body>',
+'</html>'))
+,p_success_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>',
+'          #SUCCESS_MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_notification_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>',
+'          #MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_navigation_bar=>'#BAR_BODY#'
+,p_navbar_entry=>'<a href="#LINK#">#TEXT#</a>'
+,p_region_table_cattributes=>' summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
+,p_theme_class_id=>4
+,p_grid_type=>'FIXED'
+,p_grid_max_columns=>12
+,p_grid_always_use_max_columns=>false
+,p_grid_has_column_span=>true
+,p_grid_always_emit=>false
+,p_grid_emit_empty_leading_cols=>true
+,p_grid_emit_empty_trail_cols=>false
+,p_grid_template=>'#ROWS#'
+,p_grid_row_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_row">',
+'#COLUMNS#',
+'</div>'))
+,p_grid_column_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">',
+'#CONTENT#',
+'</div>'))
+,p_grid_first_column_attributes=>'alpha'
+,p_grid_last_column_attributes=>'omega'
+,p_grid_javascript_debug_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'apex.jQuery(document)',
+'    .on("apex-devbar-grid-debug-on", showGrid)',
+'    .on("apex-devbar-grid-debug-off", hideGrid);'))
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171975473803048134)
+,p_page_template_id=>wwv_flow_api.id(28171975383742048133)
+,p_name=>'Content Body'
+,p_placeholder=>'BODY'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>12
+);
+wwv_flow_api.create_template(
+ p_id=>wwv_flow_api.id(28171975559241048134)
+,p_theme_id=>25
+,p_name=>'Printer Friendly'
+,p_is_popup=>false
+,p_javascript_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#',
+'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'))
+,p_css_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'))
+,p_header_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<!--[if HTML5]><![endif]-->',
+'<!doctype html>',
+'<meta http-equiv="x-ua-compatible" content="IE=edge" />',
+'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->',
+'<head>',
+'<!--[if !HTML5]>',
+'  ',
+'<![endif]-->',
+'  <meta charset="UTF-8">',
+'  <title>#TITLE#</title>',
+'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'#APEX_CSS#',
+'#THEME_CSS#',
+'#TEMPLATE_CSS#',
+'#THEME_STYLE_CSS#',
+'#APPLICATION_CSS#',
+'#PAGE_CSS#',
+'#APEX_JAVASCRIPT#',
+'#THEME_JAVASCRIPT#',
+'#TEMPLATE_JAVASCRIPT#',
+'#APPLICATION_JAVASCRIPT#',
+'#PAGE_JAVASCRIPT#',
+'#HEAD#',
+'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />',
+'</head>',
+'<body #ONLOAD# class="printerFriendly">',
+'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->',
+'#FORM_OPEN#',
+'<header id="uHeader">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      #REGION_POSITION_07#',
+'      <div class="logoBar">',
+'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>',
+'        <div class="userBlock">',
+'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">',
+'          <span>&APP_USER.</span>',
+'          #NAVIGATION_BAR#',
+'        </div>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</header>'))
+,p_box=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div id="uBodyContainer">',
+'#REGION_POSITION_01#',
+'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#',
+'<div id="uOneCol">',
+'  <div class="apex_grid_container">',
+'    <div class="apex_cols apex_span_12">',
+'      #BODY#',
+'    </div>',
+'  </div>',
+'</div>',
+'</div>'))
+,p_footer_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<footer id="uFooter">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      <div class="uFooterContent">',
+'        #REGION_POSITION_05#',
+'        <div id="customize">#CUSTOMIZE#</div>',
+'        #SCREEN_READER_TOGGLE#',
+'        <span class="uFooterVersion">',
+'          #APP_VERSION#',
+'        </span>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</footer>',
+'#FORM_CLOSE#',
+'#DEVELOPER_TOOLBAR#',
+'#GENERATED_CSS#',
+'#GENERATED_JAVASCRIPT#',
+'</body>',
+'</html>'))
+,p_success_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>',
+'          #SUCCESS_MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_notification_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>',
+'          #MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_navigation_bar=>'#BAR_BODY#'
+,p_navbar_entry=>'<a href="#LINK#">#TEXT#</a>#EDIT#'
+,p_region_table_cattributes=>' summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
+,p_breadcrumb_def_reg_pos=>'REGION_POSITION_01'
+,p_theme_class_id=>5
+,p_error_page_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_cols apex_span_12">',
+'  <section class="uRegion uNoHeading uErrorRegion">',
+'    <div class="uRegionContent">',
+'      <p class="errorIcon"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" class="iconLarge error"/></p>',
+'      <p><strong>#MESSAGE#</strong></p>',
+'      <p>#ADDITIONAL_INFO#</p>',
+'      <div class="uErrorTechInfo">#TECHNICAL_INFO#</div>',
+'    </div>',
+'    <div class="uRegionHeading">',
+'      <span class="uButtonContainer">',
+'        <button onclick="#BACK_LINK#" class="uButtonLarge uHotButton" type="button"><span>#OK#</span></button>',
+'      </span>',
+'    </div>',
+'  </section>',
+'</div>'))
+,p_grid_type=>'FIXED'
+,p_grid_max_columns=>12
+,p_grid_always_use_max_columns=>false
+,p_grid_has_column_span=>true
+,p_grid_always_emit=>false
+,p_grid_emit_empty_leading_cols=>true
+,p_grid_emit_empty_trail_cols=>false
+,p_grid_template=>'#ROWS#'
+,p_grid_row_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_row">',
+'#COLUMNS#',
+'</div>'))
+,p_grid_column_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">',
+'#CONTENT#',
+'</div>'))
+,p_grid_first_column_attributes=>'alpha'
+,p_grid_last_column_attributes=>'omega'
+,p_grid_javascript_debug_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'apex.jQuery(document)',
+'    .on("apex-devbar-grid-debug-on", showGrid)',
+'    .on("apex-devbar-grid-debug-off", hideGrid);'))
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171975674069048135)
+,p_page_template_id=>wwv_flow_api.id(28171975559241048134)
+,p_name=>'Content Body'
+,p_placeholder=>'BODY'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>12
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171975786175048135)
+,p_page_template_id=>wwv_flow_api.id(28171975559241048134)
+,p_name=>'Breadcrumb'
+,p_placeholder=>'REGION_POSITION_01'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171975870422048135)
+,p_page_template_id=>wwv_flow_api.id(28171975559241048134)
+,p_name=>'Footer'
+,p_placeholder=>'REGION_POSITION_05'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171975971201048135)
+,p_page_template_id=>wwv_flow_api.id(28171975559241048134)
+,p_name=>'Header'
+,p_placeholder=>'REGION_POSITION_07'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+end;
+/
+begin
+wwv_flow_api.create_template(
+ p_id=>wwv_flow_api.id(28171976084985048136)
+,p_theme_id=>25
+,p_name=>'Two Level Tabs - Left Sidebar'
+,p_is_popup=>false
+,p_javascript_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#',
+'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'))
+,p_css_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'))
+,p_header_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<!--[if HTML5]><![endif]-->',
+'<!doctype html>',
+'<meta http-equiv="x-ua-compatible" content="IE=edge" />',
+'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->',
+'<head>',
+'<!--[if !HTML5]>',
+'  ',
+'<![endif]-->',
+'  <meta charset="UTF-8">',
+'  <title>#TITLE#</title>',
+'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'#APEX_CSS#',
+'#THEME_CSS#',
+'#TEMPLATE_CSS#',
+'#THEME_STYLE_CSS#',
+'#APPLICATION_CSS#',
+'#PAGE_CSS#',
+'#APEX_JAVASCRIPT#',
+'#THEME_JAVASCRIPT#',
+'#TEMPLATE_JAVASCRIPT#',
+'#APPLICATION_JAVASCRIPT#',
+'#PAGE_JAVASCRIPT#',
+'#HEAD#',
+'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />',
+'</head>',
+'<body #ONLOAD#>',
+'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->',
+'#FORM_OPEN#',
+'<div class="uParentTabs">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      <ul>',
+'        #PARENT_TAB_CELLS#',
+'      </ul>',
+'    </div>',
+'  </div>  ',
+'</div>',
+'<header id="uHeader">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      #REGION_POSITION_07#',
+'      <div class="logoBar">',
+'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>',
+'        <div class="userBlock">',
+'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">',
+'          <span>&APP_USER.</span>',
+'          #NAVIGATION_BAR#',
+'        </div>',
+'      </div>',
+'    </div>',
+'  </div>',
+'  <nav>',
+'    <div class="apex_grid_container clearfix">',
+'      <div class="apex_cols apex_span_12">',
+'        <ul class="uMainNav">',
+'          #TAB_CELLS#',
+'          #REGION_POSITION_06#',
+'        </ul>',
+'        #REGION_POSITION_08#',
+'      </div>',
+'    </div>',
+'  </nav>',
+'</header>'))
+,p_box=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div id="uBodyContainer">',
+'#REGION_POSITION_01#',
+'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#',
+'<div id="uTwoColumns" class="sideLeftCol">',
+'  <div class="apex_grid_container">',
+'    <div class="apex_cols apex_span_2" id="uLeftCol">',
+'      <aside>',
+'        #REGION_POSITION_02#',
+'      </aside>',
+'    </div>',
+'    <div class="apex_cols apex_span_10" id="uMidCol">',
+'    #BODY#',
+'    </div>',
+'  </div>',
+'</div>',
+'</div>'))
+,p_footer_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<footer id="uFooter">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      <div class="uFooterContent">',
+'        #REGION_POSITION_05#',
+'        <div id="customize">#CUSTOMIZE#</div>',
+'        #SCREEN_READER_TOGGLE#',
+'        <span class="uFooterVersion">',
+'          #APP_VERSION#',
+'        </span>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</footer>',
+'#FORM_CLOSE#',
+'#DEVELOPER_TOOLBAR#',
+'#GENERATED_CSS#',
+'#GENERATED_JAVASCRIPT#',
+'</body>',
+'</html>'))
+,p_success_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>',
+'          #SUCCESS_MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_current_tab=>'<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_non_current_tab=>'<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_top_current_tab=>'<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_top_non_curr_tab=>'<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_notification_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>',
+'          #MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_navigation_bar=>'#BAR_BODY#'
+,p_navbar_entry=>'<a href="#LINK#">#TEXT#</a>#EDIT#'
+,p_region_table_cattributes=>' summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
+,p_sidebar_def_reg_pos=>'REGION_POSITION_02'
+,p_breadcrumb_def_reg_pos=>'REGION_POSITION_01'
+,p_theme_class_id=>18
+,p_grid_type=>'FIXED'
+,p_grid_max_columns=>12
+,p_grid_always_use_max_columns=>false
+,p_grid_has_column_span=>true
+,p_grid_always_emit=>false
+,p_grid_emit_empty_leading_cols=>true
+,p_grid_emit_empty_trail_cols=>false
+,p_grid_template=>'#ROWS#'
+,p_grid_row_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_row">',
+'#COLUMNS#',
+'</div>'))
+,p_grid_column_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">',
+'#CONTENT#',
+'</div>'))
+,p_grid_first_column_attributes=>'alpha'
+,p_grid_last_column_attributes=>'omega'
+,p_grid_javascript_debug_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'apex.jQuery(document)',
+'    .on("apex-devbar-grid-debug-on", showGrid)',
+'    .on("apex-devbar-grid-debug-off", hideGrid);'))
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171976160906048140)
+,p_page_template_id=>wwv_flow_api.id(28171976084985048136)
+,p_name=>'Content Body'
+,p_placeholder=>'BODY'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>10
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171976260804048140)
+,p_page_template_id=>wwv_flow_api.id(28171976084985048136)
+,p_name=>'Breadcrumb'
+,p_placeholder=>'REGION_POSITION_01'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171976382954048140)
+,p_page_template_id=>wwv_flow_api.id(28171976084985048136)
+,p_name=>'Left Column'
+,p_placeholder=>'REGION_POSITION_02'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>2
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171976468427048140)
+,p_page_template_id=>wwv_flow_api.id(28171976084985048136)
+,p_name=>'Footer'
+,p_placeholder=>'REGION_POSITION_05'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>12
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171976582940048140)
+,p_page_template_id=>wwv_flow_api.id(28171976084985048136)
+,p_name=>'Page Level Tabs'
+,p_placeholder=>'REGION_POSITION_06'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171976665617048140)
+,p_page_template_id=>wwv_flow_api.id(28171976084985048136)
+,p_name=>'Header'
+,p_placeholder=>'REGION_POSITION_07'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171976764453048140)
+,p_page_template_id=>wwv_flow_api.id(28171976084985048136)
+,p_name=>'Icon Nav Bar'
+,p_placeholder=>'REGION_POSITION_08'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_template(
+ p_id=>wwv_flow_api.id(28171976877449048141)
+,p_theme_id=>25
+,p_name=>'Two Level Tabs - Left and Right Sidebar'
+,p_is_popup=>false
+,p_javascript_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#',
+'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'))
+,p_css_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'))
+,p_header_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<!--[if HTML5]><![endif]-->',
+'<!doctype html>',
+'<meta http-equiv="x-ua-compatible" content="IE=edge" />',
+'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->',
+'<head>',
+'<!--[if !HTML5]>',
+'  ',
+'<![endif]-->',
+'  <meta charset="UTF-8">',
+'  <title>#TITLE#</title>',
+'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'#APEX_CSS#',
+'#THEME_CSS#',
+'#TEMPLATE_CSS#',
+'#THEME_STYLE_CSS#',
+'#APPLICATION_CSS#',
+'#PAGE_CSS#',
+'#APEX_JAVASCRIPT#',
+'#THEME_JAVASCRIPT#',
+'#TEMPLATE_JAVASCRIPT#',
+'#APPLICATION_JAVASCRIPT#',
+'#PAGE_JAVASCRIPT#',
+'#HEAD#',
+'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />',
+'</head>',
+'<body #ONLOAD#>',
+'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->',
+'#FORM_OPEN#',
+'<div class="uParentTabs">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      <ul>',
+'        #PARENT_TAB_CELLS#',
+'      </ul>',
+'    </div>',
+'  </div>  ',
+'</div>',
+'<header id="uHeader">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      #REGION_POSITION_07#',
+'      <div class="logoBar">',
+'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>',
+'        <div class="userBlock">',
+'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">',
+'          <span>&APP_USER.</span>',
+'          #NAVIGATION_BAR#',
+'        </div>',
+'      </div>',
+'    </div>',
+'  </div>',
+'  <nav>',
+'    <div class="apex_grid_container clearfix">',
+'      <div class="apex_cols apex_span_12">',
+'        <ul class="uMainNav">',
+'          #TAB_CELLS#',
+'          #REGION_POSITION_06#',
+'        </ul>',
+'        #REGION_POSITION_08#',
+'      </div>',
+'    </div>',
+'  </nav>',
+'</header>'))
+,p_box=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div id="uBodyContainer">',
+'#REGION_POSITION_01#',
+'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#',
+'<div id="uThreeColumns">',
+'  <div class="apex_grid_container">',
+'    <div class="apex_cols apex_span_2" id="uLeftCol">',
+'      <aside>',
+'        #REGION_POSITION_02#',
+'      </aside>',
+'    </div>',
+'    <div class="apex_cols apex_span_8" id="uMidCol">',
+'    #BODY#',
+'    </div>',
+'    <div class="apex_cols apex_span_2" id="uRightCol">',
+'      <aside>',
+'        #REGION_POSITION_03#',
+'      </aside>',
+'    </div>',
+'  </div>',
+'</div>',
+'</div>'))
+,p_footer_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<footer id="uFooter">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      <div class="uFooterContent">',
+'        #REGION_POSITION_05#',
+'        <div id="customize">#CUSTOMIZE#</div>',
+'        #SCREEN_READER_TOGGLE#',
+'        <span class="uFooterVersion">',
+'          #APP_VERSION#',
+'        </span>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</footer>',
+'#FORM_CLOSE#',
+'#DEVELOPER_TOOLBAR#',
+'#GENERATED_CSS#',
+'#GENERATED_JAVASCRIPT#',
+'</body>',
+'</html>'))
+,p_success_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>',
+'          #SUCCESS_MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_current_tab=>'<li><a class="active" href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_non_current_tab=>'<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_top_current_tab=>'<li><a class="active" href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_top_non_curr_tab=>'<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_notification_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>',
+'          #MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_navigation_bar=>'#BAR_BODY#'
+,p_navbar_entry=>'<a href="#LINK#">#TEXT#</a>#EDIT#'
+,p_region_table_cattributes=>' summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
+,p_sidebar_def_reg_pos=>'REGION_POSITION_03'
+,p_breadcrumb_def_reg_pos=>'REGION_POSITION_01'
+,p_theme_class_id=>18
+,p_grid_type=>'FIXED'
+,p_grid_max_columns=>12
+,p_grid_always_use_max_columns=>false
+,p_grid_has_column_span=>true
+,p_grid_always_emit=>false
+,p_grid_emit_empty_leading_cols=>true
+,p_grid_emit_empty_trail_cols=>false
+,p_grid_template=>'#ROWS#'
+,p_grid_row_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_row">',
+'#COLUMNS#',
+'</div>'))
+,p_grid_column_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">',
+'#CONTENT#',
+'</div>'))
+,p_grid_first_column_attributes=>'alpha'
+,p_grid_last_column_attributes=>'omega'
+,p_grid_javascript_debug_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'apex.jQuery(document)',
+'    .on("apex-devbar-grid-debug-on", showGrid)',
+'    .on("apex-devbar-grid-debug-off", hideGrid);'))
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171976967038048142)
+,p_page_template_id=>wwv_flow_api.id(28171976877449048141)
+,p_name=>'Content Body'
+,p_placeholder=>'BODY'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>8
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171977069235048142)
+,p_page_template_id=>wwv_flow_api.id(28171976877449048141)
+,p_name=>'Left Column'
+,p_placeholder=>'REGION_POSITION_02'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>2
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171977158963048142)
+,p_page_template_id=>wwv_flow_api.id(28171976877449048141)
+,p_name=>'Breadcrumb'
+,p_placeholder=>'REGION_POSITON_01'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171977268864048142)
+,p_page_template_id=>wwv_flow_api.id(28171976877449048141)
+,p_name=>'Right Column'
+,p_placeholder=>'REGION_POSITON_03'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>2
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171977385154048142)
+,p_page_template_id=>wwv_flow_api.id(28171976877449048141)
+,p_name=>'Footer'
+,p_placeholder=>'REGION_POSITON_05'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>12
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171977485069048142)
+,p_page_template_id=>wwv_flow_api.id(28171976877449048141)
+,p_name=>'Page Level Tabs'
+,p_placeholder=>'REGION_POSITON_06'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171977567383048142)
+,p_page_template_id=>wwv_flow_api.id(28171976877449048141)
+,p_name=>'Header'
+,p_placeholder=>'REGION_POSITON_07'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171977665492048142)
+,p_page_template_id=>wwv_flow_api.id(28171976877449048141)
+,p_name=>'Icon Nav Bar'
+,p_placeholder=>'REGION_POSITON_08'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_template(
+ p_id=>wwv_flow_api.id(28171977763136048143)
+,p_theme_id=>25
+,p_name=>'Two Level Tabs - No Sidebar'
+,p_is_popup=>false
+,p_javascript_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#',
+'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'))
+,p_css_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'))
+,p_header_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<!--[if HTML5]><![endif]-->',
+'<!doctype html>',
+'<meta http-equiv="x-ua-compatible" content="IE=edge" />',
+'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->',
+'<head>',
+'<!--[if !HTML5]>',
+'  ',
+'<![endif]-->',
+'  <meta charset="UTF-8">',
+'  <title>#TITLE#</title>',
+'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'#APEX_CSS#',
+'#THEME_CSS#',
+'#TEMPLATE_CSS#',
+'#THEME_STYLE_CSS#',
+'#APPLICATION_CSS#',
+'#PAGE_CSS#',
+'#APEX_JAVASCRIPT#',
+'#THEME_JAVASCRIPT#',
+'#TEMPLATE_JAVASCRIPT#',
+'#APPLICATION_JAVASCRIPT#',
+'#PAGE_JAVASCRIPT#',
+'#HEAD#',
+'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />',
+'</head>',
+'<body #ONLOAD#>',
+'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->',
+'#FORM_OPEN#',
+'<div class="uParentTabs">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      <ul>',
+'        #PARENT_TAB_CELLS#',
+'      </ul>',
+'    </div>',
+'  </div>  ',
+'</div>',
+'<header id="uHeader">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      #REGION_POSITION_07#',
+'      <div class="logoBar">',
+'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>',
+'        <div class="userBlock">',
+'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">',
+'          <span>&APP_USER.</span>',
+'          #NAVIGATION_BAR#',
+'        </div>',
+'      </div>',
+'    </div>',
+'  </div>',
+'  <nav>',
+'    <div class="apex_grid_container clearfix">',
+'      <div class="apex_cols apex_span_12">',
+'        <ul class="uMainNav">',
+'          #TAB_CELLS#',
+'          #REGION_POSITION_06#',
+'        </ul>',
+'        #REGION_POSITION_08#',
+'      </div>',
+'    </div>',
+'  </nav>',
+'</header>'))
+,p_box=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div id="uBodyContainer">',
+'#REGION_POSITION_01#',
+'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#',
+'<div id="uOneCol">',
+'  <div class="apex_grid_container">',
+'    <div class="apex_cols apex_span_12">',
+'      #BODY#',
+'    </div>',
+'  </div>',
+'</div>',
+'</div>'))
+,p_footer_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<footer id="uFooter">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      <div class="uFooterContent">',
+'        #REGION_POSITION_05#',
+'        <div id="customize">#CUSTOMIZE#</div>',
+'        #SCREEN_READER_TOGGLE#',
+'        <span class="uFooterVersion">',
+'          #APP_VERSION#',
+'        </span>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</footer>',
+'#FORM_CLOSE#',
+'#DEVELOPER_TOOLBAR#',
+'#GENERATED_CSS#',
+'#GENERATED_JAVASCRIPT#',
+'</body>',
+'</html>'))
+,p_success_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>',
+'          #SUCCESS_MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_current_tab=>'<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_non_current_tab=>'<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_top_current_tab=>'<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_top_non_curr_tab=>'<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_notification_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>',
+'          #MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_navigation_bar=>'#BAR_BODY#'
+,p_navbar_entry=>'<a href="#LINK#">#TEXT#</a>#EDIT#'
+,p_region_table_cattributes=>' summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
+,p_breadcrumb_def_reg_pos=>'REGION_POSITION_01'
+,p_theme_class_id=>2
+,p_grid_type=>'FIXED'
+,p_grid_max_columns=>12
+,p_grid_always_use_max_columns=>false
+,p_grid_has_column_span=>true
+,p_grid_always_emit=>false
+,p_grid_emit_empty_leading_cols=>true
+,p_grid_emit_empty_trail_cols=>false
+,p_grid_template=>'#ROWS#'
+,p_grid_row_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_row">',
+'#COLUMNS#',
+'</div>'))
+,p_grid_column_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">',
+'#CONTENT#',
+'</div>'))
+,p_grid_first_column_attributes=>'alpha'
+,p_grid_last_column_attributes=>'omega'
+,p_grid_javascript_debug_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'apex.jQuery(document)',
+'    .on("apex-devbar-grid-debug-on", showGrid)',
+'    .on("apex-devbar-grid-debug-off", hideGrid);'))
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171977857113048144)
+,p_page_template_id=>wwv_flow_api.id(28171977763136048143)
+,p_name=>'Content Body'
+,p_placeholder=>'BODY'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>12
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171977967021048144)
+,p_page_template_id=>wwv_flow_api.id(28171977763136048143)
+,p_name=>'Breadcrumb'
+,p_placeholder=>'REGION_POSITION_01'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171978072204048144)
+,p_page_template_id=>wwv_flow_api.id(28171977763136048143)
+,p_name=>'Footer'
+,p_placeholder=>'REGION_POSITION_05'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>12
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171978159890048144)
+,p_page_template_id=>wwv_flow_api.id(28171977763136048143)
+,p_name=>'Page Level Tabs'
+,p_placeholder=>'REGION_POSITION_06'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171978259535048144)
+,p_page_template_id=>wwv_flow_api.id(28171977763136048143)
+,p_name=>'Header'
+,p_placeholder=>'REGION_POSITION_07'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171978365514048144)
+,p_page_template_id=>wwv_flow_api.id(28171977763136048143)
+,p_name=>'Icon Nav Bar'
+,p_placeholder=>'REGION_POSITION_08'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_template(
+ p_id=>wwv_flow_api.id(28171978484705048145)
+,p_theme_id=>25
+,p_name=>'Two Level Tabs - Right Sidebar'
+,p_is_popup=>false
+,p_javascript_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#libraries/modernizr/2.5.3/modernizr.min.js?v=#APEX_VERSION#',
+'[if lt IE 9]#IMAGE_PREFIX#libraries/respond-js/1.1.0/respond.min.js?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/js/4_2#MIN#.js?v=#APEX_VERSION#'))
+,p_css_file_urls=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#IMAGE_PREFIX#themes/theme_25/css/4_2.css?v=#APEX_VERSION#',
+'#IMAGE_PREFIX#themes/theme_25/css/responsive_grid.css?v=#APEX_VERSION#'))
+,p_header_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<!--[if HTML5]><![endif]-->',
+'<!doctype html>',
+'<meta http-equiv="x-ua-compatible" content="IE=edge" />',
+'<!--[if lt IE 7 ]> <html class="ie6 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 7 ]>    <html class="ie7 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 8 ]>    <html class="ie8 no-css3 no-js" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if IE 9 ]>    <html class="ie9" lang="&BROWSER_LANGUAGE."> <![endif]-->',
+'<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="&BROWSER_LANGUAGE."> <!--<![endif]-->',
+'<head>',
+'<!--[if !HTML5]>',
+'  ',
+'<![endif]-->',
+'  <meta charset="UTF-8">',
+'  <title>#TITLE#</title>',
+'  <link rel="icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'  <link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'#APEX_CSS#',
+'#THEME_CSS#',
+'#TEMPLATE_CSS#',
+'#THEME_STYLE_CSS#',
+'#APPLICATION_CSS#',
+'#PAGE_CSS#',
+'#APEX_JAVASCRIPT#',
+'#THEME_JAVASCRIPT#',
+'#TEMPLATE_JAVASCRIPT#',
+'#APPLICATION_JAVASCRIPT#',
+'#PAGE_JAVASCRIPT#',
+'#HEAD#',
+'  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />',
+'</head>',
+'<body #ONLOAD#>',
+'<!--[if lte IE 6]><div id="outdated-browser">#OUTDATED_BROWSER#</div><![endif]-->',
+'#FORM_OPEN#',
+'<div class="uParentTabs">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      <ul>',
+'        #PARENT_TAB_CELLS#',
+'      </ul>',
+'    </div>',
+'  </div>  ',
+'</div>',
+'<header id="uHeader">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      #REGION_POSITION_07#',
+'      <div class="logoBar">',
+'        <h1><a href="#HOME_LINK#" id="uLogo">#LOGO#</a></h1>',
+'        <div class="userBlock">',
+'          <img src="#IMAGE_PREFIX#f_spacer.gif" class="navIcon user" alt="">',
+'          <span>&APP_USER.</span>',
+'          #NAVIGATION_BAR#',
+'        </div>',
+'      </div>',
+'    </div>',
+'  </div>',
+'  <nav>',
+'    <div class="apex_grid_container clearfix">',
+'      <div class="apex_cols apex_span_12">',
+'        <ul class="uMainNav">',
+'          #TAB_CELLS#',
+'          #REGION_POSITION_06#',
+'        </ul>',
+'        #REGION_POSITION_08#',
+'      </div>',
+'    </div>',
+'  </nav>',
+'</header>'))
+,p_box=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div id="uBodyContainer">',
+'#REGION_POSITION_01#',
+'#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#',
+'<div id="uTwoColumns" class="sideRightCol">',
+'  <div class="apex_grid_container">',
+'    <div class="apex_cols apex_span_10" id="uMidCol">',
+'    #BODY#',
+'    </div>',
+'    <div class="apex_cols apex_span_2" id="uRightCol">',
+'      <aside>',
+'        #REGION_POSITION_03#',
+'      </aside>',
+'    </div>',
+'  </div>',
+'</div>',
+'</div>'))
+,p_footer_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<footer id="uFooter">',
+'  <div class="apex_grid_container clearfix">',
+'    <div class="apex_cols apex_span_12">',
+'      <div class="uFooterContent">',
+'        #REGION_POSITION_05#',
+'        <div id="customize">#CUSTOMIZE#</div>',
+'        #SCREEN_READER_TOGGLE#',
+'        <span class="uFooterVersion">',
+'          #APP_VERSION#',
+'        </span>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</footer>',
+'#FORM_CLOSE#',
+'#DEVELOPER_TOOLBAR#',
+'#GENERATED_CSS#',
+'#GENERATED_JAVASCRIPT#',
+'</body>',
+'</html>'))
+,p_success_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion successMessage clearfix" id="uSuccessMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uSuccessMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uCheckmarkIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#SUCCESS_MESSAGE_HEADING#</h2>',
+'          #SUCCESS_MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_current_tab=>'<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_non_current_tab=>'<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_top_current_tab=>'<li><a href="#TAB_LINK#" class="active">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_top_non_curr_tab=>'<li><a href="#TAB_LINK#">#TAB_LABEL#</a>#TAB_INLINE_EDIT#</li>'
+,p_notification_message=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <section class="uMessageRegion errorMessage clearfix" id="uNotificationMessage">',
+'      <div class="uRegionContent clearfix">',
+'        <a href="javascript:void(0)" onclick="apex.jQuery(''#uNotificationMessage'').remove();" class="uCloseMessage"><span class="visuallyhidden">#CLOSE_NOTIFICATION#</span></a>',
+'        <img src="#IMAGE_PREFIX#f_spacer.gif" class="uWarningIcon" alt="" />',
+'        <div class="uMessageText">',
+'          <h2 class="visuallyhidden">#ERROR_MESSAGE_HEADING#</h2>',
+'          #MESSAGE#',
+'        </div>',
+'      </div>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_navigation_bar=>'#BAR_BODY#'
+,p_navbar_entry=>'<a href="#LINK#">#TEXT#</a>#EDIT#'
+,p_region_table_cattributes=>' summary="" cellpadding="0" border="0" cellspacing="0" width="100%"'
+,p_sidebar_def_reg_pos=>'REGION_POSITION_03'
+,p_breadcrumb_def_reg_pos=>'REGION_POSITION_01'
+,p_theme_class_id=>2
+,p_grid_type=>'FIXED'
+,p_grid_max_columns=>12
+,p_grid_always_use_max_columns=>false
+,p_grid_has_column_span=>true
+,p_grid_always_emit=>false
+,p_grid_emit_empty_leading_cols=>true
+,p_grid_emit_empty_trail_cols=>false
+,p_grid_template=>'#ROWS#'
+,p_grid_row_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_row">',
+'#COLUMNS#',
+'</div>'))
+,p_grid_column_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_cols apex_span_#COLUMN_SPAN_NUMBER# #FIRST_LAST_COLUMN_ATTRIBUTES#">',
+'#CONTENT#',
+'</div>'))
+,p_grid_first_column_attributes=>'alpha'
+,p_grid_last_column_attributes=>'omega'
+,p_grid_javascript_debug_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'apex.jQuery(document)',
+'    .on("apex-devbar-grid-debug-on", showGrid)',
+'    .on("apex-devbar-grid-debug-off", hideGrid);'))
+,p_translate_this_template=>'N'
+);
+end;
+/
+begin
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171978554830048146)
+,p_page_template_id=>wwv_flow_api.id(28171978484705048145)
+,p_name=>'Content Body'
+,p_placeholder=>'BODY'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>10
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171978660123048146)
+,p_page_template_id=>wwv_flow_api.id(28171978484705048145)
+,p_name=>'Breadcrumb'
+,p_placeholder=>'REGION_POSITION_01'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171978774165048146)
+,p_page_template_id=>wwv_flow_api.id(28171978484705048145)
+,p_name=>'Right Column'
+,p_placeholder=>'REGION_POSITION_03'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>2
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171978854855048146)
+,p_page_template_id=>wwv_flow_api.id(28171978484705048145)
+,p_name=>'Footer'
+,p_placeholder=>'REGION_POSITION_05'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>12
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171978986371048146)
+,p_page_template_id=>wwv_flow_api.id(28171978484705048145)
+,p_name=>'Page Level Tabs'
+,p_placeholder=>'REGION_POSITION_06'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171979069822048146)
+,p_page_template_id=>wwv_flow_api.id(28171978484705048145)
+,p_name=>'Header'
+,p_placeholder=>'REGION_POSITION_07'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+wwv_flow_api.create_page_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171979165222048146)
+,p_page_template_id=>wwv_flow_api.id(28171978484705048145)
+,p_name=>'Icon Nav Bar'
+,p_placeholder=>'REGION_POSITION_08'
+,p_has_grid_support=>false
+,p_glv_new_row=>true
+);
+end;
+/
+prompt --application/shared_components/user_interface/templates/button
+begin
+wwv_flow_api.create_button_templates(
+ p_id=>wwv_flow_api.id(28171984661783048197)
+,p_template_name=>'Button'
+,p_template=>'<button class="uButton #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button"><span>#LABEL#</span></button> '
+,p_hot_template=>'<button class="uButton uHotButton #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button"><span>#LABEL#</span></button> '
+,p_translate_this_template=>'N'
+,p_theme_class_id=>1
+,p_theme_id=>25
+);
+wwv_flow_api.create_button_templates(
+ p_id=>wwv_flow_api.id(28171984763759048201)
+,p_template_name=>'Button - Icon'
+,p_template=>'<button class="uButton iconButton #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button"><span><i class="iL"></i>#LABEL#<i class="iR"></i></span></button> '
+,p_hot_template=>'<button class="uButton uHotButton iconButton #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button"><span><i class="iL"></i>#LABEL#<i class="iR"></i></span></button> '
+,p_translate_this_template=>'N'
+,p_theme_class_id=>6
+,p_theme_id=>25
+);
+wwv_flow_api.create_button_templates(
+ p_id=>wwv_flow_api.id(28171984878526048201)
+,p_template_name=>'Button - Icon Only'
+,p_template=>'<button class="uButton iconOnly iconButton #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button" title="#LABEL#"><span><i></i></span></button> '
+,p_hot_template=>'<button class="uButton uHotButton iconOnly iconButton #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button" title="#LABEL#"><span><i></i></span></button> '
+,p_translate_this_template=>'N'
+,p_theme_class_id=>7
+,p_theme_id=>25
+);
+wwv_flow_api.create_button_templates(
+ p_id=>wwv_flow_api.id(28171984965918048201)
+,p_template_name=>'Large Button'
+,p_template=>'<button class="uButtonLarge #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button"><span>#LABEL#</span></button> '
+,p_hot_template=>'<button class="uButtonLarge uHotButton #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button"><span>#LABEL#</span></button> '
+,p_translate_this_template=>'N'
+,p_theme_class_id=>5
+,p_template_comment=>'Standard Button'
+,p_theme_id=>25
+);
+wwv_flow_api.create_button_templates(
+ p_id=>wwv_flow_api.id(28171985076630048201)
+,p_template_name=>'Large Button - Icon'
+,p_template=>'<button class="uButtonLarge iconButton #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button"><span><i class="iL"></i>#LABEL#<i class="iR"></i></span></button> '
+,p_hot_template=>'<button class="uButtonLarge uHotButton iconButton #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button"><span><i class="iL"></i>#LABEL#<i class="iR"></i></span></button> '
+,p_translate_this_template=>'N'
+,p_theme_class_id=>5
+,p_theme_id=>25
+);
+wwv_flow_api.create_button_templates(
+ p_id=>wwv_flow_api.id(28171985167331048202)
+,p_template_name=>'Large Button - Icon Only'
+,p_template=>'<button class="uButtonLarge iconButton iconOnly #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button" title="#LABEL#"><span><i></i></span></button> '
+,p_hot_template=>'<button class="uButtonLarge uHotButton iconButton iconOnly #BUTTON_CSS_CLASSES#" onclick="#JAVASCRIPT#" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#" type="button" title="#LABEL#"><span><i></i></span></button> '
+,p_translate_this_template=>'N'
+,p_theme_class_id=>8
+,p_theme_id=>25
+);
+end;
+/
+prompt --application/shared_components/user_interface/templates/region
+begin
+wwv_flow_api.create_plug_template(
+ p_id=>wwv_flow_api.id(28171979285949048148)
+,p_layout=>'TABLE'
+,p_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<section id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES# class="#REGION_CSS_CLASSES#">',
+'  <h1 class="visuallyhidden">#TITLE#</h1>',
+'  #BODY#',
+'</section>'))
+,p_page_plug_template_name=>'Accessible Region with Heading'
+,p_theme_id=>25
+,p_theme_class_id=>21
+,p_default_label_alignment=>'RIGHT'
+,p_default_field_alignment=>'LEFT'
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_plug_template(
+ p_id=>wwv_flow_api.id(28171979360502048159)
+,p_layout=>'TABLE'
+,p_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<section class="uRegion uWhiteRegion uAlertRegion #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>',
+'  <div class="uRegionHeading">',
+'    <h1>#TITLE#</h1>',
+'  </div>',
+'  <div class="uRegionContent clearfix">',
+'    #BODY#',
+'  </div>',
+'    <span class="uButtonContainer">',
+'      #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#',
+'    </span>',
+'</section>'))
+,p_page_plug_template_name=>'Alert Region'
+,p_plug_table_bgcolor=>'#ffffff'
+,p_theme_id=>25
+,p_theme_class_id=>10
+,p_plug_heading_bgcolor=>'#ffffff'
+,p_plug_font_size=>'-1'
+,p_default_label_alignment=>'RIGHT'
+,p_default_field_alignment=>'LEFT'
+,p_translate_this_template=>'N'
+,p_template_comment=>'Used for alerts and confirmations.  Please use a region image for the success/warning icon'
+);
+wwv_flow_api.create_plug_template(
+ p_id=>wwv_flow_api.id(28171979475266048160)
+,p_layout=>'TABLE'
+,p_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<section class="uRegion uBorderlessRegion #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>',
+'  <div class="uRegionHeading">',
+'    <h1>#TITLE#</h1>',
+'    <span class="uButtonContainer">',
+'      #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#',
+'    </span>',
+'  </div>',
+'  <div class="uRegionContent clearfix">',
+'    #BODY#',
+'  </div>',
+'</section>'))
+,p_page_plug_template_name=>'Borderless Region'
+,p_theme_id=>25
+,p_theme_class_id=>7
+,p_default_label_alignment=>'RIGHT'
+,p_default_field_alignment=>'LEFT'
+,p_translate_this_template=>'N'
+,p_template_comment=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'Use this region template when you want to contain content without a border.',
+'',
+'TITLE=YES',
+'BUTTONS=YES',
+'100% WIDTH=NO'))
+);
+wwv_flow_api.create_plug_template(
+ p_id=>wwv_flow_api.id(28171979559517048160)
+,p_layout=>'TABLE'
+,p_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="uBreadcrumbsContainer #REGION_CSS_CLASSES#" #REGION_ATTRIBUTES# id="#REGION_STATIC_ID#">',
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <div class="uBreadcrumbs">',
+'      #BODY#',
+'    </div>',
+'  </div>',
+'</div>',
+'</div>'))
+,p_page_plug_template_name=>'Breadcrumb Region'
+,p_theme_id=>25
+,p_theme_class_id=>6
+,p_default_label_alignment=>'RIGHT'
+,p_default_field_alignment=>'LEFT'
+,p_translate_this_template=>'N'
+,p_template_comment=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'Use this region template to contain breadcrumb menus.  Breadcrumb menus are implemented using breadcrumbs.  Breadcrumb menus are designed to displayed in #REGION_POSITION_01#',
+'',
+'',
+'',
+'<div id="uBreadcrumbsContainer #REGION_CSS_CLASSES#" #REGION_ATTRIBUTES# id="#REGION_STATIC_ID#">',
+'<div class="apex_grid_container">',
+'  <div class="apex_cols apex_span_12">',
+'    <div id="uBreadcrumbs">',
+'      #BODY#',
+'      <div class="uBreadcrumbsBG">',
+'        <div class="uLeft"></div>',
+'        <div class="uRight"></div>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</div>',
+'</div>'))
+);
+wwv_flow_api.create_plug_template(
+ p_id=>wwv_flow_api.id(28171979666386048161)
+,p_layout=>'TABLE'
+,p_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<section class="uButtonRegion #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>',
+'  <div class="uButtonRegionContentContainer">',
+'    <h1>#TITLE#</h1>',
+'    <span class="uButtonContainer">',
+'      #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#',
+'    </span>',
+'  </div>',
+'</section>'))
+,p_page_plug_template_name=>'Button Region with Title'
+,p_theme_id=>25
+,p_theme_class_id=>4
+,p_default_label_alignment=>'RIGHT'
+,p_default_field_alignment=>'LEFT'
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_plug_template(
+ p_id=>wwv_flow_api.id(28171979772190048162)
+,p_layout=>'TABLE'
+,p_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<section class="uButtonRegion #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>',
+'  <div class="uButtonRegionContentContainer">',
+'    <div class="uButtonRegionContent">#BODY#</div>',
+'    <span class="uButtonContainer">',
+'      #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#',
+'    </span>',
+'  </div>',
+'</section>'))
+,p_page_plug_template_name=>'Button Region without Title'
+,p_theme_id=>25
+,p_theme_class_id=>17
+,p_default_label_alignment=>'RIGHT'
+,p_default_field_alignment=>'LEFT'
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_plug_template(
+ p_id=>wwv_flow_api.id(28171979885028048162)
+,p_layout=>'TABLE'
+,p_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'#SUB_REGION_HEADERS#',
+'#BODY#',
+'<div class="uFrameContainer" class="#REGION_CSS_CLASSES# #REGION_ATTRIBUTES# id="#REGION_STATIC_ID#">',
+'#SUB_REGIONS#',
+'</div>'))
+,p_sub_plug_header_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="uFrameRegionSelector clearfix">',
+'  <ul>',
+'    <li><a href="javascript:void(0);" class="showAllLink active"><span>Show All</span></a></li>',
+'    #ENTRIES#',
+'  </ul>',
+'</div>'))
+,p_sub_plug_header_entry_templ=>'<li><a href="javascript:void(0);" id="sub_#SUB_REGION_ID#"><span>#SUB_REGION_TITLE#</span></a></li>'
+,p_page_plug_template_name=>'Content Frame Body Container'
+,p_theme_id=>25
+,p_theme_class_id=>7
+,p_default_label_alignment=>'RIGHT'
+,p_default_field_alignment=>'LEFT'
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_plug_template(
+ p_id=>wwv_flow_api.id(28171979981316048163)
+,p_layout=>'TABLE'
+,p_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES# class="#REGION_CSS_CLASSES#"> ',
+'#BODY#',
+'#CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#',
+'</div>'))
+,p_page_plug_template_name=>'DIV Region with ID'
+,p_theme_id=>25
+,p_theme_class_id=>22
+,p_default_label_alignment=>'RIGHT'
+,p_default_field_alignment=>'LEFT'
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_plug_template(
+ p_id=>wwv_flow_api.id(28171980063736048163)
+,p_layout=>'TABLE'
+,p_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<section class="uRegion #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>',
+'  <div class="uRegionHeading">',
+'    <h1>#TITLE#</h1>',
+'    <span class="uButtonContainer">',
+'      #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#',
+'    </span>',
+'  </div>',
+'  <div class="uRegionContent clearfix">',
+'    #BODY#',
+'  </div>',
+'</section>'))
+,p_page_plug_template_name=>'Form Region'
+,p_plug_table_bgcolor=>'#f7f7e7'
+,p_theme_id=>25
+,p_theme_class_id=>8
+,p_plug_heading_bgcolor=>'#f7f7e7'
+,p_plug_font_size=>'-1'
+,p_default_label_alignment=>'RIGHT'
+,p_default_field_alignment=>'LEFT'
+,p_translate_this_template=>'N'
+,p_template_comment=>'Red Theme'
+);
+wwv_flow_api.create_plug_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171980167133048163)
+,p_plug_template_id=>wwv_flow_api.id(28171980063736048163)
+,p_name=>'Region Body'
+,p_placeholder=>'BODY'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>-1
+);
+wwv_flow_api.create_plug_template(
+ p_id=>wwv_flow_api.id(28171980279677048164)
+,p_layout=>'TABLE'
+,p_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<section class="uRegion uHideShowRegion #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>',
+'  <div class="uRegionHeading">',
+'    <h1>',
+'      <a href="javascript:void(0)" class="uRegionControl"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="Hide/Show"/></a>',
+'      #TITLE#',
+'    </h1>',
+'    <span class="uButtonContainer">',
+'      #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#',
+'    </span>',
+'  </div>',
+'  <div class="uRegionContent clearfix">',
+'    #BODY#',
+'  </div>',
+'</section>'))
+,p_page_plug_template_name=>'Hide and Show Region (Expanded)'
+,p_theme_id=>25
+,p_theme_class_id=>1
+,p_default_label_alignment=>'RIGHT'
+,p_default_field_alignment=>'LEFT'
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_plug_template(
+ p_id=>wwv_flow_api.id(28171980361256048165)
+,p_layout=>'TABLE'
+,p_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<section class="uRegion uHideShowRegion #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>',
+'  <div class="uRegionHeading">',
+'    <h1>',
+'      <a href="javascript:void(0)" class="uRegionControl uRegionCollapsed"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="Hide/Show"/></a>',
+'      #TITLE#',
+'    </h1>',
+'    <span class="uButtonContainer">',
+'      #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#',
+'    </span>',
+'  </div>',
+'  <div class="uRegionContent clearfix" style="display: none;">',
+'    #BODY#',
+'  </div>',
+'</section>'))
+,p_page_plug_template_name=>'Hide and Show Region (Hidden)'
+,p_theme_id=>25
+,p_theme_class_id=>1
+,p_default_label_alignment=>'RIGHT'
+,p_default_field_alignment=>'LEFT'
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_plug_template(
+ p_id=>wwv_flow_api.id(28171980465038048165)
+,p_layout=>'TABLE'
+,p_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<section class="uIRRegion" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES# class="#REGION_CSS_CLASSES#">',
+'  <h1 class="visuallyhidden">#TITLE#</h1>',
+'  #BODY#',
+'</section>'))
+,p_page_plug_template_name=>'Interactive Report Region'
+,p_theme_id=>25
+,p_theme_class_id=>21
+,p_default_label_alignment=>'RIGHT'
+,p_default_field_alignment=>'LEFT'
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_plug_template(
+ p_id=>wwv_flow_api.id(28171980579841048165)
+,p_layout=>'TABLE'
+,p_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="apex_grid_container modal_grid">',
+'  <div class="apex_cols apex_span_8 modal_col">',
+'    <section class="uRegion uWhiteRegion uModalRegion uAlertRegion #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>',
+'      <div class="uRegionHeading">',
+'        <h1>#TITLE#</h1>',
+'      </div>',
+'      <div class="uRegionContent clearfix">',
+'        #BODY#',
+'      </div>',
+'        <span class="uButtonContainer">',
+'          #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#',
+'        </span>',
+'    </section>',
+'  </div>',
+'</div>'))
+,p_page_plug_template_name=>'Modal Region'
+,p_plug_table_bgcolor=>'#ffffff'
+,p_theme_id=>25
+,p_theme_class_id=>9
+,p_plug_heading_bgcolor=>'#ffffff'
+,p_plug_font_size=>'-1'
+,p_default_label_alignment=>'RIGHT'
+,p_default_field_alignment=>'LEFT'
+,p_translate_this_template=>'N'
+,p_template_comment=>'Red Theme'
+);
+wwv_flow_api.create_plug_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171980665330048165)
+,p_plug_template_id=>wwv_flow_api.id(28171980579841048165)
+,p_name=>'Region Body'
+,p_placeholder=>'BODY'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>6
+);
+wwv_flow_api.create_plug_template(
+ p_id=>wwv_flow_api.id(28171980779572048165)
+,p_layout=>'TABLE'
+,p_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<section class="uRegion uNoHeading #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>',
+'  <div class="uRegionContent clearfix">',
+'    #BODY#',
+'#CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#',
+'  </div>',
+'</section>'))
+,p_page_plug_template_name=>'Region without Buttons and Titles'
+,p_theme_id=>25
+,p_theme_class_id=>19
+,p_default_label_alignment=>'RIGHT'
+,p_default_field_alignment=>'LEFT'
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_plug_template(
+ p_id=>wwv_flow_api.id(28171980857640048166)
+,p_layout=>'TABLE'
+,p_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<section class="uRegion #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>',
+'  <div class="uRegionHeading">',
+'    <h1>#TITLE#</h1>',
+'    <span class="uButtonContainer">',
+'      #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#',
+'    </span>',
+'  </div>',
+'  <div class="uRegionContent clearfix">',
+'    #BODY#',
+'  </div>',
+'</section>'))
+,p_page_plug_template_name=>'Sidebar Region'
+,p_plug_table_bgcolor=>'#f7f7e7'
+,p_theme_id=>25
+,p_theme_class_id=>2
+,p_plug_heading_bgcolor=>'#f7f7e7'
+,p_plug_font_size=>'-1'
+,p_default_label_alignment=>'RIGHT'
+,p_default_field_alignment=>'LEFT'
+,p_translate_this_template=>'N'
+,p_template_comment=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<table border="0" cellpadding="0" cellspacing="0">',
+'        <tr>',
+'          <td rowspan="2" valign="top" width="4" bgcolor="#FF0000"><img src="#IMAGE_PREFIX#tl_img.gif" border="0" width="4" height="18" alt="" /></td>',
+'          <td bgcolor="#000000" height="1"><img src="#IMAGE_PREFIX#stretch.gif" width="142" height="1" border="0" alt="" /></td>',
+'          <td rowspan="2" valign="top" width="4" bgcolor="#FF0000"><img src="#IMAGE_PREFIX#tr_img.gif" border="0" width="4" height="18" alt="" /></td>',
+'        </tr>',
+'        <tr>',
+'          <td bgcolor="#FF0000" height="16">',
+'            <table border="0" cellpadding="0" cellspacing="0" width="100%">',
+'              <tr>',
+'                <td align=middle valign="top">',
+'                  <div align="center">',
+'                     <font color="#ffffff" face="Arial, Helvetica, sans-serif" size="1">',
+'                      <b>#TITLE# </b></font></div>',
+'                </td>',
+'              </tr>',
+'            </table>',
+'          </td>',
+'        </tr>',
+'</table>',
+'<table border="0" cellpadding="0" cellspacing="0">',
+'   <tr>',
+'   <td bgcolor="#000000" width="1" height="96"><img src="#IMAGE_PREFIX#stretch.gif" width="1" height="1" border="0" alt="" /></td>',
+'   <td valign="top" height="96"><img src="#IMAGE_PREFIX#stretch.gif" width="146" height="1" border="0" alt="" /><br />',
+'            <table border="0" cellpadding="1" cellspacing="0" width="146" summary="">',
+'              <tr>',
+'                <td colspan="2">',
+'                  <table border="0" cellpadding="2" cellspacing="0" width="124" summary="">',
+'                    <tr>',
+'                      <td>&nbsp;</td>',
+'                      <td valign="top" width="106">',
+'                        <P><FONT face="arial, helvetica" size="1">',
+'                            #BODY#',
+'                           </font>',
+'                        </P>',
+'                      </td>',
+'                    </tr>',
+'                  </table>',
+'            </table>',
+'          </td>',
+'          <td bgcolor="#000000" width="1" height="96"><img src="#IMAGE_PREFIX#stretch.gif" width="1" height="1" border="0" alt="" /></td>',
+'          <td bgcolor="#9a9c9a" width="1" height="96"><img src="#IMAGE_PREFIX#stretch.gif" width="1" height="1" border="0" alt="" /></td>',
+'          <td bgcolor="#b3b4b3" width="1" height="96"><img src="#IMAGE_PREFIX#stretch.gif" width="1" height="1" border="0" alt="" /></td>',
+'        </tr>',
+'      </table>',
+'      <table border="0" cellpadding="0" cellspacing="0">',
+'        <tr>',
+'          <td rowspan="4" valign="top" width="4"><img src="#IMAGE_PREFIX#bl_img.gif" border="0" width="4" height="6" alt="" /></td>',
+'          <td bgcolor="#ffffff" height="2"><img src="#IMAGE_PREFIX#stretch.gif" width="142" height="1" border="0" alt="" /></td>',
+'          <td rowspan="4" valign="top" width="4"><img src="#IMAGE_PREFIX#br_img.gif" border="0" width="4" height="6" alt="" /></td>',
+'        </tr>',
+'        <tr>',
+'          <td bgcolor="#000000" width="1"><img src="#IMAGE_PREFIX#stretch.gif" width="1" height="1" border="0" alt="" /></td>',
+'        </tr>',
+'        <tr>',
+'          <td bgcolor="#9a9c9a" width="1"><img src="#IMAGE_PREFIX#stretch.gif" width="1" height="1" border="0" alt="" /></td>',
+'        </tr>',
+'        <tr>',
+'          <td bgcolor="#b3b4b3" width="1" height="2"><img src="#IMAGE_PREFIX#stretch.gif" width="1" height="1" border="0" alt="" /></td>',
+'        </tr>',
+'</table>',
+''))
+);
+wwv_flow_api.create_plug_template(
+ p_id=>wwv_flow_api.id(28171980972155048167)
+,p_layout=>'TABLE'
+,p_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<section class="uRegion #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>',
+'  <div class="uRegionHeading">',
+'    <h1>#TITLE#</h1>',
+'    <span class="uButtonContainer">',
+'      #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#',
+'    </span>',
+'  </div>',
+'  <div class="uRegionContent clearfix">',
+'    #BODY#',
+'  </div>',
+'</section>'))
+,p_page_plug_template_name=>'Standard Region'
+,p_plug_table_bgcolor=>'#ffffff'
+,p_theme_id=>25
+,p_theme_class_id=>9
+,p_plug_heading_bgcolor=>'#ffffff'
+,p_plug_font_size=>'-1'
+,p_default_label_alignment=>'RIGHT'
+,p_default_field_alignment=>'LEFT'
+,p_translate_this_template=>'N'
+,p_template_comment=>'Red Theme'
+);
+wwv_flow_api.create_plug_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171981086301048168)
+,p_plug_template_id=>wwv_flow_api.id(28171980972155048167)
+,p_name=>'Region Body'
+,p_placeholder=>'BODY'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>-1
+);
+wwv_flow_api.create_plug_tmpl_display_point(
+ p_id=>wwv_flow_api.id(28171981180239048168)
+,p_plug_template_id=>wwv_flow_api.id(28171980972155048167)
+,p_name=>'Sub Regions'
+,p_placeholder=>'SUB_REGIONS'
+,p_has_grid_support=>true
+,p_glv_new_row=>true
+,p_max_fixed_grid_columns=>-1
+);
+wwv_flow_api.create_plug_template(
+ p_id=>wwv_flow_api.id(28171981285025048168)
+,p_layout=>'TABLE'
+,p_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<section class="uRegion uRegionNoPadding #REGION_CSS_CLASSES# clearfix" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#>',
+'  <div class="uRegionHeading">',
+'    <h1>#TITLE#</h1>',
+'    <span class="uButtonContainer">',
+'      #CLOSE##PREVIOUS##NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#',
+'    </span>',
+'  </div>',
+'  <div class="uRegionContent clearfix">',
+'    #BODY#',
+'  </div>',
+'</section>'))
+,p_page_plug_template_name=>'Standard Region - No Padding'
+,p_plug_table_bgcolor=>'#ffffff'
+,p_theme_id=>25
+,p_theme_class_id=>13
+,p_plug_heading_bgcolor=>'#ffffff'
+,p_plug_font_size=>'-1'
+,p_default_label_alignment=>'RIGHT'
+,p_default_field_alignment=>'LEFT'
+,p_translate_this_template=>'N'
+,p_template_comment=>'Red Theme'
+);
+wwv_flow_api.create_plug_template(
+ p_id=>wwv_flow_api.id(28171981383902048168)
+,p_layout=>'TABLE'
+,p_template=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="cWizardButtons cWizardButtonsLeft">',
+'#PREVIOUS##CLOSE#',
+'</div>',
+'<div class="cWizardButtons cWizardButtonsRight">',
+'#NEXT##DELETE##EDIT##CHANGE##CREATE##CREATE2##EXPAND##COPY##HELP#',
+'</div>'))
+,p_page_plug_template_name=>'Wizard Buttons'
+,p_theme_id=>25
+,p_theme_class_id=>28
+,p_default_label_alignment=>'RIGHT'
+,p_default_field_alignment=>'LEFT'
+,p_translate_this_template=>'N'
+);
+end;
+/
+prompt --application/shared_components/user_interface/templates/list
+begin
+wwv_flow_api.create_list_template(
+ p_id=>wwv_flow_api.id(28171982555102048179)
+,p_list_template_current=>'<button onclick="javascript:location.href=''#LINK#''" class="uButton uHotButton #A01#" type="button"><span>#TEXT#</span></a> '
+,p_list_template_noncurrent=>'<button onclick="javascript:location.href=''#LINK#''" class="uButton #A01#" type="button"><span>#TEXT#</span></a> '
+,p_list_template_name=>'Button List'
+,p_theme_id=>25
+,p_theme_class_id=>6
+,p_list_template_before_rows=>'<div class="uButtonList">'
+,p_list_template_after_rows=>'</div>'
+);
+wwv_flow_api.create_list_template(
+ p_id=>wwv_flow_api.id(28171982677187048184)
+,p_list_template_current=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<li>',
+'  <a href="#LINK#">',
+'    <h3>#TEXT#</h3>',
+'    <p>#A01#</p>',
+'  </a>',
+'</li>'))
+,p_list_template_noncurrent=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<li>',
+'  <a href="#LINK#">',
+'    <h3>#TEXT#</h3>',
+'    <p>#A01#</p>',
+'  </a>',
+'</li>'))
+,p_list_template_name=>'Featured List with Subtext'
+,p_theme_id=>25
+,p_theme_class_id=>1
+,p_list_template_before_rows=>'<ul class="featuredLinksList">'
+,p_list_template_after_rows=>'</ul>'
+);
+wwv_flow_api.create_list_template(
+ p_id=>wwv_flow_api.id(28171982776092048185)
+,p_list_template_current=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'    <li class="active">',
+'      <a href="#LINK#">',
+'        <img src="#IMAGE_PREFIX##IMAGE#" #IMAGE_ATTR# alt="" />',
+'        <span>#TEXT#</span>',
+'      </a>',
+'    </li>'))
+,p_list_template_noncurrent=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'    <li>',
+'      <a href="#LINK#">',
+'        <img src="#IMAGE_PREFIX##IMAGE#" #IMAGE_ATTR# alt="" />',
+'        <span>#TEXT#</span>',
+'      </a>',
+'    </li>'))
+,p_list_template_name=>'Horizontal Images with Label List'
+,p_theme_id=>25
+,p_theme_class_id=>4
+,p_list_template_before_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="uImagesList uHorizontalImagesList clearfix">',
+'  <ul>'))
+,p_list_template_after_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'  </ul>',
+'</div>'))
+);
+wwv_flow_api.create_list_template(
+ p_id=>wwv_flow_api.id(28171982867003048185)
+,p_list_template_current=>'<li class="active"><a href="#LINK#">#TEXT#</a></li> '
+,p_list_template_noncurrent=>'<li><a href="#LINK#">#TEXT#</a></li> '
+,p_list_template_name=>'Horizontal Links List'
+,p_theme_id=>25
+,p_theme_class_id=>3
+,p_list_template_before_rows=>'<ul class="uHorizontalLinksList">'
+,p_list_template_after_rows=>'</ul>'
+);
+wwv_flow_api.create_list_template(
+ p_id=>wwv_flow_api.id(28171982961458048185)
+,p_list_template_current=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'    <li class="#LIST_STATUS#">',
+'      <span>#TEXT#</span>',
+'    </li>'))
+,p_list_template_noncurrent=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'    <li class="#LIST_STATUS#">',
+'      <span>#TEXT#</span>',
+'    </li>'))
+,p_list_template_name=>'Horizontal Wizard Progress List'
+,p_theme_id=>25
+,p_theme_class_id=>17
+,p_list_template_before_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="uHorizontalProgressList hidden-phone">',
+'  <ul>'))
+,p_list_template_after_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'  </ul>',
+'</div>'))
+);
+wwv_flow_api.create_list_template(
+ p_id=>wwv_flow_api.id(28171983063293048186)
+,p_list_template_current=>'<li><a href="#LINK#" class="active">#TEXT#</a></li>'
+,p_list_template_noncurrent=>'<li><a href="#LINK#">#TEXT#</a></li>'
+,p_list_template_name=>'Page Level Tabs List'
+,p_theme_id=>25
+,p_theme_class_id=>7
+,p_list_template_before_rows=>' '
+,p_list_template_after_rows=>' '
+);
+wwv_flow_api.create_list_template(
+ p_id=>wwv_flow_api.id(28171983158287048186)
+,p_list_template_current=>'<li class="active"><a href="#LINK#">#TEXT#</a></li>'
+,p_list_template_noncurrent=>'<li><a href="#LINK#">#TEXT#</a></li>'
+,p_list_template_name=>'Tabbed Navigation List'
+,p_theme_id=>25
+,p_theme_class_id=>7
+,p_list_template_before_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="uHorizontalTabs">',
+'<ul>'))
+,p_list_template_after_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</ul>',
+'</div>'))
+);
+wwv_flow_api.create_list_template(
+ p_id=>wwv_flow_api.id(28171983273972048186)
+,p_list_template_current=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'    <li class="active">',
+'      <a href="#LINK#">',
+'        <img src="#IMAGE_PREFIX##IMAGE#" #IMAGE_ATTR# alt="" />',
+'        <span>#TEXT#</span>',
+'      </a>',
+'    </li>'))
+,p_list_template_noncurrent=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'    <li>',
+'      <a href="#LINK#">',
+'        <img src="#IMAGE_PREFIX##IMAGE#" #IMAGE_ATTR# alt="" />',
+'        <span>#TEXT#</span>',
+'      </a>',
+'    </li>'))
+,p_list_template_name=>'Vertical Images List'
+,p_theme_id=>25
+,p_theme_class_id=>5
+,p_list_template_before_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="uImagesList uVerticalImagesList clearfix">',
+'  <ul>'))
+,p_list_template_after_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'  </ul>',
+'</div>'))
+);
+wwv_flow_api.create_list_template(
+ p_id=>wwv_flow_api.id(28171983355446048186)
+,p_list_template_current=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'  <li>',
+'    <a href="#LINK#">',
+'      <img src="#IMAGE_PREFIX#f_spacer.gif" class="#A02#" alt="#LIST_LABEL#"/>',
+'      <h3>#TEXT#</h3>',
+'      <h4>#A01#</h4>',
+'    </a>',
+'  </li>'))
+,p_list_template_noncurrent=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'  <li>',
+'    <a href="#LINK#">',
+'      <img src="#IMAGE_PREFIX#f_spacer.gif" class="#A02#" alt="#LIST_LABEL#"/>',
+'      <h3>#TEXT#</h3>',
+'      <h4>#A01#</h4>',
+'    </a>',
+'  </li>'))
+,p_list_template_name=>'Vertical List with Subtext and Icon'
+,p_theme_id=>25
+,p_theme_class_id=>1
+,p_list_template_before_rows=>'<ul class="largeLinkList">'
+,p_list_template_after_rows=>'</ul>'
+);
+wwv_flow_api.create_list_template(
+ p_id=>wwv_flow_api.id(28171983471200048187)
+,p_list_template_current=>'<li class="active"><a href="#LINK#">#TEXT#</a></li>'
+,p_list_template_noncurrent=>'<li><a href="#LINK#">#TEXT#</a></li>'
+,p_list_template_name=>'Vertical Ordered List'
+,p_theme_id=>25
+,p_theme_class_id=>2
+,p_list_template_before_rows=>'<ol class="uNumberedList">'
+,p_list_template_after_rows=>'</ol>'
+);
+wwv_flow_api.create_list_template(
+ p_id=>wwv_flow_api.id(28171983573752048187)
+,p_list_template_current=>'<li class="active"><a href="#LINK#">#TEXT#</a></li>'
+,p_list_template_noncurrent=>'<li><a href="#LINK#">#TEXT#</a></li>'
+,p_list_template_name=>'Vertical Sidebar List'
+,p_theme_id=>25
+,p_theme_class_id=>19
+,p_list_template_before_rows=>'<ul class="uVerticalSidebarList">'
+,p_list_template_after_rows=>'</ul>'
+);
+wwv_flow_api.create_list_template(
+ p_id=>wwv_flow_api.id(28171983674210048187)
+,p_list_template_current=>'<li class="active"><a href="#LINK#">#TEXT#</a></li>'
+,p_list_template_noncurrent=>'<li><a href="#LINK#">#TEXT#</a></li>'
+,p_list_template_name=>'Vertical Unordered List with Bullets'
+,p_theme_id=>25
+,p_theme_class_id=>1
+,p_list_template_before_rows=>'<ul class="uVerticalList">'
+,p_list_template_after_rows=>'</ul>'
+);
+wwv_flow_api.create_list_template(
+ p_id=>wwv_flow_api.id(28171983770737048187)
+,p_list_template_current=>'<li class="active"><a href="#LINK#">#TEXT#</a></li>'
+,p_list_template_noncurrent=>'<li><a href="#LINK#">#TEXT#</a></li>'
+,p_list_template_name=>'Vertical Unordered List without Bullets'
+,p_theme_id=>25
+,p_theme_class_id=>18
+,p_list_template_before_rows=>'<ul class="uVerticalList noBullets">'
+,p_list_template_after_rows=>'</ul>'
+);
+wwv_flow_api.create_list_template(
+ p_id=>wwv_flow_api.id(28171983873874048187)
+,p_list_template_current=>'<li class="#LIST_STATUS#"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /><span>#TEXT#</span></li>'
+,p_list_template_noncurrent=>'<li class="#LIST_STATUS#"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /><span>#TEXT#</span></li>'
+,p_list_template_name=>'Wizard Progress List - Vertical'
+,p_theme_id=>25
+,p_theme_class_id=>17
+,p_list_template_before_rows=>'<div class="uVerticalProgressList" id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES#><ul>'
+,p_list_template_after_rows=>'</ul></div>'
+);
+end;
+/
+prompt --application/shared_components/user_interface/templates/report
+begin
+wwv_flow_api.create_row_template(
+ p_id=>wwv_flow_api.id(28171981468859048169)
+,p_row_template_name=>'Borderless Report'
+,p_row_template1=>'<td #ALIGNMENT# headers="#COLUMN_HEADER_NAME#">#COLUMN_VALUE#</td>'
+,p_row_template_before_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<table class="uReportContainer uBorderlessReportContainer" #REPORT_ATTRIBUTES# id="report_#REGION_STATIC_ID#" summary="">',
+'<tbody class="uReportPagination">',
+'#TOP_PAGINATION#',
+'</tbody>',
+'<tbody class="uReportBody">',
+'<tr><td>',
+'<table summary="#REGION_TITLE#" class="uReport uReportBorderless">'))
+,p_row_template_after_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</tbody>',
+'</table>',
+'</td>',
+'</tr>',
+'</tbody>',
+'<tbody class="uReportPagination">',
+'#PAGINATION#',
+'</tbody>',
+'</table>',
+'<div class="uReportDownloadLinks">#EXTERNAL_LINK##CSV_LINK#</div>'))
+,p_row_template_type=>'GENERIC_COLUMNS'
+,p_before_column_heading=>'<thead>'
+,p_column_heading_template=>'<th #ALIGNMENT# id="#COLUMN_HEADER_NAME#" #COLUMN_WIDTH#>#COLUMN_HEADER#</th>'
+,p_after_column_heading=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</thead>',
+'<tbody>'))
+,p_row_template_display_cond1=>'0'
+,p_row_template_display_cond2=>'0'
+,p_row_template_display_cond3=>'0'
+,p_row_template_display_cond4=>'0'
+,p_next_page_template=>'<a href="#LINK#" class="uPaginationNext">#PAGINATION_NEXT# <img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /></a>'
+,p_previous_page_template=>'<a href="#LINK#" class="uPaginationPrev"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /> #PAGINATION_PREVIOUS#</a>'
+,p_next_set_template=>'<a href="#LINK#" class="uPaginationNext">#PAGINATION_NEXT_SET# <img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /></a>'
+,p_previous_set_template=>'<a href="#LINK#" class="uPaginationPrev"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /> #PAGINATION_PREVIOUS_SET#</a>'
+,p_row_style_mouse_over=>'#F0F0F0'
+,p_row_style_checked=>'#E8E8E8'
+,p_theme_id=>25
+,p_theme_class_id=>1
+,p_translate_this_template=>'N'
+);
+begin
+wwv_flow_api.create_row_template_patch(
+ p_id=>wwv_flow_api.id(28171981468859048169)
+,p_row_template_before_first=>'<tr>'
+,p_row_template_after_last=>'</tr>'
+);
+exception when others then null;
+end;
+wwv_flow_api.create_row_template(
+ p_id=>wwv_flow_api.id(28171981570808048174)
+,p_row_template_name=>'Comment Bubbles'
+,p_row_template1=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<li class="#1#">',
+'<div>',
+'	<em>#2#</em>',
+'	#3##4##5##6##7#',
+'</div>',
+'<span>',
+'	#8# (#9#) #10#',
+'</span>',
+'</li>'))
+,p_row_template_before_rows=>'<ul class="commentBubbles">'
+,p_row_template_after_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</ul>',
+'<table class="uPaginationTable">',
+'#PAGINATION#',
+'</table>'))
+,p_row_template_type=>'NAMED_COLUMNS'
+,p_row_template_display_cond1=>'0'
+,p_row_template_display_cond2=>'0'
+,p_row_template_display_cond3=>'0'
+,p_row_template_display_cond4=>'0'
+,p_next_page_template=>'<a href="#LINK#" class="sPaginationNext">#PAGINATION_NEXT#</a>'
+,p_previous_page_template=>'<a href="#LINK#" class="sPaginationPrev">#PAGINATION_PREVIOUS#</a>'
+,p_next_set_template=>'<a href="#LINK#" class="sPaginationNext">#PAGINATION_NEXT_SET#</a>'
+,p_previous_set_template=>'<a href="#LINK#" class="sPaginationPrev">#PAGINATION_PREVIOUS_SET#</a>'
+,p_theme_id=>25
+,p_theme_class_id=>1
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_row_template(
+ p_id=>wwv_flow_api.id(28171981659491048174)
+,p_row_template_name=>'Fixed Headers'
+,p_row_template1=>'<td #ALIGNMENT# headers="#COLUMN_HEADER_NAME#" #COLUMN_WIDTH#>#COLUMN_VALUE#</td>'
+,p_row_template_before_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<table class="uReportContainer" #REPORT_ATTRIBUTES# id="report_#REGION_STATIC_ID#" summary="">',
+'<tbody class="uReportPagination">',
+'#TOP_PAGINATION#',
+'</tbody>',
+'<tbody class="uReportBody">',
+'<tr><td>',
+'<div class="uFixedHeadersContainer">',
+'<table summary="#REGION_TITLE#" class="uReport uReportFixedHeaders">'))
+,p_row_template_after_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</tbody>',
+'</table>',
+'</div>',
+'</td>',
+'</tr>',
+'</tbody>',
+'<tbody class="uReportPagination">',
+'#PAGINATION#',
+'</tbody>',
+'</table>',
+'<div class="uReportDownloadLinks">#EXTERNAL_LINK##CSV_LINK#</div>'))
+,p_row_template_table_attr=>'OMIT'
+,p_row_template_type=>'GENERIC_COLUMNS'
+,p_before_column_heading=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<thead>',
+''))
+,p_column_heading_template=>'<th #ALIGNMENT# id="#COLUMN_HEADER_NAME#" #COLUMN_WIDTH#>#COLUMN_HEADER#</th>'
+,p_after_column_heading=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</thead>',
+'<tbody>',
+''))
+,p_row_template_display_cond1=>'0'
+,p_row_template_display_cond2=>'0'
+,p_row_template_display_cond3=>'0'
+,p_row_template_display_cond4=>'0'
+,p_next_page_template=>'<a href="#LINK#" class="uPaginationNext">#PAGINATION_NEXT# <img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /></a>'
+,p_previous_page_template=>'<a href="#LINK#" class="uPaginationPrev"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /> #PAGINATION_PREVIOUS#</a>'
+,p_next_set_template=>'<a href="#LINK#" class="uPaginationNext">#PAGINATION_NEXT_SET# <img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /></a>'
+,p_previous_set_template=>'<a href="#LINK#" class="uPaginationPrev"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /> #PAGINATION_PREVIOUS_SET#</a>'
+,p_row_style_mouse_over=>'#F0F0F0'
+,p_row_style_checked=>'#E8E8E8'
+,p_theme_id=>25
+,p_theme_class_id=>7
+,p_translate_this_template=>'N'
+);
+begin
+wwv_flow_api.create_row_template_patch(
+ p_id=>wwv_flow_api.id(28171981659491048174)
+,p_row_template_before_first=>'<tr>'
+,p_row_template_after_last=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</tr>',
+''))
+);
+exception when others then null;
+end;
+wwv_flow_api.create_row_template(
+ p_id=>wwv_flow_api.id(28171981780251048175)
+,p_row_template_name=>'Horizontal Border'
+,p_row_template1=>'<td #ALIGNMENT# headers="#COLUMN_HEADER_NAME#">#COLUMN_VALUE#</td>'
+,p_row_template_before_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<table class="uReportContainer" #REPORT_ATTRIBUTES# id="report_#REGION_STATIC_ID#" summary="">',
+'<tbody class="uReportPagination">',
+'#TOP_PAGINATION#',
+'</tbody>',
+'<tbody class="uReportBody">',
+'<tr><td>',
+'<table summary="#REGION_TITLE#" class="uReport uReportHorizontal">'))
+,p_row_template_after_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</tbody>',
+'</table>',
+'</td>',
+'</tr>',
+'</tbody>',
+'<tbody class="uReportPagination">',
+'#PAGINATION#',
+'</tbody>',
+'</table>',
+'<div class="uReportDownloadLinks">#EXTERNAL_LINK##CSV_LINK#</div>'))
+,p_row_template_type=>'GENERIC_COLUMNS'
+,p_before_column_heading=>'<thead>'
+,p_column_heading_template=>'<th #ALIGNMENT# id="#COLUMN_HEADER_NAME#" #COLUMN_WIDTH#>#COLUMN_HEADER#</th>'
+,p_after_column_heading=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</thead>',
+'<tbody>'))
+,p_row_template_display_cond1=>'0'
+,p_row_template_display_cond2=>'0'
+,p_row_template_display_cond3=>'0'
+,p_row_template_display_cond4=>'0'
+,p_next_page_template=>'<a href="#LINK#" class="uPaginationNext">#PAGINATION_NEXT# <img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /></a>'
+,p_previous_page_template=>'<a href="#LINK#" class="uPaginationPrev"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /> #PAGINATION_PREVIOUS#</a>'
+,p_next_set_template=>'<a href="#LINK#" class="uPaginationNext">#PAGINATION_NEXT_SET# <img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /></a>'
+,p_previous_set_template=>'<a href="#LINK#" class="uPaginationPrev"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /> #PAGINATION_PREVIOUS_SET#</a>'
+,p_row_style_mouse_over=>'#F0F0F0'
+,p_row_style_checked=>'#E8E8E8'
+,p_theme_id=>25
+,p_theme_class_id=>2
+,p_translate_this_template=>'N'
+);
+begin
+wwv_flow_api.create_row_template_patch(
+ p_id=>wwv_flow_api.id(28171981780251048175)
+,p_row_template_before_first=>'<tr>'
+,p_row_template_after_last=>'</tr>'
+);
+exception when others then null;
+end;
+wwv_flow_api.create_row_template(
+ p_id=>wwv_flow_api.id(28171981872598048175)
+,p_row_template_name=>'One Column Unordered List'
+,p_row_template1=>'<li>#COLUMN_VALUE#</li>'
+,p_row_template_before_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<table class="uReportList" #REPORT_ATTRIBUTES# id="report_#REGION_STATIC_ID#" summary="">',
+'<tbody class="uReportPagination">',
+'#TOP_PAGINATION#',
+'</tbody>',
+'<tbody class="uReportBody">',
+'<tr><td>',
+'<ul class="uReportList">'))
+,p_row_template_after_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</ul>',
+'</td>',
+'</tr>',
+'</tbody>',
+'<tbody class="uReportPagination">',
+'#PAGINATION#',
+'</tbody>',
+'</table>',
+'<div class="uReportDownloadLinks">#EXTERNAL_LINK##CSV_LINK#</div>'))
+,p_row_template_table_attr=>'OMIT'
+,p_row_template_type=>'GENERIC_COLUMNS'
+,p_row_template_display_cond1=>'NOT_CONDITIONAL'
+,p_row_template_display_cond2=>'NOT_CONDITIONAL'
+,p_row_template_display_cond3=>'NOT_CONDITIONAL'
+,p_row_template_display_cond4=>'NOT_CONDITIONAL'
+,p_next_page_template=>'<a href="#LINK#" class="sPaginationNext">#PAGINATION_NEXT#</a>'
+,p_previous_page_template=>'<a href="#LINK#" class="sPaginationPrev">#PAGINATION_PREVIOUS#</a>'
+,p_next_set_template=>'<a href="#LINK#" class="sPaginationNext">#PAGINATION_NEXT_SET#</a>'
+,p_previous_set_template=>'<a href="#LINK#" class="sPaginationPrev">#PAGINATION_PREVIOUS_SET#</a>'
+,p_theme_id=>25
+,p_theme_class_id=>3
+,p_translate_this_template=>'N'
+);
+begin
+wwv_flow_api.create_row_template_patch(
+ p_id=>wwv_flow_api.id(28171981872598048175)
+,p_row_template_before_first=>'OMIT'
+,p_row_template_after_last=>'OMIT'
+);
+exception when others then null;
+end;
+wwv_flow_api.create_row_template(
+ p_id=>wwv_flow_api.id(28171981969633048175)
+,p_row_template_name=>'Search Results Report (SELECT link_text, link_target, detail1, detail2, last_modified)'
+,p_row_template1=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<li>',
+'<span class="title"><a href="#2#">#1#</a></span>',
+'<span class="description"><span class="last_modified">#5#</span>#3#</span>',
+'<span class="type">#4#</span>',
+'</li>'))
+,p_row_template_before_rows=>'<ul class="sSearchResultsReport">'
+,p_row_template_after_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</ul>',
+'<table class="uPaginationTable">',
+'#PAGINATION#',
+'</table>'))
+,p_row_template_type=>'NAMED_COLUMNS'
+,p_row_template_display_cond1=>'0'
+,p_row_template_display_cond2=>'0'
+,p_row_template_display_cond3=>'0'
+,p_row_template_display_cond4=>'0'
+,p_next_page_template=>'<a href="#LINK#" class="sPaginationNext">#PAGINATION_NEXT#</a>'
+,p_previous_page_template=>'<a href="#LINK#" class="sPaginationPrev">#PAGINATION_PREVIOUS#</a>'
+,p_next_set_template=>'<a href="#LINK#" class="sPaginationNext">#PAGINATION_NEXT_SET#</a>'
+,p_previous_set_template=>'<a href="#LINK#" class="sPaginationPrev">#PAGINATION_PREVIOUS_SET#</a>'
+,p_theme_id=>25
+,p_theme_class_id=>1
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_row_template(
+ p_id=>wwv_flow_api.id(28171982080246048176)
+,p_row_template_name=>'Standard'
+,p_row_template1=>'<td #ALIGNMENT# headers="#COLUMN_HEADER_NAME#">#COLUMN_VALUE#</td>'
+,p_row_template_before_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<table class="uReportContainer" #REPORT_ATTRIBUTES# id="report_#REGION_STATIC_ID#" summary="">',
+'<tbody class="uReportPagination">',
+'#TOP_PAGINATION#',
+'</tbody>',
+'<tbody class="uReportBody">',
+'<tr><td>',
+'<table summary="#REGION_TITLE#" class="uReport uReportStandard">'))
+,p_row_template_after_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</tbody>',
+'</table>',
+'</td>',
+'</tr>',
+'</tbody>',
+'<tbody class="uReportPagination">',
+'#PAGINATION#',
+'</tbody>',
+'</table>',
+'<div class="uReportDownloadLinks">#EXTERNAL_LINK##CSV_LINK#</div>'))
+,p_row_template_type=>'GENERIC_COLUMNS'
+,p_before_column_heading=>'<thead>'
+,p_column_heading_template=>'<th #ALIGNMENT# id="#COLUMN_HEADER_NAME#" #COLUMN_WIDTH#>#COLUMN_HEADER#</th>'
+,p_after_column_heading=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</thead>',
+'<tbody>'))
+,p_row_template_display_cond1=>'0'
+,p_row_template_display_cond2=>'0'
+,p_row_template_display_cond3=>'0'
+,p_row_template_display_cond4=>'0'
+,p_next_page_template=>'<a href="#LINK#" class="uPaginationNext">#PAGINATION_NEXT# <img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /></a>'
+,p_previous_page_template=>'<a href="#LINK#" class="uPaginationPrev"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /> #PAGINATION_PREVIOUS#</a>'
+,p_next_set_template=>'<a href="#LINK#" class="uPaginationNext">#PAGINATION_NEXT_SET# <img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /></a>'
+,p_previous_set_template=>'<a href="#LINK#" class="uPaginationPrev"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /> #PAGINATION_PREVIOUS_SET#</a>'
+,p_row_style_mouse_over=>'#F0F0F0'
+,p_row_style_checked=>'#E8E8E8'
+,p_theme_id=>25
+,p_theme_class_id=>4
+,p_translate_this_template=>'N'
+);
+begin
+wwv_flow_api.create_row_template_patch(
+ p_id=>wwv_flow_api.id(28171982080246048176)
+,p_row_template_before_first=>'<tr>'
+,p_row_template_after_last=>'</tr>'
+);
+exception when others then null;
+end;
+wwv_flow_api.create_row_template(
+ p_id=>wwv_flow_api.id(28171982176379048176)
+,p_row_template_name=>'Standard - Alternative'
+,p_row_template1=>'<td #ALIGNMENT# headers="#COLUMN_HEADER_NAME#">#COLUMN_VALUE#</td>'
+,p_row_template3=>'<td #ALIGNMENT# headers="#COLUMN_HEADER_NAME#" class="uOddRow">#COLUMN_VALUE#</td>'
+,p_row_template_before_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<table class="uReportContainer" #REPORT_ATTRIBUTES# id="report_#REGION_STATIC_ID#" summary="">',
+'<tbody class="uReportPagination">',
+'#TOP_PAGINATION#',
+'</tbody>',
+'<tbody class="uReportBody">',
+'<tr><td>',
+'<table summary="#REGION_TITLE#" class="uReport uReportAlternative">'))
+,p_row_template_after_rows=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</tbody>',
+'</table>',
+'</td>',
+'</tr>',
+'</tbody>',
+'<tbody class="uReportPagination">',
+'#PAGINATION#',
+'</tbody>',
+'</table>',
+'<div class="uReportDownloadLinks">#EXTERNAL_LINK##CSV_LINK#</div>'))
+,p_row_template_table_attr=>'OMIT'
+,p_row_template_type=>'GENERIC_COLUMNS'
+,p_before_column_heading=>'<thead>'
+,p_column_heading_template=>'<th #ALIGNMENT# id="#COLUMN_HEADER_NAME#" #COLUMN_WIDTH#>#COLUMN_HEADER#</th>'
+,p_after_column_heading=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</thead>',
+'<tbody>'))
+,p_row_template_display_cond1=>'0'
+,p_row_template_display_cond2=>'ODD_ROW_NUMBERS'
+,p_row_template_display_cond3=>'0'
+,p_row_template_display_cond4=>'0'
+,p_next_page_template=>'<a href="#LINK#" class="uPaginationNext">#PAGINATION_NEXT# <img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /></a>'
+,p_previous_page_template=>'<a href="#LINK#" class="uPaginationPrev"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /> #PAGINATION_PREVIOUS#</a>'
+,p_next_set_template=>'<a href="#LINK#" class="uPaginationNext">#PAGINATION_NEXT_SET# <img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /></a>'
+,p_previous_set_template=>'<a href="#LINK#" class="uPaginationPrev"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" /> #PAGINATION_PREVIOUS_SET#</a>'
+,p_theme_id=>25
+,p_theme_class_id=>5
+,p_translate_this_template=>'N'
+);
+begin
+wwv_flow_api.create_row_template_patch(
+ p_id=>wwv_flow_api.id(28171982176379048176)
+,p_row_template_before_first=>'<tr>'
+,p_row_template_after_last=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</tr>',
+''))
+);
+exception when others then null;
+end;
+wwv_flow_api.create_row_template(
+ p_id=>wwv_flow_api.id(28171982267765048176)
+,p_row_template_name=>'Two Column Portlet'
+,p_row_template1=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<li>',
+'  <span class="uValueHeading">',
+'    #1#',
+'  </span>',
+'  <span class="uValue">',
+'    #2#',
+'  </span>',
+'</li>'))
+,p_row_template_before_rows=>'<ul class="uValuePairs" #REPORT_ATTRIBUTES# id="report_#REGION_STATIC_ID#">'
+,p_row_template_after_rows=>'</ul>'
+,p_row_template_type=>'NAMED_COLUMNS'
+,p_row_template_display_cond1=>'0'
+,p_row_template_display_cond2=>'0'
+,p_row_template_display_cond3=>'0'
+,p_row_template_display_cond4=>'0'
+,p_theme_id=>25
+,p_theme_class_id=>7
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_row_template(
+ p_id=>wwv_flow_api.id(28171982361609048177)
+,p_row_template_name=>'Value Attribute Pairs'
+,p_row_template1=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<li>',
+'  <span class="uValueHeading">',
+'    #COLUMN_HEADER#',
+'  </span>',
+'  <span class="uValue">',
+'    #COLUMN_VALUE#',
+'  </span>',
+'</li>'))
+,p_row_template_before_rows=>'<ul class="uValuePairs" #REPORT_ATTRIBUTES#>'
+,p_row_template_after_rows=>'</ul>'
+,p_row_template_type=>'GENERIC_COLUMNS'
+,p_row_template_display_cond1=>'0'
+,p_row_template_display_cond2=>'0'
+,p_row_template_display_cond3=>'0'
+,p_row_template_display_cond4=>'0'
+,p_theme_id=>25
+,p_theme_class_id=>6
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_row_template(
+ p_id=>wwv_flow_api.id(28171982455751048177)
+,p_row_template_name=>'Value Attribute Pairs - Left Aligned'
+,p_row_template1=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<li>',
+'  <label>',
+'    #COLUMN_HEADER#',
+'  </label>',
+'  <span>',
+'    #COLUMN_VALUE#',
+'  </span>',
+'</li>'))
+,p_row_template_before_rows=>'<ul class="vapList tableBased" #REPORT_ATTRIBUTES# id="report_#REPORT_STATIC_ID#">'
+,p_row_template_after_rows=>'</ul>'
+,p_row_template_type=>'GENERIC_COLUMNS'
+,p_row_template_display_cond1=>'0'
+,p_row_template_display_cond2=>'0'
+,p_row_template_display_cond3=>'0'
+,p_row_template_display_cond4=>'0'
+,p_theme_id=>25
+,p_theme_class_id=>6
+,p_translate_this_template=>'N'
+,p_row_template_comment=>'shrahman 03/12/2012 Making table based '
+);
+end;
+/
+prompt --application/shared_components/user_interface/templates/label
+begin
+wwv_flow_api.create_field_template(
+ p_id=>wwv_flow_api.id(28171983958571048189)
+,p_template_name=>'Hidden Label (Read by Screen Readers)'
+,p_template_body1=>'<label for="#CURRENT_ITEM_NAME#" id="#LABEL_ID#" class="visuallyhidden">'
+,p_template_body2=>'</label>'
+,p_before_item=>'<div id="#CURRENT_ITEM_CONTAINER_ID#">'
+,p_after_item=>'</div>'
+,p_on_error_after_label=>'<span class="uLabelError">#ERROR_MESSAGE#</span>'
+,p_theme_id=>25
+,p_theme_class_id=>13
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_field_template(
+ p_id=>wwv_flow_api.id(28171984069518048193)
+,p_template_name=>'Optional (Horizontal - Left Aligned)'
+,p_template_body1=>'<label for="#CURRENT_ITEM_NAME#" id="#LABEL_ID#" class="uOptional">'
+,p_template_body2=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</label>',
+'<div class="fieldControls">'))
+,p_before_item=>'<div class="fieldContainer horizontal" id="#CURRENT_ITEM_CONTAINER_ID#">'
+,p_after_item=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<button class="uButton iconButton iconOnly altButton help itemHelpButton" onclick="uShowItemHelp(''#CURRENT_ITEM_NAME#'');return false;" id="hb_#CURRENT_ITEM_NAME#" type="button" title="#CURRENT_ITEM_HELP_LABEL#"><span><i></i></span></button>',
+'<span class="uItemHelp" data-item-id="#CURRENT_ITEM_NAME#">#CURRENT_ITEM_HELP_TEXT#</span>',
+'</div>',
+'</div>'))
+,p_on_error_after_label=>'<span class="uLabelError">#ERROR_MESSAGE#</span>'
+,p_theme_id=>25
+,p_theme_class_id=>3
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_field_template(
+ p_id=>wwv_flow_api.id(28171984163949048193)
+,p_template_name=>'Optional (Horizontal - Right Aligned)'
+,p_template_body1=>'<label for="#CURRENT_ITEM_NAME#" id="#LABEL_ID#" class="uOptional">'
+,p_template_body2=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</label>',
+'<div class="fieldControls">'))
+,p_before_item=>'<div class="fieldContainer horizontal rightlabels" id="#CURRENT_ITEM_CONTAINER_ID#">'
+,p_after_item=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<button class="uButton iconButton iconOnly altButton help itemHelpButton" onclick="uShowItemHelp(''#CURRENT_ITEM_NAME#'');return false;" id="hb_#CURRENT_ITEM_NAME#" type="button"  title="#CURRENT_ITEM_HELP_LABEL#"><span><i></i></span></button>',
+'<span class="uItemHelp" data-item-id="#CURRENT_ITEM_NAME#">#CURRENT_ITEM_HELP_TEXT#</span>',
+'</div>',
+'</div>'))
+,p_on_error_after_label=>'<span class="uLabelError">#ERROR_MESSAGE#</span>'
+,p_theme_id=>25
+,p_theme_class_id=>3
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_field_template(
+ p_id=>wwv_flow_api.id(28171984263119048194)
+,p_template_name=>'Optional (Label Above)'
+,p_template_body1=>'<label for="#CURRENT_ITEM_NAME#" id="#LABEL_ID#" class="uOptional">'
+,p_template_body2=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</label>',
+'<button class="uButton iconButton iconOnly altButton help itemHelpButton" onclick="uShowItemHelp(''#CURRENT_ITEM_NAME#'');return false;" id="hb_#CURRENT_ITEM_NAME#" type="button" title="#CURRENT_ITEM_HELP_LABEL#"><span><i></i></span></button>',
+'<span class="uItemHelp" data-item-id="#CURRENT_ITEM_NAME#">#CURRENT_ITEM_HELP_TEXT#</span>',
+'<div class="fieldControls">'))
+,p_before_item=>'<div class="fieldContainer vertical" id="#CURRENT_ITEM_CONTAINER_ID#">'
+,p_after_item=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</div>',
+'</div>'))
+,p_on_error_after_label=>'<span class="uLabelError">#ERROR_MESSAGE#</span>'
+,p_theme_id=>25
+,p_theme_class_id=>3
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_field_template(
+ p_id=>wwv_flow_api.id(28171984380827048194)
+,p_template_name=>'Required (Horizontal - Left Aligned)'
+,p_template_body1=>'<label for="#CURRENT_ITEM_NAME#" id="#LABEL_ID#" class="uRequired"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" class="uAsterisk" />'
+,p_template_body2=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<span class="visuallyhidden">(#VALUE_REQUIRED#)</span></label>',
+'<div class="fieldControls">'))
+,p_before_item=>'<div class="fieldContainer horizontal" id="#CURRENT_ITEM_CONTAINER_ID#">'
+,p_after_item=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<button class="uButton iconButton iconOnly altButton help itemHelpButton" onclick="uShowItemHelp(''#CURRENT_ITEM_NAME#'');return false;" id="hb_#CURRENT_ITEM_NAME#" type="button" title="#CURRENT_ITEM_HELP_LABEL#"><span><i></i></span></button>',
+'<span class="uItemHelp" data-item-id="#CURRENT_ITEM_NAME#">#CURRENT_ITEM_HELP_TEXT#</span>',
+'</div>',
+'</div>'))
+,p_on_error_after_label=>'<span class="uLabelError">#ERROR_MESSAGE#</span>'
+,p_theme_id=>25
+,p_theme_class_id=>4
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_field_template(
+ p_id=>wwv_flow_api.id(28171984464931048195)
+,p_template_name=>'Required (Horizontal - Right Aligned)'
+,p_template_body1=>'<label for="#CURRENT_ITEM_NAME#" id="#LABEL_ID#" class="uRequired"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" class="uAsterisk" />'
+,p_template_body2=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+' <span class="visuallyhidden">(#VALUE_REQUIRED#)</span></label>',
+'<div class="fieldControls">'))
+,p_before_item=>'<div class="fieldContainer horizontal rightlabels" id="#CURRENT_ITEM_CONTAINER_ID#">'
+,p_after_item=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<button class="uButton iconButton iconOnly altButton help itemHelpButton" onclick="uShowItemHelp(''#CURRENT_ITEM_NAME#'');return false;" id="hb_#CURRENT_ITEM_NAME#" type="button" title="#CURRENT_ITEM_HELP_LABEL#"><span><i></i></span></button>',
+'<span class="uItemHelp" data-item-id="#CURRENT_ITEM_NAME#">#CURRENT_ITEM_HELP_TEXT#</span>',
+'</div>',
+'</div>'))
+,p_on_error_after_label=>'<span class="uLabelError">#ERROR_MESSAGE#</span>'
+,p_theme_id=>25
+,p_theme_class_id=>4
+,p_translate_this_template=>'N'
+);
+wwv_flow_api.create_field_template(
+ p_id=>wwv_flow_api.id(28171984567865048195)
+,p_template_name=>'Required (Label Above)'
+,p_template_body1=>'<label for="#CURRENT_ITEM_NAME#" id="#LABEL_ID#" class="uRequired"><img src="#IMAGE_PREFIX#f_spacer.gif" alt="" class="uAsterisk" />'
+,p_template_body2=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<span class="visuallyhidden">(#VALUE_REQUIRED#)</span></label>',
+'<button class="uButton iconButton iconOnly altButton help itemHelpButton" onclick="uShowItemHelp(''#CURRENT_ITEM_NAME#'');return false;" id="hb_#CURRENT_ITEM_NAME#" type="button" title="#CURRENT_ITEM_HELP_LABEL#"><span><i></i></span></button>',
+'<span class="uItemHelp" data-item-id="#CURRENT_ITEM_NAME#">#CURRENT_ITEM_HELP_TEXT#</span>',
+'<div class="fieldControls">'))
+,p_before_item=>'<div class="fieldContainer vertical" id="#CURRENT_ITEM_CONTAINER_ID#">'
+,p_after_item=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</div>',
+'</div>'))
+,p_on_error_after_label=>'<span class="uLabelError">#ERROR_MESSAGE#</span>'
+,p_theme_id=>25
+,p_theme_class_id=>4
+,p_translate_this_template=>'N'
+);
+end;
+/
+prompt --application/shared_components/user_interface/templates/breadcrumb
+begin
+wwv_flow_api.create_menu_template(
+ p_id=>wwv_flow_api.id(28171985258615048203)
+,p_name=>'Breadcrumb Menu'
+,p_before_first=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<ul>',
+'<li class="uStartCap"><span></span></li>'))
+,p_current_page_option=>'<li class="active"><span>#NAME#</span></li> '
+,p_non_current_page_option=>'<li><a href="#LINK#">#NAME#</a></li> '
+,p_between_levels=>'<li class="uSeparator"><span></span></li>'
+,p_after_last=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<li class="uEndCap"><span></span></li>',
+'</ul>'))
+,p_max_levels=>12
+,p_start_with_node=>'PARENT_TO_LEAF'
+,p_theme_id=>25
+,p_theme_class_id=>1
+,p_translate_this_template=>'N'
+);
+end;
+/
+prompt --application/shared_components/user_interface/templates/popuplov
+begin
+wwv_flow_api.create_popup_lov_template(
+ p_id=>wwv_flow_api.id(28171985460499048215)
+,p_popup_icon=>'#IMAGE_PREFIX#f_spacer.gif'
+,p_popup_icon_attr=>'alt="#LIST_OF_VALUES#" title="#LIST_OF_VALUES#" class="uPopupLOVIcon"'
+,p_page_name=>'winlov'
+,p_page_title=>'Search Dialog'
+,p_page_html_head=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<html lang="&BROWSER_LANGUAGE.">',
+'<head>',
+'<title>#TITLE#</title>',
+'#APEX_CSS#',
+'#THEME_CSS#',
+'#THEME_STYLE_CSS#',
+'#APEX_JAVASCRIPT#',
+'<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />',
+'<link rel="shortcut icon" href="#IMAGE_PREFIX#favicon.ico" type="image/x-icon">',
+'<link rel="stylesheet" href="#IMAGE_PREFIX#themes/theme_25/css/4_2.css" type="text/css" media="all"/>',
+'',
+'</head>'))
+,p_page_body_attr=>'class="uPopUpLOV"'
+,p_before_field_text=>'<div class="uActionBar">'
+,p_filter_width=>'20'
+,p_filter_max_width=>'100'
+,p_filter_text_attr=>'class="searchField"'
+,p_find_button_text=>'Search'
+,p_find_button_attr=>'class="lovButton hotButton"'
+,p_close_button_text=>'Close'
+,p_close_button_attr=>'class="lovButton"'
+,p_next_button_text=>'Next >'
+,p_next_button_attr=>'class="lovButton"'
+,p_prev_button_text=>'< Previous'
+,p_prev_button_attr=>'class="lovButton"'
+,p_after_field_text=>'</div>'
+,p_scrollbars=>'1'
+,p_resizable=>'1'
+,p_width=>'400'
+,p_height=>'450'
+,p_result_row_x_of_y=>'<div class="lovPagination">Row(s) #FIRST_ROW# - #LAST_ROW#</div>'
+,p_result_rows_per_pg=>500
+,p_before_result_set=>'<div class="lovLinks">'
+,p_theme_id=>25
+,p_theme_class_id=>1
+,p_translate_this_template=>'N'
+,p_after_result_set=>'</div>'
+);
+end;
+/
+prompt --application/shared_components/user_interface/templates/calendar
 begin
 wwv_flow_api.create_calendar_template(
-  p_id=> 27233143636693054 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_cal_template_name=>'Calendar',
-  p_translate_this_template=> 'N',
-  p_day_of_week_format=> '<th id="#DY#" scope="col" class="uCalDayCol">#IDAY#</th>',
-  p_month_title_format=> '<div class="uCal">'||unistr('\000a')||
-'<h1 class="uMonth">#IMONTH# <span>#YYYY#</span></h1>',
-  p_month_open_format=> '<table class="uCal" cellpadding="0" cellspacing="0" border="0" summary="#IMONTH# #YYYY#">',
-  p_month_close_format=> '</table>'||unistr('\000a')||
-'<div class="uCalFooter"></div>'||unistr('\000a')||
-'</div>'||unistr('\000a')||
+ p_id=>wwv_flow_api.id(28171985370272048208)
+,p_cal_template_name=>'Calendar'
+,p_day_of_week_format=>'<th id="#DY#" scope="col" class="uCalDayCol">#IDAY#</th>'
+,p_month_title_format=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="uCal">',
+'<h1 class="uMonth">#IMONTH# <span>#YYYY#</span></h1>'))
+,p_month_open_format=>'<table class="uCal" cellpadding="0" cellspacing="0" border="0" summary="#IMONTH# #YYYY#">'
+,p_month_close_format=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</table>',
+'<div class="uCalFooter"></div>',
+'</div>',
+''))
+,p_day_title_format=>'<span class="uDayTitle">#DD#</span>'
+,p_day_open_format=>'<td class="uDay" headers="#DY#">#TITLE_FORMAT#<div class="uDayData">#DATA#</div>'
+,p_day_close_format=>'</td>'
+,p_today_open_format=>'<td class="uDay today" headers="#DY#">#TITLE_FORMAT#<div class="uDayData">#DATA#</div>'
+,p_weekend_title_format=>'<span class="uDayTitle weekendday">#DD#</span>'
+,p_weekend_open_format=>'<td class="uDay" headers="#DY#">#TITLE_FORMAT#<div class="uDayData">#DATA#</div>'
+,p_weekend_close_format=>'</td>'
+,p_nonday_title_format=>'<span class="uDayTitle">#DD#</span>'
+,p_nonday_open_format=>'<td class="uDay nonday" headers="#DY#">'
+,p_nonday_close_format=>'</td>'
+,p_week_open_format=>'<tr>'
+,p_week_close_format=>'</tr> '
+,p_daily_title_format=>'<table cellspacing="0" cellpadding="0" border="0" summary="" class="t1DayCalendarHolder"> <tr> <td class="t1MonthTitle">#IMONTH# #DD#, #YYYY#</td> </tr> <tr> <td>'
+,p_daily_open_format=>'<tr>'
+,p_daily_close_format=>'</tr>'
+,p_weekly_title_format=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="uCal uCalWeekly">',
+'<h1 class="uMonth">#WTITLE#</h1>'))
+,p_weekly_day_of_week_format=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<th scope="col" class="aCalDayCol" id="#DY#">',
+'  <span class="visible-desktop">#DD# #IDAY#</span>',
+'  <span class="hidden-desktop">#DD# <em>#IDY#</em></span>',
+'</th>'))
+,p_weekly_month_open_format=>'<table border="0" cellpadding="0" cellspacing="0" summary="#CALENDAR_TITLE# #START_DL# - #END_DL#" class="uCal">'
+,p_weekly_month_close_format=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</table>',
+'<div class="uCalFooter"></div>',
+'</div>'))
+,p_weekly_day_open_format=>'<td class="uDay" headers="#DY#"><div class="uDayData">'
+,p_weekly_day_close_format=>'</div></td>'
+,p_weekly_today_open_format=>'<td class="uDay today" headers="#DY#"><div class="uDayData">'
+,p_weekly_weekend_open_format=>'<td class="uDay weekend" headers="#DY#"><div class="uDayData">'
+,p_weekly_weekend_close_format=>'</div></td>'
+,p_weekly_time_open_format=>'<th scope="row" class="uCalHour">'
+,p_weekly_time_close_format=>'</th>'
+,p_weekly_time_title_format=>'#TIME#'
+,p_weekly_hour_open_format=>'<tr>'
+,p_weekly_hour_close_format=>'</tr>'
+,p_daily_day_of_week_format=>'<th scope="col" id="#DY#" class="aCalDayCol">#IDAY#</th>'
+,p_daily_month_title_format=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<div class="uCal uCalWeekly uCalDaily">',
+'<h1 class="uMonth">#IMONTH# #DD#, #YYYY#</h1>'))
+,p_daily_month_open_format=>'<table border="0" cellpadding="0" cellspacing="0" summary="#CALENDAR_TITLE# #START_DL#" class="uCal">'
+,p_daily_month_close_format=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'</table>',
+'<div class="uCalFooter"></div>',
+'</div>'))
+,p_daily_day_open_format=>'<td class="uDay" headers="#DY#"><div class="uDayData">'
+,p_daily_day_close_format=>'</div></td>'
+,p_daily_today_open_format=>'<td class="uDay today" headers="#DY#"><div class="uDayData">'
+,p_daily_time_open_format=>'<th scope="row" class="uCalHour" id="#TIME#">'
+,p_daily_time_close_format=>'</th>'
+,p_daily_time_title_format=>'#TIME#'
+,p_daily_hour_open_format=>'<tr>'
+,p_daily_hour_close_format=>'</tr>'
+,p_agenda_format=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'<ul class="listCalendar">',
+'  <li class="monthHeader">',
+'    <h1>#IMONTH# #YYYY#</h1>',
+'  </li>',
+'  #DAYS#',
+'  <li class="listEndCap"></li>',
+'</ul>'))
+,p_agenda_past_day_format=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'  <li class="dayHeader past">',
+'    <h2>#IDAY# <span>#IMONTH# #DD#</span></h2>',
+'  </li>'))
+,p_agenda_today_day_format=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'  <li class="dayHeader today">',
+'    <h2>#IDAY# <span>#IMONTH# #DD#</span></h2>',
+'  </li>'))
+,p_agenda_future_day_format=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'  <li class="dayHeader future">',
+'    <h2>#IDAY# <span>#IMONTH# #DD#</span></h2>',
+'  </li>'))
+,p_agenda_past_entry_format=>'  <li class="dayData past">#DATA#</li>'
+,p_agenda_today_entry_format=>'  <li class="dayData today">#DATA#</li>'
+,p_agenda_future_entry_format=>'  <li class="dayData future">#DATA#</li>'
+,p_month_data_format=>'#DAYS#'
+,p_month_data_entry_format=>'#DATA#'
+,p_theme_id=>25
+,p_theme_class_id=>1
+);
+end;
+/
+prompt --application/shared_components/user_interface/themes
+begin
+wwv_flow_api.create_theme(
+ p_id=>wwv_flow_api.id(28171985578594048236)
+,p_theme_id=>25
+,p_theme_name=>'Blue Responsive'
+,p_ui_type_name=>'DESKTOP'
+,p_navigation_type=>'T'
+,p_nav_bar_type=>'NAVBAR'
+,p_is_locked=>false
+,p_default_page_template=>wwv_flow_api.id(28171973058928048126)
+,p_error_template=>wwv_flow_api.id(28171969357302048115)
+,p_printer_friendly_template=>wwv_flow_api.id(28171975559241048134)
+,p_breadcrumb_display_point=>'REGION_POSITION_01'
+,p_sidebar_display_point=>'REGION_POSITION_02'
+,p_login_template=>wwv_flow_api.id(28171967883218048096)
+,p_default_button_template=>wwv_flow_api.id(28171984661783048197)
+,p_default_region_template=>wwv_flow_api.id(28171980972155048167)
+,p_default_chart_template=>wwv_flow_api.id(28171980972155048167)
+,p_default_form_template=>wwv_flow_api.id(28171980063736048163)
+,p_default_reportr_template=>wwv_flow_api.id(28171980972155048167)
+,p_default_tabform_template=>wwv_flow_api.id(28171980972155048167)
+,p_default_wizard_template=>wwv_flow_api.id(28171980063736048163)
+,p_default_menur_template=>wwv_flow_api.id(28171979559517048160)
+,p_default_listr_template=>wwv_flow_api.id(28171980972155048167)
+,p_default_irr_template=>wwv_flow_api.id(28171980465038048165)
+,p_default_report_template=>wwv_flow_api.id(28171982080246048176)
+,p_default_label_template=>wwv_flow_api.id(28171984163949048193)
+,p_default_menu_template=>wwv_flow_api.id(28171985258615048203)
+,p_default_calendar_template=>wwv_flow_api.id(28171985370272048208)
+,p_default_list_template=>wwv_flow_api.id(28171983674210048187)
+,p_default_option_label=>wwv_flow_api.id(28171984163949048193)
+,p_default_required_label=>wwv_flow_api.id(28171984464931048195)
+,p_default_page_transition=>'NONE'
+,p_default_popup_transition=>'NONE'
+,p_file_prefix => nvl(wwv_flow_application_install.get_static_theme_file_prefix(25),'')
+,p_css_file_urls=>'#IMAGE_PREFIX#legacy_ui/css/5.0#MIN#.css?v=#APEX_VERSION#'
+);
+end;
+/
+prompt --application/shared_components/user_interface/theme_style
+begin
+null;
+end;
+/
+prompt --application/shared_components/user_interface/theme_files
+begin
+null;
+end;
+/
+prompt --application/shared_components/user_interface/theme_display_points
+begin
+null;
+end;
+/
+prompt --application/shared_components/user_interface/template_opt_groups
+begin
+null;
+end;
+/
+prompt --application/shared_components/user_interface/template_options
+begin
+null;
+end;
+/
+prompt --application/shared_components/logic/build_options
+begin
+null;
+end;
+/
+prompt --application/shared_components/globalization/language
+begin
+null;
+end;
+/
+prompt --application/shared_components/globalization/translations
+begin
+null;
+end;
+/
+prompt --application/shared_components/globalization/messages
+begin
+null;
+end;
+/
+prompt --application/shared_components/globalization/dyntranslations
+begin
+null;
+end;
+/
+prompt --application/shared_components/user_interface/shortcuts
+begin
+null;
+end;
+/
+prompt --application/shared_components/security/authentications
+begin
+wwv_flow_api.create_authentication(
+ p_id=>wwv_flow_api.id(28171985867037048292)
+,p_name=>'Application Express Authentication'
+,p_scheme_type=>'NATIVE_APEX_ACCOUNTS'
+,p_invalid_session_type=>'LOGIN'
+,p_use_secure_cookie_yn=>'N'
+,p_ras_mode=>0
+);
+end;
+/
+prompt --application/ui_types
+begin
+null;
+end;
+/
+prompt --application/shared_components/plugins/item_type/com_jannavratil_apex_qr_item
+begin
+wwv_flow_api.create_plugin(
+ p_id=>wwv_flow_api.id(28240543150826735563)
+,p_plugin_type=>'ITEM TYPE'
+,p_name=>'COM.JANNAVRATIL.APEX.QR.ITEM'
+,p_display_name=>'QR Code Item'
+,p_supported_ui_types=>'DESKTOP:JQM_SMARTPHONE'
+,p_image_prefix => nvl(wwv_flow_application_install.get_static_plugin_file_prefix('ITEM TYPE','COM.JANNAVRATIL.APEX.QR.ITEM'),'')
+,p_plsql_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'function render_qr_item (',
+'    p_item                in apex_plugin.t_page_item,',
+'    p_plugin              in apex_plugin.t_plugin,',
+'    p_value               in varchar2,',
+'    p_is_readonly         in boolean,',
+'    p_is_printer_friendly in boolean )',
+'    return apex_plugin.t_page_item_render_result',
+'is',
+'    l_size          apex_application_page_items.attribute_01%type := p_item.attribute_01;',
+'    l_color         apex_application_page_items.attribute_01%type := p_item.attribute_02;',
+'    l_background    apex_application_page_items.attribute_01%type := p_item.attribute_03;',
+'    l_err_correction_level apex_application_page_items.attribute_01%type := p_item.attribute_04;',
+'begin',
 '',
-  p_day_title_format=> '<span class="uDayTitle">#DD#</span>',
-  p_day_open_format=> '<td class="uDay" headers="#DY#">#TITLE_FORMAT#<div class="uDayData">#DATA#</div>',
-  p_day_close_format=> '</td>',
-  p_today_open_format=> '<td class="uDay today" headers="#DY#">#TITLE_FORMAT#<div class="uDayData">#DATA#</div>',
-  p_weekend_title_format=> '<span class="uDayTitle weekendday">#DD#</span>',
-  p_weekend_open_format => '<td class="uDay" headers="#DY#">#TITLE_FORMAT#<div class="uDayData">#DATA#</div>',
-  p_weekend_close_format => '</td>',
-  p_nonday_title_format => '<span class="uDayTitle">#DD#</span>',
-  p_nonday_open_format => '<td class="uDay nonday" headers="#DY#">',
-  p_nonday_close_format => '</td>',
-  p_week_title_format => '',
-  p_week_open_format => '<tr>',
-  p_week_close_format => '</tr> ',
-  p_daily_title_format => '<table cellspacing="0" cellpadding="0" border="0" summary="" class="t1DayCalendarHolder"> <tr> <td class="t1MonthTitle">#IMONTH# #DD#, #YYYY#</td> </tr> <tr> <td>',
-  p_daily_open_format => '<tr>',
-  p_daily_close_format => '</tr>',
-  p_weekly_title_format => '<div class="uCal uCalWeekly">'||unistr('\000a')||
-'<h1 class="uMonth">#WTITLE#</h1>',
-  p_weekly_day_of_week_format => '<th scope="col" class="aCalDayCol" id="#DY#">'||unistr('\000a')||
-'  <span class="visible-desktop">#DD# #IDAY#</span>'||unistr('\000a')||
-'  <span class="hidden-desktop">#DD# <em>#IDY#</em></span>'||unistr('\000a')||
-'</th>',
-  p_weekly_month_open_format => '<table border="0" cellpadding="0" cellspacing="0" summary="#CALENDAR_TITLE# #START_DL# - #END_DL#" class="uCal">',
-  p_weekly_month_close_format => '</table>'||unistr('\000a')||
-'<div class="uCalFooter"></div>'||unistr('\000a')||
-'</div>',
-  p_weekly_day_title_format => '',
-  p_weekly_day_open_format => '<td class="uDay" headers="#DY#"><div class="uDayData">',
-  p_weekly_day_close_format => '</div></td>',
-  p_weekly_today_open_format => '<td class="uDay today" headers="#DY#"><div class="uDayData">',
-  p_weekly_weekend_title_format => '',
-  p_weekly_weekend_open_format => '<td class="uDay weekend" headers="#DY#"><div class="uDayData">',
-  p_weekly_weekend_close_format => '</div></td>',
-  p_weekly_time_open_format => '<th scope="row" class="uCalHour">',
-  p_weekly_time_close_format => '</th>',
-  p_weekly_time_title_format => '#TIME#',
-  p_weekly_hour_open_format => '<tr>',
-  p_weekly_hour_close_format => '</tr>',
-  p_daily_day_of_week_format => '<th scope="col" id="#DY#" class="aCalDayCol">#IDAY#</th>',
-  p_daily_month_title_format => '<div class="uCal uCalWeekly uCalDaily">'||unistr('\000a')||
-'<h1 class="uMonth">#IMONTH# #DD#, #YYYY#</h1>',
-  p_daily_month_open_format => '<table border="0" cellpadding="0" cellspacing="0" summary="#CALENDAR_TITLE# #START_DL#" class="uCal">',
-  p_daily_month_close_format => '</table>'||unistr('\000a')||
-'<div class="uCalFooter"></div>'||unistr('\000a')||
-'</div>',
-  p_daily_day_title_format => '',
-  p_daily_day_open_format => '<td class="uDay" headers="#DY#"><div class="uDayData">',
-  p_daily_day_close_format => '</div></td>',
-  p_daily_today_open_format => '<td class="uDay today" headers="#DY#"><div class="uDayData">',
-  p_daily_time_open_format => '<th scope="row" class="uCalHour" id="#TIME#">',
-  p_daily_time_close_format => '</th>',
-  p_daily_time_title_format => '#TIME#',
-  p_daily_hour_open_format => '<tr>',
-  p_daily_hour_close_format => '</tr>',
-  p_cust_month_title_format => '',
-  p_cust_day_of_week_format => '',
-  p_cust_month_open_format => '',
-  p_cust_month_close_format => '',
-  p_cust_week_title_format => '',
-  p_cust_week_open_format => '',
-  p_cust_week_close_format => '',
-  p_cust_day_title_format => '',
-  p_cust_day_open_format => '',
-  p_cust_day_close_format => '',
-  p_cust_today_open_format => '',
-  p_cust_daily_title_format => '',
-  p_cust_daily_open_format => '',
-  p_cust_daily_close_format => '',
-  p_cust_nonday_title_format => '',
-  p_cust_nonday_open_format => '',
-  p_cust_nonday_close_format => '',
-  p_cust_weekend_title_format => '',
-  p_cust_weekend_open_format => '',
-  p_cust_weekend_close_format => '',
-  p_cust_hour_open_format => '',
-  p_cust_hour_close_format => '',
-  p_cust_time_title_format => '',
-  p_cust_time_open_format => '',
-  p_cust_time_close_format => '',
-  p_cust_wk_month_title_format => '',
-  p_cust_wk_day_of_week_format => '',
-  p_cust_wk_month_open_format => '',
-  p_cust_wk_month_close_format => '',
-  p_cust_wk_week_title_format => '',
-  p_cust_wk_week_open_format => '',
-  p_cust_wk_week_close_format => '',
-  p_cust_wk_day_title_format => '',
-  p_cust_wk_day_open_format => '',
-  p_cust_wk_day_close_format => '',
-  p_cust_wk_today_open_format => '',
-  p_cust_wk_weekend_title_format => '',
-  p_cust_wk_weekend_open_format => '',
-  p_cust_wk_weekend_close_format => '',
-  p_cust_month_day_height_pix => '',
-  p_cust_month_day_height_per => '',
-  p_cust_week_day_width_pix => '',
-  p_cust_week_day_width_per => '',
-  p_agenda_format => '<ul class="listCalendar">'||unistr('\000a')||
-'  <li class="monthHeader">'||unistr('\000a')||
-'    <h1>#IMONTH# #YYYY#</h1>'||unistr('\000a')||
-'  </li>'||unistr('\000a')||
-'  #DAYS#'||unistr('\000a')||
-'  <li class="listEndCap"></li>'||unistr('\000a')||
+'  if apex_application.g_debug then',
+'    apex_plugin_util.debug_page_item(',
+'      p_plugin        => p_plugin,',
+'      p_page_item     => p_item',
+'    );',
+'  end if;',
+'   ',
+'  apex_javascript.add_library(',
+'     p_name      => ''qrcode.min'',',
+'     p_directory => p_plugin.file_prefix,',
+'     p_version   => NULL',
+'  );',
+'',
+'  sys.htp.p(''<div id="QR-''||p_item.id||''" style="width:''||l_size||''px; height:''||l_size||''px;"></div>'');',
+'',
+'  apex_javascript.add_inline_code (',
+'    p_code => ''function renderQR_''||p_item.name||''(value) ',
+'{ $("#QR-''||p_item.id||''").html(" ");',
+'  new QRCode(document.getElementById("QR-''||p_item.id||''"), {',
+'  text:   value, ',
+'  width:  "''||l_size||''" , ',
+'  height: "''||l_size||''" ,',
+'  colorDark:  "''||l_color||''" , ',
+'  colorLight: "''||l_background||''" ,',
+'  correctLevel : QRCode.CorrectLevel.''||l_err_correction_level||''',
+'  } );',
+'}'',',
+'    p_key  => ''renderQR_''||p_item.name',
+'  );',
+'',
+'  apex_javascript.add_onload_code (',
+'    p_code => ''renderQR_''||p_item.name||''("''||p_value||''");'', ',
+'    p_key  => ''renderQR_''||p_item.name',
+'  );',
+'  ',
+'  return null;',
+'end;'))
+,p_render_function=>'render_qr_item'
+,p_standard_attributes=>'VISIBLE:SOURCE:ELEMENT:ENCRYPT'
+,p_substitute_attributes=>true
+,p_subscribe_plugin_settings=>true
+,p_version_identifier=>'1.1.0'
+,p_about_url=>'https://github.com/jeffreykemp/apex-qr-plugin'
+,p_plugin_comment=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'1.1.0 (16 Mar 2016) jeffreykemp - Updated to Apex 5.0 and added Error Correction Level parameter - https://github.com/jeffreykemp/apex-qr-plugin',
+'',
+'1.0.0 (24 Feb 2014) navratil - original release https://github.com/navratil/apex-qr-plugin',
+'',
+'The MIT License (MIT)',
+'',
+'QR code plugin for Oracle Application Express',
+'',
+'Copyright (c) 2014 Jan Navratil    (github.com/navratil/apex-qr-plugin)',
+'Copyright (c) 2012 davidshimjs     (github.com/davidshimjs/qrcodejs)',
+'',
+'Permission is hereby granted, free of charge, to any person obtaining a copy of',
+'this software and associated documentation files (the "Software"), to deal in',
+'the Software without restriction, including without limitation the rights to',
+'use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of',
+'the Software, and to permit persons to whom the Software is furnished to do so,',
+'subject to the following conditions:',
+'',
+'The above copyright notice and this permission notice shall be included in all',
+'copies or substantial portions of the Software.',
+'',
+'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR',
+'IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS',
+'FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR',
+'COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER',
+'IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN',
+'CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.',
+''))
+);
+wwv_flow_api.create_plugin_attribute(
+ p_id=>wwv_flow_api.id(28240546927796920801)
+,p_plugin_id=>wwv_flow_api.id(28240543150826735563)
+,p_attribute_scope=>'COMPONENT'
+,p_attribute_sequence=>1
+,p_display_sequence=>10
+,p_prompt=>'Size'
+,p_attribute_type=>'INTEGER'
+,p_is_required=>true
+,p_default_value=>'200'
+,p_display_length=>10
+,p_max_length=>30
+,p_is_translatable=>false
+,p_help_text=>'Height and Width of the QR code in pixels'
+);
+wwv_flow_api.create_plugin_attribute(
+ p_id=>wwv_flow_api.id(28240547549541956378)
+,p_plugin_id=>wwv_flow_api.id(28240543150826735563)
+,p_attribute_scope=>'COMPONENT'
+,p_attribute_sequence=>2
+,p_display_sequence=>20
+,p_prompt=>'Color'
+,p_attribute_type=>'TEXT'
+,p_is_required=>true
+,p_default_value=>'#000000'
+,p_display_length=>10
+,p_max_length=>30
+,p_is_translatable=>false
+,p_help_text=>'QR code color (dark)'
+);
+wwv_flow_api.create_plugin_attribute(
+ p_id=>wwv_flow_api.id(28240547941992959820)
+,p_plugin_id=>wwv_flow_api.id(28240543150826735563)
+,p_attribute_scope=>'COMPONENT'
+,p_attribute_sequence=>3
+,p_display_sequence=>30
+,p_prompt=>'Background'
+,p_attribute_type=>'TEXT'
+,p_is_required=>true
+,p_default_value=>'#FFFFFF'
+,p_display_length=>10
+,p_max_length=>30
+,p_is_translatable=>false
+,p_help_text=>'QR code background color'
+);
+wwv_flow_api.create_plugin_attribute(
+ p_id=>wwv_flow_api.id(28219981265149826743)
+,p_plugin_id=>wwv_flow_api.id(28240543150826735563)
+,p_attribute_scope=>'COMPONENT'
+,p_attribute_sequence=>4
+,p_display_sequence=>40
+,p_prompt=>'Error Correction Level'
+,p_attribute_type=>'SELECT LIST'
+,p_is_required=>true
+,p_default_value=>'M'
+,p_is_translatable=>false
+,p_lov_type=>'STATIC'
+,p_help_text=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'There are 4 error correction levels used for QR codes, with each one adding different amounts of "backup" data depending on how much damage the QR code is expected to suffer in its intended environment, and hence how much error correction may be requ'
+||'ired:',
+'<ul>',
+'<li>Level L – up to 7% damage</ul>',
+'<li>Level M – up to 15% damage</ul>',
+'<li>Level Q – up to 25% damage</ul>',
+'<li>Level H – up to 30% damage</ul>',
 '</ul>',
-  p_agenda_past_day_format => '  <li class="dayHeader past">'||unistr('\000a')||
-'    <h2>#IDAY# <span>#IMONTH# #DD#</span></h2>'||unistr('\000a')||
-'  </li>',
-  p_agenda_today_day_format => '  <li class="dayHeader today">'||unistr('\000a')||
-'    <h2>#IDAY# <span>#IMONTH# #DD#</span></h2>'||unistr('\000a')||
-'  </li>',
-  p_agenda_future_day_format => '  <li class="dayHeader future">'||unistr('\000a')||
-'    <h2>#IDAY# <span>#IMONTH# #DD#</span></h2>'||unistr('\000a')||
-'  </li>',
-  p_agenda_past_entry_format => '  <li class="dayData past">#DATA#</li>',
-  p_agenda_today_entry_format => '  <li class="dayData today">#DATA#</li>',
-  p_agenda_future_entry_format => '  <li class="dayData future">#DATA#</li>',
-  p_month_data_format => '#DAYS#',
-  p_month_data_entry_format => '#DATA#',
-  p_theme_id  => 25,
-  p_theme_class_id => 1,
-  p_reference_id=> null);
-end;
-null;
- 
-end;
-/
-
-prompt  ...application themes
---
---application/shared_components/user_interface/themes/blue_responsive
-prompt  ......theme 27233351958693082
-begin
-wwv_flow_api.create_theme (
-  p_id =>27233351958693082 + wwv_flow_api.g_id_offset,
-  p_flow_id =>wwv_flow.g_flow_id,
-  p_theme_id  => 25,
-  p_theme_name=>'Blue Responsive',
-  p_ui_type_name=>'DESKTOP',
-  p_is_locked=>false,
-  p_default_page_template=>27220832292692972 + wwv_flow_api.g_id_offset,
-  p_error_template=>27217130666692961 + wwv_flow_api.g_id_offset,
-  p_printer_friendly_template=>27223332605692980 + wwv_flow_api.g_id_offset,
-  p_breadcrumb_display_point=>'REGION_POSITION_01',
-  p_sidebar_display_point=>'REGION_POSITION_02',
-  p_login_template=>27215656582692942 + wwv_flow_api.g_id_offset,
-  p_default_button_template=>27232435147693043 + wwv_flow_api.g_id_offset,
-  p_default_region_template=>27228745519693013 + wwv_flow_api.g_id_offset,
-  p_default_chart_template =>27228745519693013 + wwv_flow_api.g_id_offset,
-  p_default_form_template  =>27227837100693009 + wwv_flow_api.g_id_offset,
-  p_default_reportr_template   =>27228745519693013 + wwv_flow_api.g_id_offset,
-  p_default_tabform_template=>27228745519693013 + wwv_flow_api.g_id_offset,
-  p_default_wizard_template=>27227837100693009 + wwv_flow_api.g_id_offset,
-  p_default_menur_template=>27227332881693006 + wwv_flow_api.g_id_offset,
-  p_default_listr_template=>27228745519693013 + wwv_flow_api.g_id_offset,
-  p_default_irr_template=>27228238402693011 + wwv_flow_api.g_id_offset,
-  p_default_report_template   =>27229853610693022 + wwv_flow_api.g_id_offset,
-  p_default_label_template=>27231937313693039 + wwv_flow_api.g_id_offset,
-  p_default_menu_template=>27233031979693049 + wwv_flow_api.g_id_offset,
-  p_default_calendar_template=>27233143636693054 + wwv_flow_api.g_id_offset,
-  p_default_list_template=>27231447574693033 + wwv_flow_api.g_id_offset,
-  p_default_option_label=>27231937313693039 + wwv_flow_api.g_id_offset,
-  p_default_header_template=>null + wwv_flow_api.g_id_offset,
-  p_default_footer_template=>null + wwv_flow_api.g_id_offset,
-  p_default_page_transition=>'NONE',
-  p_default_popup_transition=>'NONE',
-  p_default_required_label=>27232238295693041 + wwv_flow_api.g_id_offset);
+'<p>',
+'More info: http://blog.qrstuff.com/2011/12/14/qr-code-error-correction'))
+);
+wwv_flow_api.create_plugin_attr_value(
+ p_id=>wwv_flow_api.id(28219981895588827452)
+,p_plugin_attribute_id=>wwv_flow_api.id(28219981265149826743)
+,p_display_sequence=>10
+,p_display_value=>'L'
+,p_return_value=>'L'
+);
+wwv_flow_api.create_plugin_attr_value(
+ p_id=>wwv_flow_api.id(28219982475177828544)
+,p_plugin_attribute_id=>wwv_flow_api.id(28219981265149826743)
+,p_display_sequence=>20
+,p_display_value=>'M'
+,p_return_value=>'M'
+);
+wwv_flow_api.create_plugin_attr_value(
+ p_id=>wwv_flow_api.id(28219982891447828977)
+,p_plugin_attribute_id=>wwv_flow_api.id(28219981265149826743)
+,p_display_sequence=>30
+,p_display_value=>'Q'
+,p_return_value=>'Q'
+);
+wwv_flow_api.create_plugin_attr_value(
+ p_id=>wwv_flow_api.id(28219983327460829371)
+,p_plugin_attribute_id=>wwv_flow_api.id(28219981265149826743)
+,p_display_sequence=>40
+,p_display_value=>'H'
+,p_return_value=>'H'
+);
 end;
 /
- 
-prompt  ...theme styles
---
- 
 begin
- 
-null;
- 
-end;
-/
-
-prompt  ...theme display points
---
- 
-begin
- 
-null;
- 
-end;
-/
-
-prompt  ...build options
---
- 
-begin
- 
-null;
- 
-end;
-/
-
---application/shared_components/globalization/language
-prompt  ...Language Maps for Application 104
---
- 
-begin
- 
-null;
- 
-end;
-/
-
---application/shared_components/globalization/messages
-prompt  ...text messages
---
---application/shared_components/globalization/dyntranslations
-prompt  ...dynamic translations
---
-prompt  ...Shortcuts
---
-prompt  ...web services (9iR2 or better)
---
-prompt  ...shared queries
---
-prompt  ...report layouts
---
-prompt  ...authentication schemes
---
---application/shared_components/security/authentication/application_express_authentication
-prompt  ......authentication 27233640401693138
- 
-begin
- 
-wwv_flow_api.create_authentication (
-  p_id => 27233640401693138 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_name => 'Application Express Authentication'
- ,p_scheme_type => 'NATIVE_APEX_ACCOUNTS'
- ,p_invalid_session_type => 'LOGIN'
- ,p_use_secure_cookie_yn => 'N'
-  );
-null;
- 
-end;
-/
-
-prompt  ...ui types
---
- 
-begin
- 
-null;
- 
-end;
-/
-
-prompt  ...plugins
---
---application/shared_components/plugins/item_type/com_jannavratil_apex_qr_item
- 
-begin
- 
-wwv_flow_api.create_plugin (
-  p_id => 20563635873959606 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_plugin_type => 'ITEM TYPE'
- ,p_name => 'COM.JANNAVRATIL.APEX.QR.ITEM'
- ,p_display_name => 'QR Code Item'
- ,p_supported_ui_types => 'DESKTOP:JQM_SMARTPHONE'
- ,p_image_prefix => '#PLUGIN_PREFIX#'
- ,p_plsql_code => 
-'function render_qr_item ('||unistr('\000a')||
-'    p_item                in apex_plugin.t_page_item,'||unistr('\000a')||
-'    p_plugin              in apex_plugin.t_plugin,'||unistr('\000a')||
-'    p_value               in varchar2,'||unistr('\000a')||
-'    p_is_readonly         in boolean,'||unistr('\000a')||
-'    p_is_printer_friendly in boolean )'||unistr('\000a')||
-'    return apex_plugin.t_page_item_render_result'||unistr('\000a')||
-'is'||unistr('\000a')||
-'    l_size          apex_application_page_items.attribute_01%type := p_item.attribute_01;'||unistr('\000a')||
-'    l_color'||
-'         apex_application_page_items.attribute_01%type := p_item.attribute_02;'||unistr('\000a')||
-'    l_background    apex_application_page_items.attribute_01%type := p_item.attribute_03;'||unistr('\000a')||
-'begin'||unistr('\000a')||
-''||unistr('\000a')||
-'  if apex_application.g_debug then'||unistr('\000a')||
-'    apex_plugin_util.debug_page_item('||unistr('\000a')||
-'      p_plugin        => p_plugin,'||unistr('\000a')||
-'      p_page_item     => p_item'||unistr('\000a')||
-'    );'||unistr('\000a')||
-'  end if;'||unistr('\000a')||
-'   '||unistr('\000a')||
-'  apex_javascript.add_library('||unistr('\000a')||
-'     p_name      => ''qrcode.min'''||
-','||unistr('\000a')||
-'     p_directory => p_plugin.file_prefix,'||unistr('\000a')||
-'     p_version   => NULL'||unistr('\000a')||
-'  );'||unistr('\000a')||
-''||unistr('\000a')||
-'  sys.htp.p(''<div id="QR-''||p_item.id||''" style="width:''||l_size||''px; height:''||l_size||''px;"></div>'');'||unistr('\000a')||
-''||unistr('\000a')||
-'  apex_javascript.add_inline_code ('||unistr('\000a')||
-'    p_code => ''function renderQR_''||p_item.name||''(value) '||unistr('\000a')||
-'{ $("#QR-''||p_item.id||''").html(" ");'||unistr('\000a')||
-'  new QRCode(document.getElementById("QR-''||p_item.id||''"), {'||unistr('\000a')||
-'  text:   value, '||unistr('\000a')||
-'  widt'||
-'h:  "''||l_size||''" , '||unistr('\000a')||
-'  height: "''||l_size||''" ,'||unistr('\000a')||
-'  colorDark:  "''||l_color||''" , '||unistr('\000a')||
-'  colorLight: "''||l_background||''"'||unistr('\000a')||
-'  } );'||unistr('\000a')||
-'}'','||unistr('\000a')||
-'    p_key  => ''renderQR_''||p_item.name'||unistr('\000a')||
-'  );'||unistr('\000a')||
-''||unistr('\000a')||
-'  apex_javascript.add_onload_code ('||unistr('\000a')||
-'    p_code => ''renderQR_''||p_item.name||''("''||p_value||''");'', '||unistr('\000a')||
-'    p_key  => ''renderQR_''||p_item.name'||unistr('\000a')||
-'  );'||unistr('\000a')||
-'  '||unistr('\000a')||
-'  return null;'||unistr('\000a')||
-'end;'
- ,p_render_function => 'render_qr_item'
- ,p_standard_attributes => 'VISIBLE:SOURCE:ELEMENT:ENCRYPT'
- ,p_substitute_attributes => true
- ,p_subscribe_plugin_settings => true
- ,p_help_text => '<div>'||unistr('\000a')||
-'	<span style="font-size:11px;"><span style="font-family:courier new,courier,monospace;">&nbsp;__ &nbsp; &nbsp;__ &nbsp; &nbsp; ____ &nbsp; &nbsp;__ &nbsp; &nbsp;__ &nbsp; _________ &nbsp; &nbsp; ____ &nbsp; ________ &nbsp; __ &nbsp; __</span></span></div>'||unistr('\000a')||
-'<div>'||unistr('\000a')||
-'	<span style="font-size:11px;"><span style="font-family: ''courier new'', courier, monospace;">| &nbsp;\ &nbsp;| &nbsp;| &nbsp; / &nbsp; &nbsp;\ &nbsp;| &nbsp;| &nbsp;| &nbsp;| | &nbsp; ___ &nbsp; \ &nbsp; / &nbsp; &nbsp;\ |__ &nbsp; &nbsp;__| | &nbsp;| | &nbsp;|</span></span></div>'||unistr('\000a')||
-'<div>'||unistr('\000a')||
-'	<span style="font-size:11px;"><span style="font-family:courier new,courier,monospace;">| &nbsp; \_| &nbsp;| &nbsp;/ &nbsp;/\ &nbsp;\ | &nbsp;| &nbsp;| &nbsp;| | &nbsp;|___| &nbsp;/ &nbsp;/ &nbsp;/\ &nbsp;\ &nbsp; | &nbsp;| &nbsp; &nbsp;| &nbsp;| | &nbsp;|</span></span></div>'||unistr('\000a')||
-'<div>'||unistr('\000a')||
-'	<span style="font-size:11px;"><span style="font-family:courier new,courier,monospace;">| &nbsp; _ &nbsp; &nbsp;| | &nbsp;|__| &nbsp;| \ &nbsp;\/ &nbsp;/ &nbsp;| &nbsp; __ &nbsp; / &nbsp;| &nbsp;|__| &nbsp;| &nbsp;| &nbsp;| &nbsp; &nbsp;| &nbsp;| | &nbsp;|</span></span></div>'||unistr('\000a')||
-'<div>'||unistr('\000a')||
-'	<span style="font-size:11px;"><span style="font-family:courier new,courier,monospace;">| &nbsp;| \ &nbsp; | | &nbsp; __ &nbsp; | &nbsp;\ &nbsp; &nbsp;/ &nbsp; | &nbsp;| &nbsp;\ &nbsp;\ &nbsp;| &nbsp; __ &nbsp; | &nbsp;| &nbsp;| &nbsp; &nbsp;| &nbsp;| | &nbsp;|____</span></span></div>'||unistr('\000a')||
-'<div>'||unistr('\000a')||
-'	<span style="font-size:11px;"><span style="font-family:courier new,courier,monospace;">|__| &nbsp;\__| |__| &nbsp;|__| &nbsp; \__/ &nbsp; &nbsp;|__| &nbsp; \__\ |__| &nbsp;|__| &nbsp;|__| &nbsp; &nbsp;|__| |_______|</span></span></div>'||unistr('\000a')||
-'<div>'||unistr('\000a')||
-'	&nbsp;</div>'||unistr('\000a')||
-'<div>'||unistr('\000a')||
-'	<span style="font-size:16px;">github.com/navratil/apex-qr-plugin</span></div>'||unistr('\000a')||
-''
- ,p_version_identifier => '1.0.0'
- ,p_about_url => 'https://github.com/navratil/apex-qr-code'
- ,p_plugin_comment => 'The MIT License (MIT)'||unistr('\000a')||
-''||unistr('\000a')||
-'QR code plugin for Oracle Application Express'||unistr('\000a')||
-''||unistr('\000a')||
-'Copyright (c) 2014 Jan Navratil    (github.com/navratil/apex-qr-plugin)'||unistr('\000a')||
-'Copyright (c) 2012 davidshimjs     (github.com/davidshimjs/qrcodejs)'||unistr('\000a')||
-''||unistr('\000a')||
-'Permission is hereby granted, free of charge, to any person obtaining a copy of'||unistr('\000a')||
-'this software and associated documentation files (the "Software"), to deal in'||unistr('\000a')||
-'the Software without restriction, including without limitation the rights to'||unistr('\000a')||
-'use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of'||unistr('\000a')||
-'the Software, and to permit persons to whom the Software is furnished to do so,'||unistr('\000a')||
-'subject to the following conditions:'||unistr('\000a')||
-''||unistr('\000a')||
-'The above copyright notice and this permission notice shall be included in all'||unistr('\000a')||
-'copies or substantial portions of the Software.'||unistr('\000a')||
-''||unistr('\000a')||
-'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR'||unistr('\000a')||
-'IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS'||unistr('\000a')||
-'FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR'||unistr('\000a')||
-'COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER'||unistr('\000a')||
-'IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN'||unistr('\000a')||
-'CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.'||unistr('\000a')||
-''
-  );
-wwv_flow_api.create_plugin_attribute (
-  p_id => 20567412844144844 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_plugin_id => 20563635873959606 + wwv_flow_api.g_id_offset
- ,p_attribute_scope => 'COMPONENT'
- ,p_attribute_sequence => 1
- ,p_display_sequence => 10
- ,p_prompt => 'Size'
- ,p_attribute_type => 'INTEGER'
- ,p_is_required => true
- ,p_default_value => '200'
- ,p_display_length => 10
- ,p_max_length => 30
- ,p_is_translatable => false
- ,p_help_text => 'Height and Width of the QR code in pixels'
-  );
-wwv_flow_api.create_plugin_attribute (
-  p_id => 20568034589180421 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_plugin_id => 20563635873959606 + wwv_flow_api.g_id_offset
- ,p_attribute_scope => 'COMPONENT'
- ,p_attribute_sequence => 2
- ,p_display_sequence => 20
- ,p_prompt => 'Color'
- ,p_attribute_type => 'TEXT'
- ,p_is_required => true
- ,p_default_value => '#000000'
- ,p_display_length => 10
- ,p_max_length => 30
- ,p_is_translatable => false
- ,p_help_text => 'QR code color (dark)'
-  );
-wwv_flow_api.create_plugin_attribute (
-  p_id => 20568427040183863 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_plugin_id => 20563635873959606 + wwv_flow_api.g_id_offset
- ,p_attribute_scope => 'COMPONENT'
- ,p_attribute_sequence => 3
- ,p_display_sequence => 30
- ,p_prompt => 'Background'
- ,p_attribute_type => 'TEXT'
- ,p_is_required => true
- ,p_default_value => '#FFFFFF'
- ,p_display_length => 10
- ,p_max_length => 30
- ,p_is_translatable => false
- ,p_help_text => 'QR code background color'
-  );
-null;
- 
-end;
-/
-
- 
-begin
- 
 wwv_flow_api.g_varchar2_table := wwv_flow_api.empty_varchar2_table;
 wwv_flow_api.g_varchar2_table(1) := '766172205152436F64653B2166756E6374696F6E28297B66756E6374696F6E20612861297B746869732E6D6F64653D632E4D4F44455F384249545F425954452C746869732E646174613D612C746869732E706172736564446174613D5B5D3B666F722876';
 wwv_flow_api.g_varchar2_table(2) := '617220623D5B5D2C643D302C653D746869732E646174612E6C656E6774683B653E643B642B2B297B76617220663D746869732E646174612E63686172436F646541742864293B663E36353533363F28625B305D3D3234307C28313833353030382666293E';
@@ -7847,46 +5928,327 @@ wwv_flow_api.g_varchar2_table(198) := '6F64652E70726F746F747970652E6D616B65496D6
 wwv_flow_api.g_varchar2_table(199) := '732E5F616E64726F69643E3D33292626746869732E5F6F44726177696E672E6D616B65496D61676528297D2C5152436F64652E70726F746F747970652E636C6561723D66756E6374696F6E28297B746869732E5F6F44726177696E672E636C6561722829';
 wwv_flow_api.g_varchar2_table(200) := '7D2C5152436F64652E436F72726563744C6576656C3D647D28293B';
 null;
- 
 end;
 /
-
- 
 begin
- 
-wwv_flow_api.create_plugin_file (
-  p_id => 20564911238048246 + wwv_flow_api.g_id_offset
- ,p_flow_id => wwv_flow.g_flow_id
- ,p_plugin_id => 20563635873959606 + wwv_flow_api.g_id_offset
- ,p_file_name => 'qrcode.min.js'
- ,p_mime_type => 'application/javascript'
- ,p_file_content => wwv_flow_api.g_varchar2_table
-  );
+wwv_flow_api.create_plugin_file(
+ p_id=>wwv_flow_api.id(28240544426190824203)
+,p_plugin_id=>wwv_flow_api.id(28240543150826735563)
+,p_file_name=>'qrcode.min.js'
+,p_mime_type=>'application/javascript'
+,p_file_content=>wwv_flow_api.varchar2_to_blob(wwv_flow_api.g_varchar2_table)
+);
+end;
+/
+prompt --application/user_interfaces
+begin
+wwv_flow_api.create_user_interface(
+ p_id=>wwv_flow_api.id(28171985680048048241)
+,p_ui_type_name=>'DESKTOP'
+,p_display_name=>'Desktop'
+,p_display_seq=>10
+,p_use_auto_detect=>false
+,p_is_default=>true
+,p_theme_id=>25
+,p_home_url=>'f?p=&APP_ID.:HOME:&SESSION.'
+,p_login_url=>'f?p=&APP_ID.:LOGIN_DESKTOP:&SESSION.'
+,p_nav_list_template_options=>'#DEFAULT#'
+,p_include_jquery_migrate=>true
+,p_nav_bar_type=>'NAVBAR'
+,p_nav_bar_template_options=>'#DEFAULT#'
+);
+end;
+/
+prompt --application/user_interfaces/combined_files
+begin
 null;
- 
 end;
 /
-
-prompt  ...data loading
---
-prompt  ...post import process
- 
+prompt --application/pages/page_00101
 begin
- 
-wwv_flow_api.post_import_process(p_flow_id => wwv_flow.g_flow_id);
+wwv_flow_api.create_page(
+ p_id=>101
+,p_user_interface_id=>wwv_flow_api.id(28171985680048048241)
+,p_name=>'QR Code demo'
+,p_alias=>'HOME'
+,p_page_mode=>'NORMAL'
+,p_step_title=>'QR Code demo'
+,p_step_sub_title=>'QR Code demo'
+,p_step_sub_title_type=>'TEXT_WITH_SUBSTITUTIONS'
+,p_first_item=>'NO_FIRST_ITEM'
+,p_javascript_code_onload=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'renderQR_P101_QR_CLOCK((new Date).toTimeString());',
+'',
+'setInterval(function() {',
+'   renderQR_P101_QR_CLOCK((new Date).toTimeString());',
+'}, 1000);'))
+,p_page_template_options=>'#DEFAULT#'
+,p_overwrite_navigation_list=>'N'
+,p_page_is_public_y_n=>'Y'
+,p_cache_mode=>'NOCACHE'
+,p_help_text=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'More info: <a href="&REPOSITORY.">&REPOSITORY.</a>',
+'<p>',
+'All due credit to the original author of this plugin, <strong>Jan Navratil<strong> <a href="https://twitter.com/apexindublin">@apexindublin</a>'))
+,p_last_updated_by=>'JEFFREY.KEMP@JK64.COM'
+,p_last_upd_yyyymmddhh24miss=>'20160316022513'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(3214475538946807645)
+,p_plug_name=>'Notes'
+,p_region_template_options=>'#DEFAULT#'
+,p_component_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_api.id(28171980972155048167)
+,p_plug_display_sequence=>70
+,p_include_in_reg_disp_sel_yn=>'Y'
+,p_plug_display_point=>'BODY'
+,p_plug_source_type=>'NATIVE_HELP_TEXT'
+,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(28158487751449935175)
+,p_plug_name=>'QR Code Item Plugin'
+,p_region_template_options=>'#DEFAULT#'
+,p_component_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_api.id(28171980972155048167)
+,p_plug_display_sequence=>20
+,p_include_in_reg_disp_sel_yn=>'N'
+,p_plug_display_point=>'BODY'
+,p_plug_query_row_template=>1
+,p_plug_query_headings_type=>'QUERY_COLUMNS'
+,p_plug_query_num_rows_type=>'NEXT_PREVIOUS_LINKS'
+,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
+,p_plug_query_show_nulls_as=>' - '
+,p_pagination_display_position=>'BOTTOM_RIGHT'
+,p_attribute_01=>'N'
+,p_attribute_02=>'HTML'
+,p_attribute_03=>'N'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(28158488534061935183)
+,p_plug_name=>'QR Clock'
+,p_region_template_options=>'#DEFAULT#'
+,p_component_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_api.id(28171980972155048167)
+,p_plug_display_sequence=>60
+,p_include_in_reg_disp_sel_yn=>'N'
+,p_plug_new_grid_row=>false
+,p_plug_display_point=>'BODY'
+,p_plug_query_row_template=>1
+,p_plug_query_headings_type=>'QUERY_COLUMNS'
+,p_plug_query_num_rows_type=>'NEXT_PREVIOUS_LINKS'
+,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
+,p_plug_query_show_nulls_as=>' - '
+,p_pagination_display_position=>'BOTTOM_RIGHT'
+,p_attribute_01=>'N'
+,p_attribute_02=>'HTML'
+,p_attribute_03=>'N'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(28158488940338935184)
+,p_plug_name=>'QR Code - Dynamic'
+,p_region_template_options=>'#DEFAULT#'
+,p_component_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_api.id(28171980972155048167)
+,p_plug_display_sequence=>30
+,p_include_in_reg_disp_sel_yn=>'N'
+,p_plug_new_grid_row=>false
+,p_plug_display_point=>'BODY'
+,p_plug_query_row_template=>1
+,p_plug_query_headings_type=>'QUERY_COLUMNS'
+,p_plug_query_num_rows_type=>'NEXT_PREVIOUS_LINKS'
+,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
+,p_plug_query_show_nulls_as=>' - '
+,p_pagination_display_position=>'BOTTOM_RIGHT'
+,p_attribute_01=>'N'
+,p_attribute_02=>'HTML'
+,p_attribute_03=>'N'
+);
+wwv_flow_api.create_page_button(
+ p_id=>wwv_flow_api.id(28158487946054935177)
+,p_button_sequence=>20
+,p_button_plug_id=>wwv_flow_api.id(28158487751449935175)
+,p_button_name=>'APPLY_CHANGES'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_api.id(28171984965918048201)
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Apply'
+,p_button_position=>'REGION_TEMPLATE_CHANGE'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(3214475214840807642)
+,p_name=>'P101_QR_DYNAMIC_M'
+,p_item_sequence=>100
+,p_item_plug_id=>wwv_flow_api.id(28158488940338935184)
+,p_prompt=>'QR Code (Error Correction = M)'
+,p_display_as=>'PLUGIN_COM.JANNAVRATIL.APEX.QR.ITEM'
+,p_field_template=>wwv_flow_api.id(28171984263119048194)
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_01=>'150'
+,p_attribute_02=>'#000077'
+,p_attribute_03=>'#FFFFFF'
+,p_attribute_04=>'M'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(3214475343377807643)
+,p_name=>'P101_QR_DYNAMIC_Q'
+,p_item_sequence=>110
+,p_item_plug_id=>wwv_flow_api.id(28158488940338935184)
+,p_prompt=>'QR Code (Error Correction = Q)'
+,p_display_as=>'PLUGIN_COM.JANNAVRATIL.APEX.QR.ITEM'
+,p_field_template=>wwv_flow_api.id(28171984263119048194)
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_01=>'150'
+,p_attribute_02=>'#000077'
+,p_attribute_03=>'#FFFFFF'
+,p_attribute_04=>'Q'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(3214475404064807644)
+,p_name=>'P101_QR_DYNAMIC_H'
+,p_item_sequence=>120
+,p_item_plug_id=>wwv_flow_api.id(28158488940338935184)
+,p_prompt=>'QR Code (Error Correction = H)'
+,p_display_as=>'PLUGIN_COM.JANNAVRATIL.APEX.QR.ITEM'
+,p_field_template=>wwv_flow_api.id(28171984263119048194)
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_01=>'150'
+,p_attribute_02=>'#000077'
+,p_attribute_03=>'#FFFFFF'
+,p_attribute_04=>'H'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(28158488146179935180)
+,p_name=>'P101_TEXT'
+,p_is_required=>true
+,p_item_sequence=>20
+,p_item_plug_id=>wwv_flow_api.id(28158487751449935175)
+,p_prompt=>'Text'
+,p_source=>'Hello world !'
+,p_source_type=>'STATIC'
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>40
+,p_cMaxlength=>120
+,p_field_template=>wwv_flow_api.id(28171984263119048194)
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_01=>'Y'
+,p_attribute_02=>'N'
+,p_attribute_04=>'TEXT'
+,p_attribute_05=>'NONE'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(28158488330695935182)
+,p_name=>'P101_QR_CODE'
+,p_item_sequence=>60
+,p_item_plug_id=>wwv_flow_api.id(28158487751449935175)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'QR code (Error Correction = L)'
+,p_source=>'P101_TEXT'
+,p_source_type=>'ITEM'
+,p_display_as=>'PLUGIN_COM.JANNAVRATIL.APEX.QR.ITEM'
+,p_field_template=>wwv_flow_api.id(28171984263119048194)
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_01=>'200'
+,p_attribute_02=>'#000000'
+,p_attribute_03=>'#FFFFFF'
+,p_attribute_04=>'L'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(28158488738652935184)
+,p_name=>'P101_QR_CLOCK'
+,p_item_sequence=>70
+,p_item_plug_id=>wwv_flow_api.id(28158488534061935183)
+,p_prompt=>'QR Clock (Error Correction = L)'
+,p_display_as=>'PLUGIN_COM.JANNAVRATIL.APEX.QR.ITEM'
+,p_field_template=>wwv_flow_api.id(28171984263119048194)
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_01=>'200'
+,p_attribute_02=>'#770000'
+,p_attribute_03=>'#FFFFFF'
+,p_attribute_04=>'L'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(28158489139800935184)
+,p_name=>'P101_QR_DYNAMIC_L'
+,p_item_sequence=>90
+,p_item_plug_id=>wwv_flow_api.id(28158488940338935184)
+,p_prompt=>'QR Code (Error Correction = L)'
+,p_display_as=>'PLUGIN_COM.JANNAVRATIL.APEX.QR.ITEM'
+,p_field_template=>wwv_flow_api.id(28171984263119048194)
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_01=>'150'
+,p_attribute_02=>'#000077'
+,p_attribute_03=>'#FFFFFF'
+,p_attribute_04=>'L'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(28158489355714935185)
+,p_name=>'P101_DYNAMIC_TEXT'
+,p_item_sequence=>80
+,p_item_plug_id=>wwv_flow_api.id(28158488940338935184)
+,p_prompt=>'Text'
+,p_source=>'QR changes as you type!'
+,p_source_type=>'STATIC'
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>40
+,p_cMaxlength=>120
+,p_field_template=>wwv_flow_api.id(28171984567865048195)
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_01=>'N'
+,p_attribute_02=>'N'
+,p_attribute_04=>'TEXT'
+,p_attribute_05=>'NONE'
+);
+wwv_flow_api.create_page_da_event(
+ p_id=>wwv_flow_api.id(28158489529679935186)
+,p_name=>'Change QR as you type'
+,p_event_sequence=>10
+,p_triggering_element_type=>'ITEM'
+,p_triggering_element=>'P101_DYNAMIC_TEXT'
+,p_bind_type=>'bind'
+,p_bind_event_type=>'keyup'
+);
+wwv_flow_api.create_page_da_action(
+ p_id=>wwv_flow_api.id(28158489854811935188)
+,p_event_id=>wwv_flow_api.id(28158489529679935186)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'Y'
+,p_action=>'NATIVE_JAVASCRIPT_CODE'
+,p_attribute_01=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'renderQR_P101_QR_DYNAMIC_L($x("P101_DYNAMIC_TEXT").value);',
+'renderQR_P101_QR_DYNAMIC_M($x("P101_DYNAMIC_TEXT").value);',
+'renderQR_P101_QR_DYNAMIC_Q($x("P101_DYNAMIC_TEXT").value);',
+'renderQR_P101_QR_DYNAMIC_H($x("P101_DYNAMIC_TEXT").value);'))
+);
+end;
+/
+prompt --application/deployment/definition
+begin
 null;
- 
 end;
 /
-
---application/end_environment
-commit;
-commit;
+prompt --application/deployment/install
 begin
-execute immediate 'begin sys.dbms_session.set_nls( param => ''NLS_NUMERIC_CHARACTERS'', value => '''''''' || replace(wwv_flow_api.g_nls_numeric_chars,'''''''','''''''''''') || ''''''''); end;';
+null;
 end;
 /
-set verify on
-set feedback on
-set define on
+prompt --application/deployment/checks
+begin
+null;
+end;
+/
+prompt --application/deployment/buildoptions
+begin
+null;
+end;
+/
+prompt --application/end_environment
+begin
+wwv_flow_api.import_end(p_auto_install_sup_obj => nvl(wwv_flow_application_install.get_auto_install_sup_obj, false));
+commit;
+end;
+/
+set verify on feedback on define on
 prompt  ...done
