@@ -11,8 +11,6 @@ Demo: http://apex.oracle.com/pls/apex/f?p=QRDEMO
 
 More about QR codes: http://en.wikipedia.org/wiki/QR_code
 
-Follow **@apexindublin**
-
 ##Installation
 * Import src/item_type_plugin_com_jannavratil_apex_qr.sql into your application 
   * There are no associated database objects
@@ -26,6 +24,12 @@ QR plugin has following custom component attributes
 * **Size**: Height and Width of the QR code in pixels - default 200
 * **Color**: Color of the QR code - default #000000 (black)
 * **Background**: Background color - default #FFFFFF (white)
+* **Error Correction Level**: There are 4 error correction levels used for QR codes, with each one adding different amounts of "backup" data depending on how much damage the QR code is expected to suffer in its intended environment, and hence how much error correction may be required:
+    * Level L – up to 7% damage</ul>
+    * Level M – up to 15% damage</ul>
+    * Level Q – up to 25% damage</ul>
+    * Level H – up to 30% damage</ul>
+    More info: http://blog.qrstuff.com/2011/12/14/qr-code-error-correction
 
 For performance and scalability reasons you can also store JavaScript file (src/qrcode.min.js) on your Web Server. You would need to change the "File Prefix" plugin attribute accordingly (e.g. from #PLUGIN_PREFIX# to #IMAGE_PREFIX#).
 
@@ -46,7 +50,7 @@ There are three examples in the demo application (examples/qr-code-demo.sql) on 
 * Third is based on a timer - see Page Source / Execute when Page Loads
  
 ##Compatibility
-* Developed with APEX 4.2
+* Updated by Jeffrey Kemp in Apex 5.0
 * Tested with following browsers: Firefox, Chrome, IE11, Safari (iPhone)
 * Tested with following QR code scanners: scan.me, RedLaser, Google Authenticator, HDE OTP
 
