@@ -11,6 +11,8 @@ Demo: https://apex.oracle.com/pls/apex/f?p=QRDEMO_1_1
 
 More about QR codes: http://en.wikipedia.org/wiki/QR_code
 
+The original author of this plugin was **Jan Navratil** [@apexindublin](https://twitter.com/apexindublin).
+
 ##Installation
 * Import src/item_type_plugin_com_jannavratil_apex_qr.sql into your application 
   * There are no associated database objects
