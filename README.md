@@ -7,7 +7,7 @@ Plugin simply renders value of the item as a QR code. Users can easily scan the 
 
 QR codes are generated using JavaScript - directly in the browser. Plugin does not depend on any external QR generator service. 
 
-Demo: http://apex.oracle.com/pls/apex/f?p=QRDEMO
+Demo: https://apex.oracle.com/pls/apex/f?p=QRDEMO_1_1
 
 More about QR codes: http://en.wikipedia.org/wiki/QR_code
 
@@ -25,11 +25,12 @@ QR plugin has following custom component attributes
 * **Color**: Color of the QR code - default #000000 (black)
 * **Background**: Background color - default #FFFFFF (white)
 * **Error Correction Level**: There are 4 error correction levels used for QR codes, with each one adding different amounts of "backup" data depending on how much damage the QR code is expected to suffer in its intended environment, and hence how much error correction may be required:
-    * Level L – up to 7% damage</ul>
-    * Level M – up to 15% damage</ul>
-    * Level Q – up to 25% damage</ul>
-    * Level H – up to 30% damage</ul>
-    More info: http://blog.qrstuff.com/2011/12/14/qr-code-error-correction
+     * Level L – up to 7% damage
+     * Level M – up to 15% damage
+     * Level Q – up to 25% damage
+     * Level H – up to 30% damage
+
+   More info: http://blog.qrstuff.com/2011/12/14/qr-code-error-correction
 
 For performance and scalability reasons you can also store JavaScript file (src/qrcode.min.js) on your Web Server. You would need to change the "File Prefix" plugin attribute accordingly (e.g. from #PLUGIN_PREFIX# to #IMAGE_PREFIX#).
 
