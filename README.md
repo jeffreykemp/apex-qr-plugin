@@ -53,7 +53,7 @@ There are three examples in the demo application (examples/qr-code-demo.sql) on 
 * Third is based on a timer - see Page Source / Execute when Page Loads
  
 ##Compatibility
-* Updated by Jeffrey Kemp in Apex 5.0
+* Developed with APEX 4.2
 * Tested with following browsers: Firefox, Chrome, IE11, Safari (iPhone)
 * Tested with following QR code scanners: scan.me, RedLaser, Google Authenticator, HDE OTP
 
